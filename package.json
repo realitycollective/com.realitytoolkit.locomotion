@@ -1,14 +1,15 @@
 {
-  "name": "com.realitytoolkit.UPMTEMPLATE",
-  "displayName": "RealityToolkit.UPMTEMPLATE",
-  "description": "The UPMTEMPLATE framework of the Reality Toolkit by the Reality Collective",
+  "name": "com.realitytoolkit.locomotion",
+  "displayName": "RealityToolkit.Locomotion",
+  "description": "The Locomotion System for use with the Reality Toolkit by the Reality Collective",
   "keywords": [
     "VR",
     "AR",
     "XR",
-    "Mixed Reality"
+    "Mixed Reality",
+    "Locomotion"
   ],
-  "version": "1.0.0-preview.0",
+  "version": "1.0.0",
   "unity": "2020.3",
   "homepage": "https://github.com/realitycollective",
   "bugs": {
@@ -17,7 +18,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/realitycollective/com.realitytoolkit.UPMTEMPLATE"
+    "url": "git+https://github.com/realitycollective/com.realitytoolkit.locomotion"
   },
   "author": {
     "name": "Reality Collective",
@@ -25,7 +26,7 @@
     "url": "https://github.com/realitycollective"
   },
   "dependencies": {
-    "com.realitytoolkit.core": "1.0.0-preview.1"
+    "com.realitytoolkit.core": "1.0.0-preview.2"
   },
   "assets": [
     {

@@ -1,10 +1,13 @@
 {
-    "name": "RealityToolkit.UPMTEMPLATE",
-    "rootNamespace": "RealityToolkit.UPMTEMPLATE",
+    "name": "RealityToolkit.locomotion.Editor",
+    "rootNamespace": "RealityToolkit.Locomotion.Editor",
     "references": [
+        "GUID:e67d30660ec243e4836aac191d3f36fb",
         "GUID:f3241d040533491e8a1e2714b27c3111"
     ],
-    "includePlatforms": [],
+    "includePlatforms": [
+        "Editor"
+    ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,

@@ -2,17 +2,17 @@
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 
 using UnityEngine;
-using XRTK.Editor.Utilities;
+using RealityToolkit.Editor.Utilities;
 
-namespace RealityToolkit.UPMTEMPLATE.Editor
+namespace RealityToolkit.Locomotion.Editor
 {
     /// <summary>
     /// Dummy scriptable object used to find the relative path of the platform package.
     /// </summary>
-    ///// <inheritdoc cref="IPathFinder" />
-    public class UPMTEMPLATEPathFinder : ScriptableObject, IPathFinder
+    /// <inheritdoc cref="IPathFinder" />
+    public class LocomotionPathFinder : ScriptableObject, IPathFinder
     {
-        ///// <inheritdoc />
-        public string Location => $"/Editor/{nameof(UPMTEMPLATEPathFinder)}.cs";
+        /// <inheritdoc />
+        public string Location => $"/Editor/{nameof(LocomotionPathFinder)}.cs";
     }
 }
