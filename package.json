@@ -1,7 +1,7 @@
 {
   "name": "com.realitytoolkit.locomotion",
   "displayName": "RealityToolkit.Locomotion",
-  "description": "The Locomotion System for use with the Reality Toolkit by the Reality Collective",
+  "description": "The Locomotion System for use with the Reality Toolkit by the Reality Collective.",
   "keywords": [
     "VR",
     "AR",
@@ -14,7 +14,7 @@
   "homepage": "https://github.com/realitycollective",
   "bugs": {
     "url": "https://github.com/realitycollective/realitytoolkit.dev/issues"
-  },  
+  },
   "license": "MIT",
   "repository": {
     "type": "git",

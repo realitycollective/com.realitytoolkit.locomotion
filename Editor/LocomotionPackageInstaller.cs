@@ -13,7 +13,7 @@ namespace RealityToolkit.Locomotion.Editor
     internal static class LocomotionPackageInstaller
     {
         private static readonly string DefaultPath = $"{MixedRealityPreferences.ProfileGenerationPath}Locomotion";
-        private static readonly string HiddenPath = Path.GetFullPath($"{PathFinderUtility.ResolvePath<IPathFinder>(typeof(locomotionPathFinder)).ForwardSlashes()}{Path.DirectorySeparatorChar}{MixedRealityPreferences.HIDDEN_PACKAGE_ASSETS_PATH}");
+        private static readonly string HiddenPath = Path.GetFullPath($"{PathFinderUtility.ResolvePath<IPathFinder>(typeof(LocomotionPathFinder)).ForwardSlashes()}{Path.DirectorySeparatorChar}{MixedRealityPreferences.HIDDEN_PACKAGE_ASSETS_PATH}");
 
         static LocomotionPackageInstaller()
         {
