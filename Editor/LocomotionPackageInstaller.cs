@@ -3,8 +3,9 @@
 
 using RealityCollective.Editor.Utilities;
 using RealityCollective.Extensions;
+using RealityCollective.ServiceFramework.Editor;
+using RealityCollective.ServiceFramework.Editor.Packages;
 using RealityToolkit.Editor;
-using RealityToolkit.Editor.Utilities;
 using System.IO;
 using UnityEditor;
 
@@ -13,8 +14,8 @@ namespace RealityToolkit.Locomotion.Editor
     [InitializeOnLoad]
     internal static class LocomotionPackageInstaller
     {
-        private static readonly string DefaultPath = $"{MixedRealityPreferences.ProfileGenerationPath}Locomotion";
-        private static readonly string HiddenPath = Path.GetFullPath($"{PathFinderUtility.ResolvePath<IPathFinder>(typeof(LocomotionPathFinder)).ForwardSlashes()}{Path.DirectorySeparatorChar}{MixedRealityPreferences.HIDDEN_PACKAGE_ASSETS_PATH}");
+        private static readonly string destinationPath = $"{MixedRealityPreferences.ProfileGenerationPath}Locomotion";
+        private static readonly string sourcePath = Path.GetFullPath($"{PathFinderUtility.ResolvePath<IPathFinder>(typeof(LocomotionPackagePathFinder)).ForwardSlashes()}{Path.DirectorySeparatorChar}{MixedRealityPreferences.HIDDEN_PACKAGE_ASSETS_PATH}");
 
         static LocomotionPackageInstaller()
         {
@@ -24,7 +25,7 @@ namespace RealityToolkit.Locomotion.Editor
         [MenuItem("Reality Toolkit/Packages/Install Locomotion Package Assets...", true)]
         private static bool ImportPackageAssetsValidation()
         {
-            return !Directory.Exists($"{DefaultPath}{Path.DirectorySeparatorChar}");
+            return !Directory.Exists($"{destinationPath}{Path.DirectorySeparatorChar}");
         }
 
         [MenuItem("Reality Toolkit/Packages/Install Locomotion Package Assets...")]
@@ -38,7 +39,7 @@ namespace RealityToolkit.Locomotion.Editor
         {
             if (!EditorPreferences.Get($"{nameof(LocomotionPackageInstaller)}.Assets", false))
             {
-                EditorPreferences.Set($"{nameof(LocomotionPackageInstaller)}.Assets", PackageInstaller.TryInstallAssets(HiddenPath, DefaultPath));
+                EditorPreferences.Set($"{nameof(LocomotionPackageInstaller)}.Assets", AssetsInstaller.TryInstallAssets(sourcePath, destinationPath));
             }
         }
     }
