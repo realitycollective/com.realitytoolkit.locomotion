@@ -1,8 +1,11 @@
 // Copyright (c) Reality Collective. All rights reserved.
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 
+using RealityCollective.Definitions.Utilities;
+using RealityCollective.Extensions;
 using RealityCollective.ServiceFramework.Modules;
 using RealityCollective.ServiceFramework.Services;
+using RealityToolkit.CameraService.Interfaces;
 using RealityToolkit.EventDatum.Input;
 using RealityToolkit.InputSystem.Definitions;
 using RealityToolkit.LocomotionSystem.Definitions;
