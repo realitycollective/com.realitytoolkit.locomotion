@@ -4,10 +4,10 @@
 using RealityCollective.ServiceFramework.Definitions;
 using UnityEngine;
 
-namespace RealityToolkit.LocomotionSystem.Definitions
+namespace RealityToolkit.Locomotion.Definitions
 {
     /// <summary>
-    /// Configuration profile for the <see cref="Providers.LocomotionSystem.TeleportValidationProvider"/>.
+    /// Configuration profile for the <see cref="Providers.Locomotion.TeleportValidationProvider"/>.
     /// </summary>
     public class TeleportValidationServiceModuleProfile : BaseProfile
     {
@@ -16,7 +16,7 @@ namespace RealityToolkit.LocomotionSystem.Definitions
         private bool anchorsOnly = false;
 
         /// <summary>
-        /// Should teleportation only be allowed if the target is a <see cref="Interfaces.LocomotionSystem.ITeleportAnchor"/>?
+        /// Should teleportation only be allowed if the target is a <see cref="Interfaces.Locomotion.ITeleportAnchor"/>?
         /// </summary>
         public bool AnchorsOnly
         {

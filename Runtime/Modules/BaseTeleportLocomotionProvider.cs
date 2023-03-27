@@ -3,8 +3,8 @@
 
 using RealityToolkit.EventDatum.Input;
 using RealityToolkit.InputSystem.Interfaces;
-using RealityToolkit.LocomotionSystem.Definitions;
-using RealityToolkit.LocomotionSystem.Interfaces;
+using RealityToolkit.Locomotion.Definitions;
+using RealityToolkit.Locomotion.Interfaces;
 using System.Collections.Generic;
 using UnityEngine;
 

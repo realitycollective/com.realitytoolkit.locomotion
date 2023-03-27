@@ -8,8 +8,8 @@ using RealityCollective.ServiceFramework.Services;
 using RealityToolkit.CameraService.Interfaces;
 using RealityToolkit.EventDatum.Input;
 using RealityToolkit.InputSystem.Definitions;
-using RealityToolkit.LocomotionSystem.Definitions;
-using RealityToolkit.LocomotionSystem.Interfaces;
+using RealityToolkit.Locomotion.Definitions;
+using RealityToolkit.Locomotion.Interfaces;
 using UnityEngine;
 
 namespace RealityToolkit.Locomotion.Modules

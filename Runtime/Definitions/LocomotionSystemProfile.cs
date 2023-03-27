@@ -2,10 +2,10 @@
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 
 using RealityCollective.ServiceFramework.Definitions;
-using RealityToolkit.LocomotionSystem.Interfaces;
+using RealityToolkit.Locomotion.Interfaces;
 using UnityEngine;
 
-namespace RealityToolkit.LocomotionSystem.Definitions
+namespace RealityToolkit.Locomotion.Definitions
 {
     /// <summary>
     /// Configuration profile settings for <see cref="Services.LocomotionSystem.LocomotionSystem"/>.

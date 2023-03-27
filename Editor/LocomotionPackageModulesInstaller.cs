@@ -4,8 +4,8 @@
 using RealityCollective.ServiceFramework.Definitions;
 using RealityCollective.ServiceFramework.Editor.Packages;
 using RealityCollective.ServiceFramework.Services;
-using RealityToolkit.LocomotionSystem.Definitions;
-using RealityToolkit.LocomotionSystem.Interfaces;
+using RealityToolkit.Locomotion.Definitions;
+using RealityToolkit.Locomotion.Interfaces;
 using System.Linq;
 using UnityEditor;
 

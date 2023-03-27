@@ -3,7 +3,7 @@
 
 using RealityCollective.Extensions;
 using RealityCollective.ServiceFramework.Services;
-using RealityToolkit.LocomotionSystem.Interfaces;
+using RealityToolkit.Locomotion.Interfaces;
 using UnityEngine;
 
 namespace RealityToolkit.Locomotion

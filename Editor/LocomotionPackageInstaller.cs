@@ -22,13 +22,13 @@ namespace RealityToolkit.Locomotion.Editor
             EditorApplication.delayCall += CheckPackage;
         }
 
-        [MenuItem("Reality Toolkit/Packages/Install Locomotion Package Assets...", true)]
+        [MenuItem(MixedRealityPreferences.Editor_Menu_Keyword + "/Packages / Install Locomotion Package Assets...", true)]
         private static bool ImportPackageAssetsValidation()
         {
             return !Directory.Exists($"{destinationPath}{Path.DirectorySeparatorChar}");
         }
 
-        [MenuItem("Reality Toolkit/Packages/Install Locomotion Package Assets...")]
+        [MenuItem(MixedRealityPreferences.Editor_Menu_Keyword + "/Packages / Install Locomotion Package Assets...")]
         private static void ImportPackageAssets()
         {
             EditorPreferences.Set($"{nameof(LocomotionPackageInstaller)}.Assets", false);

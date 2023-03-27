@@ -2,10 +2,10 @@
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 
 using RealityToolkit.InputSystem.Interfaces;
-using RealityToolkit.LocomotionSystem.Definitions;
+using RealityToolkit.Locomotion.Definitions;
 using UnityEngine;
 
-namespace RealityToolkit.LocomotionSystem.Interfaces
+namespace RealityToolkit.Locomotion.Interfaces
 {
     /// <summary>
     /// Interface to define teleportation validation service modules. A <see cref="ITeleportValidationServiceModule"/>

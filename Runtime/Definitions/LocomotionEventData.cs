@@ -3,11 +3,11 @@
 
 using RealityToolkit.EventDatum;
 using RealityToolkit.InputSystem.Interfaces;
-using RealityToolkit.LocomotionSystem.Interfaces;
+using RealityToolkit.Locomotion.Interfaces;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace RealityToolkit.LocomotionSystem.Definitions
+namespace RealityToolkit.Locomotion.Definitions
 {
     /// <summary>
     /// Describes a locomotion event raised by the <see cref="ILocomotionSystem"/>.

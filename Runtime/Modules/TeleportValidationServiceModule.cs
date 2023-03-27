@@ -3,8 +3,8 @@
 
 using RealityCollective.ServiceFramework.Modules;
 using RealityToolkit.InputSystem.Interfaces;
-using RealityToolkit.LocomotionSystem.Definitions;
-using RealityToolkit.LocomotionSystem.Interfaces;
+using RealityToolkit.Locomotion.Definitions;
+using RealityToolkit.Locomotion.Interfaces;
 using UnityEngine;
 
 namespace RealityToolkit.Locomotion.Modules

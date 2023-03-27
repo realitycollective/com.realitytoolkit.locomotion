@@ -5,8 +5,8 @@ using RealityCollective.ServiceFramework.Services;
 using RealityToolkit.Definitions.Physics;
 using RealityToolkit.EventDatum.Input;
 using RealityToolkit.InputSystem.Interfaces;
-using RealityToolkit.LocomotionSystem.Definitions;
-using RealityToolkit.LocomotionSystem.Interfaces;
+using RealityToolkit.Locomotion.Definitions;
+using RealityToolkit.Locomotion.Interfaces;
 using RealityToolkit.Utilities.Physics;
 using RealityToolkit.Utilities.UX.Pointers;
 using System;
@@ -15,15 +15,14 @@ using UnityEngine.Serialization;
 
 namespace RealityToolkit.Locomotion.UX
 {
-    public class TeleportPointer : LinePointer
-#if RTK_LOCOMOTION
-        , ITeleportTargetProvider
-#endif
+    public class TeleportPointer : LinePointer, ILocomotionSystemHandler, ITeleportTargetProvider
     {
         [SerializeField]
         [Tooltip("Gradient color to apply when targeting an anchor.")]
         [FormerlySerializedAs("lineColorHotSpot")]
         private Gradient lineColorAnchor = new Gradient();
+
+        private bool lateRegisterTeleport = true;
 
         /// <summary>
         /// Gradient color to apply when targeting an <see cref="ITeleportAnchor"/>.
@@ -36,6 +35,11 @@ namespace RealityToolkit.Locomotion.UX
 
         private ITeleportValidationServiceModule validationDataProvider;
         private ITeleportValidationServiceModule ValidationDataProvider => validationDataProvider ?? (validationDataProvider = ServiceManager.Instance.GetService<ITeleportValidationServiceModule>());
+
+        private ILocomotionSystem locomotionSystem = null;
+
+        protected ILocomotionSystem LocomotionSystem
+            => locomotionSystem ?? (locomotionSystem = ServiceManager.Instance.GetService<ILocomotionSystem>());
 
         /// <inheritdoc />
         public ILocomotionProvider RequestingLocomotionProvider { get; private set; }
@@ -111,6 +115,48 @@ namespace RealityToolkit.Locomotion.UX
                 return base.PointerOrientation;
             }
             set => base.PointerOrientation = value;
+        }
+
+        /// <inheritdoc />
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+
+            if (!lateRegisterTeleport &&
+                ServiceManager.Instance.TryGetService(out locomotionSystem))
+            {
+                locomotionSystem.Register(gameObject);
+            }
+        }
+
+        /// <inheritdoc />
+        protected override async void Start()
+        {
+            base.Start();
+
+            if (lateRegisterTeleport)
+            {
+                try
+                {
+                    locomotionSystem = await ServiceManager.Instance.GetServiceAsync<ILocomotionSystem>();
+                    LocomotionSystem?.Register(gameObject);
+                }
+                catch
+                {
+                    return;
+                }
+                finally
+                {
+                    lateRegisterTeleport = false;
+                }
+            }
+        }
+
+        /// <inheritdoc />
+        protected override void OnDisable()
+        {
+            LocomotionSystem?.Unregister(gameObject);
+            base.OnDisable();
         }
 
         public override void OnPreRaycast()
@@ -236,11 +282,10 @@ namespace RealityToolkit.Locomotion.UX
 
         #endregion IMixedRealityInputHandler Implementation
 
-#if RTK_LOCOMOTION
         #region IMixedRealityTeleportHandler Implementation
 
         /// <inheritdoc />
-        public override void OnTeleportTargetRequested(LocomotionEventData eventData)
+        public void OnTeleportTargetRequested(LocomotionEventData eventData)
         {
             // Only enable teleport if the request is addressed at our input source.
             if (eventData.EventSource.SourceId == InputSource.SourceId)
@@ -256,7 +301,10 @@ namespace RealityToolkit.Locomotion.UX
         }
 
         /// <inheritdoc />
-        public override void OnTeleportCompleted(LocomotionEventData eventData)
+        public void OnTeleportStarted(LocomotionEventData eventData) { }
+
+        /// <inheritdoc />
+        public void OnTeleportCompleted(LocomotionEventData eventData)
         {
             // We could be checking here whether the completed teleport
             // is this teleport provider's own teleport operation and act differently
@@ -266,7 +314,7 @@ namespace RealityToolkit.Locomotion.UX
         }
 
         /// <inheritdoc />
-        public override void OnTeleportCanceled(LocomotionEventData eventData)
+        public void OnTeleportCanceled(LocomotionEventData eventData)
         {
             // Only cancel teleport if this target provider's teleport was canceled.
             if (eventData.EventSource.SourceId == InputSource.SourceId)
@@ -276,6 +324,5 @@ namespace RealityToolkit.Locomotion.UX
         }
 
         #endregion IMixedRealityTeleportHandler Implementation
-#endif
     }
 }

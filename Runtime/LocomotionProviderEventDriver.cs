@@ -3,9 +3,10 @@
 
 using RealityCollective.ServiceFramework.Services;
 using RealityToolkit.EventDatum.Input;
+using RealityToolkit.InputSystem.Interfaces;
 using RealityToolkit.InputSystem.Interfaces.Handlers;
-using RealityToolkit.LocomotionSystem.Definitions;
-using RealityToolkit.LocomotionSystem.Interfaces;
+using RealityToolkit.Locomotion.Definitions;
+using RealityToolkit.Locomotion.Interfaces;
 using UnityEngine;
 
 namespace RealityToolkit.Locomotion
@@ -24,12 +25,19 @@ namespace RealityToolkit.Locomotion
         IMixedRealityInputHandler<float>,
         IMixedRealityInputHandler<Vector2>
     {
-        private LocomotionSystem locomotionSystem = null;
+        private IMixedRealityInputSystem inputService = null;
+        /// <summary>
+        /// Gets the currently active <see cref="IMixedRealityInputSystem"/> instance.
+        /// </summary>
+        protected IMixedRealityInputSystem InputService
+            => inputService ??= ServiceManager.Instance.GetService<IMixedRealityInputSystem>();
+
+        private ILocomotionSystem locomotionSystem = null;
         /// <summary>
         /// Gets the currently active <see cref="Services.LocomotionSystem.LocomotionSystem"/> instance.
         /// </summary>
-        protected LocomotionSystem LocomotionSystem
-            => locomotionSystem ?? (locomotionSystem = ServiceManager.Instance.GetService<ILocomotionSystem>() as LocomotionSystem);
+        protected ILocomotionSystem LocomotionSystem
+            => locomotionSystem ??= ServiceManager.Instance.GetService<ILocomotionSystem>();
 
         /// <summary>
         /// This method is called just before any of the update methods is called the first time.
@@ -38,7 +46,7 @@ namespace RealityToolkit.Locomotion
         {
             try
             {
-                locomotionSystem = (await ServiceManager.Instance.GetServiceAsync<ILocomotionSystem>()) as LocomotionSystem;
+                locomotionSystem = await ServiceManager.Instance.GetServiceAsync<ILocomotionSystem>();
             }
             catch (System.Exception e)
             {
@@ -60,6 +68,11 @@ namespace RealityToolkit.Locomotion
         /// <inheritdoc />
         public virtual void OnTeleportTargetRequested(LocomotionEventData eventData)
         {
+            if (InputService.TryGetInputSource(eventData.EventSource.SourceId, out var inputSource))
+            {
+                TogglePointers(false, inputSource);
+            }
+
             for (int i = 0; i < LocomotionSystem.EnabledLocomotionProviders.Count; i++)
             {
                 LocomotionSystem.EnabledLocomotionProviders[i].OnTeleportTargetRequested(eventData);
@@ -69,6 +82,8 @@ namespace RealityToolkit.Locomotion
         /// <inheritdoc />
         public virtual void OnTeleportStarted(LocomotionEventData eventData)
         {
+            TogglePointers(false);
+
             for (int i = 0; i < LocomotionSystem.EnabledLocomotionProviders.Count; i++)
             {
                 LocomotionSystem.EnabledLocomotionProviders[i].OnTeleportStarted(eventData);
@@ -78,6 +93,8 @@ namespace RealityToolkit.Locomotion
         /// <inheritdoc />
         public virtual void OnTeleportCompleted(LocomotionEventData eventData)
         {
+            TogglePointers(true);
+
             for (int i = 0; i < LocomotionSystem.EnabledLocomotionProviders.Count; i++)
             {
                 LocomotionSystem.EnabledLocomotionProviders[i].OnTeleportCompleted(eventData);
@@ -87,6 +104,8 @@ namespace RealityToolkit.Locomotion
         /// <inheritdoc />
         public virtual void OnTeleportCanceled(LocomotionEventData eventData)
         {
+            TogglePointers(true);
+
             for (int i = 0; i < LocomotionSystem.EnabledLocomotionProviders.Count; i++)
             {
                 LocomotionSystem.EnabledLocomotionProviders[i].OnTeleportCanceled(eventData);
@@ -126,6 +145,29 @@ namespace RealityToolkit.Locomotion
             for (int i = 0; i < LocomotionSystem.EnabledLocomotionProviders.Count; i++)
             {
                 LocomotionSystem.EnabledLocomotionProviders[i].OnInputUp(eventData);
+            }
+        }
+
+        private void TogglePointers(bool isOn, IMixedRealityInputSource targetInputSource = null)
+        {
+            if (targetInputSource != null)
+            {
+                foreach (var pointer in targetInputSource.Pointers)
+                {
+                    pointer.IsTeleportRequestActive = !isOn;
+                    pointer.BaseCursor?.SetVisibility(isOn);
+                }
+
+                return;
+            }
+
+            foreach (var inputSource in InputService.DetectedInputSources)
+            {
+                foreach (var pointer in inputSource.Pointers)
+                {
+                    pointer.IsTeleportRequestActive = !isOn;
+                    pointer.BaseCursor?.SetVisibility(isOn);
+                }
             }
         }
     }

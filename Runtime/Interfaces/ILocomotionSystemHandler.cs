@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Reality Collective. All rights reserved.
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 
-using RealityToolkit.LocomotionSystem.Definitions;
+using RealityToolkit.Locomotion.Definitions;
 using UnityEngine.EventSystems;
 
-namespace RealityToolkit.LocomotionSystem.Interfaces
+namespace RealityToolkit.Locomotion.Interfaces
 {
     /// <summary>
     /// Interface to implement for handling locomotion events by the <see cref="ILocomotionSystem"/>.

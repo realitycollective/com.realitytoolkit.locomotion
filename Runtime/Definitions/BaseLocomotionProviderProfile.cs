@@ -6,7 +6,7 @@ using RealityCollective.ServiceFramework.Definitions;
 using RealityToolkit.InputSystem.Definitions;
 using UnityEngine;
 
-namespace RealityToolkit.LocomotionSystem.Definitions
+namespace RealityToolkit.Locomotion.Definitions
 {
     /// <summary>
     /// Base configuration profile for <see cref="Interfaces.LocomotionSystem.ILocomotionProvider"/>s. Use the <see cref="Providers.LocomotionSystem.BaseLocomotionProvider"/>

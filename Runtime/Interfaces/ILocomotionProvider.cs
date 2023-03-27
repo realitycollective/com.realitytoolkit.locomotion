@@ -5,7 +5,7 @@ using RealityToolkit.InputSystem.Definitions;
 using RealityToolkit.InputSystem.Interfaces.Handlers;
 using UnityEngine;
 
-namespace RealityToolkit.LocomotionSystem.Interfaces
+namespace RealityToolkit.Locomotion.Interfaces
 {
     /// <summary>
     /// The base interface to define locomotion providers for the <see cref="ILocomotionSystem"/>.
