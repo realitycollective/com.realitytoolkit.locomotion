@@ -9,7 +9,7 @@ using UnityEngine;
 namespace RealityToolkit.Locomotion.Definitions
 {
     /// <summary>
-    /// Base configuration profile for <see cref="Interfaces.LocomotionSystem.ILocomotionProvider"/>s. Use the <see cref="Providers.LocomotionSystem.BaseLocomotionProvider"/>
+    /// Base configuration profile for <see cref="Interfaces.ILocomotionProvider"/>s. Use the <see cref="Modules.BaseLocomotionProvider"/>
     /// base class to get started implementing your own provider.
     /// </summary>
     public class BaseLocomotionProviderProfile : BaseProfile

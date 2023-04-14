@@ -21,6 +21,7 @@ namespace RealityToolkit.Locomotion.Modules
         {
             startupBehaviour = profile.StartupBehaviour;
             InputAction = profile.InputAction;
+            LocomotionService = parentService;
         }
 
         private readonly AutoStartBehavior startupBehaviour;
@@ -33,9 +34,9 @@ namespace RealityToolkit.Locomotion.Modules
         public MixedRealityInputAction InputAction { get; }
 
         /// <summary>
-        /// Gets the active <see cref="Services.LocomotionSystem.LocomotionSystem"/> instance.
+        /// Gets the active <see cref="ILocomotionService"/> instance.
         /// </summary>
-        protected virtual LocomotionService LocomotionSystem => (LocomotionService)ParentService;
+        protected ILocomotionService LocomotionService { get; }
 
         /// <summary>
         /// Gets the player camera <see cref="Transform"/>.
@@ -57,18 +58,13 @@ namespace RealityToolkit.Locomotion.Modules
         {
             get
             {
-                if (LocomotionSystem.LocomotionTargetOverride.IsNull() ||
-                    !LocomotionSystem.LocomotionTargetOverride.enabled)
+                var targetOverride = LocomotionService.LocomotionTarget.LocomotionTargetTransform.GetComponentInParent<LocomotionTargetOverride>();
+                if (targetOverride.IsNotNull())
                 {
-                    if (Debug.isDebugBuild)
-                    {
-                        Debug.Assert(!CameraTransform.parent.IsNull(), $"The {nameof(LocomotionSystem)} expects the camera to be parented under another transform!");
-                    }
-
-                    return CameraTransform.parent;
+                    return targetOverride.transform;
                 }
 
-                return LocomotionSystem.LocomotionTargetOverride.transform;
+                return LocomotionService.LocomotionTarget.LocomotionTargetTransform;
             }
         }
 
@@ -85,7 +81,7 @@ namespace RealityToolkit.Locomotion.Modules
             if (startupBehaviour == AutoStartBehavior.AutoStart || isInitialized)
             {
                 IsActive = true;
-                LocomotionSystem.OnLocomotionProviderEnabled(this);
+                LocomotionService.OnLocomotionProviderEnabled(this);
             }
             else
             {
@@ -106,7 +102,7 @@ namespace RealityToolkit.Locomotion.Modules
             }
 
             IsActive = false;
-            LocomotionSystem.OnLocomotionProviderDisabled(this);
+            LocomotionService.OnLocomotionProviderDisabled(this);
         }
 
         /// <inheritdoc />

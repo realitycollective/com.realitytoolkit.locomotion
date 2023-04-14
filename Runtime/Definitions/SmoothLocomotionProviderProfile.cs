@@ -6,7 +6,7 @@ using UnityEngine;
 namespace RealityToolkit.Locomotion.Definitions
 {
     /// <summary>
-    /// Configuration profile for the <see cref="Providers.LocomotionSystem.SmoothLocomotionProvider"/>.
+    /// Configuration profile for the <see cref="Modules.SmoothLocomotionProvider"/>.
     /// </summary>
     public class SmoothLocomotionProviderProfile : BaseLocomotionProviderProfile
     {

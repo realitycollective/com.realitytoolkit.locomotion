@@ -32,12 +32,12 @@ namespace RealityToolkit.Locomotion
         protected IMixedRealityInputSystem InputService
             => inputService ??= ServiceManager.Instance.GetService<IMixedRealityInputSystem>();
 
-        private ILocomotionService locomotionSystem = null;
+        private ILocomotionService locomotionService = null;
         /// <summary>
-        /// Gets the currently active <see cref="Services.LocomotionSystem.LocomotionSystem"/> instance.
+        /// Gets the currently active <see cref="Interfaces.ILocomotionService"/> instance.
         /// </summary>
-        protected ILocomotionService LocomotionSystem
-            => locomotionSystem ??= ServiceManager.Instance.GetService<ILocomotionService>();
+        protected ILocomotionService LocomotionService
+            => locomotionService ??= ServiceManager.Instance.GetService<ILocomotionService>();
 
         /// <summary>
         /// This method is called just before any of the update methods is called the first time.
@@ -46,7 +46,7 @@ namespace RealityToolkit.Locomotion
         {
             try
             {
-                locomotionSystem = await ServiceManager.Instance.GetServiceAsync<ILocomotionService>();
+                locomotionService = await ServiceManager.Instance.GetServiceAsync<ILocomotionService>();
             }
             catch (System.Exception e)
             {
@@ -57,13 +57,13 @@ namespace RealityToolkit.Locomotion
             // We've been destroyed during the await.
             if (this == null) { return; }
 
-            LocomotionSystem?.Register(gameObject);
+            LocomotionService?.Register(gameObject);
         }
 
         /// <summary>
         /// This method is called when the behaviour will be destroyed.
         /// </summary>
-        protected virtual void OnDestroy() => LocomotionSystem?.Unregister(gameObject);
+        protected virtual void OnDestroy() => LocomotionService?.Unregister(gameObject);
 
         /// <inheritdoc />
         public virtual void OnTeleportTargetRequested(LocomotionEventData eventData)
@@ -73,9 +73,9 @@ namespace RealityToolkit.Locomotion
                 TogglePointers(false, inputSource);
             }
 
-            for (int i = 0; i < LocomotionSystem.EnabledLocomotionProviders.Count; i++)
+            for (int i = 0; i < LocomotionService.EnabledLocomotionProviders.Count; i++)
             {
-                LocomotionSystem.EnabledLocomotionProviders[i].OnTeleportTargetRequested(eventData);
+                LocomotionService.EnabledLocomotionProviders[i].OnTeleportTargetRequested(eventData);
             }
         }
 
@@ -84,9 +84,9 @@ namespace RealityToolkit.Locomotion
         {
             TogglePointers(false);
 
-            for (int i = 0; i < LocomotionSystem.EnabledLocomotionProviders.Count; i++)
+            for (int i = 0; i < LocomotionService.EnabledLocomotionProviders.Count; i++)
             {
-                LocomotionSystem.EnabledLocomotionProviders[i].OnTeleportStarted(eventData);
+                LocomotionService.EnabledLocomotionProviders[i].OnTeleportStarted(eventData);
             }
         }
 
@@ -95,9 +95,9 @@ namespace RealityToolkit.Locomotion
         {
             TogglePointers(true);
 
-            for (int i = 0; i < LocomotionSystem.EnabledLocomotionProviders.Count; i++)
+            for (int i = 0; i < LocomotionService.EnabledLocomotionProviders.Count; i++)
             {
-                LocomotionSystem.EnabledLocomotionProviders[i].OnTeleportCompleted(eventData);
+                LocomotionService.EnabledLocomotionProviders[i].OnTeleportCompleted(eventData);
             }
         }
 
@@ -106,45 +106,45 @@ namespace RealityToolkit.Locomotion
         {
             TogglePointers(true);
 
-            for (int i = 0; i < LocomotionSystem.EnabledLocomotionProviders.Count; i++)
+            for (int i = 0; i < LocomotionService.EnabledLocomotionProviders.Count; i++)
             {
-                LocomotionSystem.EnabledLocomotionProviders[i].OnTeleportCanceled(eventData);
+                LocomotionService.EnabledLocomotionProviders[i].OnTeleportCanceled(eventData);
             }
         }
 
         /// <inheritdoc />
         public virtual void OnInputChanged(InputEventData<float> eventData)
         {
-            for (int i = 0; i < LocomotionSystem.EnabledLocomotionProviders.Count; i++)
+            for (int i = 0; i < LocomotionService.EnabledLocomotionProviders.Count; i++)
             {
-                LocomotionSystem.EnabledLocomotionProviders[i].OnInputChanged(eventData);
+                LocomotionService.EnabledLocomotionProviders[i].OnInputChanged(eventData);
             }
         }
 
         /// <inheritdoc />
         public virtual void OnInputChanged(InputEventData<Vector2> eventData)
         {
-            for (int i = 0; i < LocomotionSystem.EnabledLocomotionProviders.Count; i++)
+            for (int i = 0; i < LocomotionService.EnabledLocomotionProviders.Count; i++)
             {
-                LocomotionSystem.EnabledLocomotionProviders[i].OnInputChanged(eventData);
+                LocomotionService.EnabledLocomotionProviders[i].OnInputChanged(eventData);
             }
         }
 
         /// <inheritdoc />
         public virtual void OnInputDown(InputEventData eventData)
         {
-            for (int i = 0; i < LocomotionSystem.EnabledLocomotionProviders.Count; i++)
+            for (int i = 0; i < LocomotionService.EnabledLocomotionProviders.Count; i++)
             {
-                LocomotionSystem.EnabledLocomotionProviders[i].OnInputDown(eventData);
+                LocomotionService.EnabledLocomotionProviders[i].OnInputDown(eventData);
             }
         }
 
         /// <inheritdoc />
         public virtual void OnInputUp(InputEventData eventData)
         {
-            for (int i = 0; i < LocomotionSystem.EnabledLocomotionProviders.Count; i++)
+            for (int i = 0; i < LocomotionService.EnabledLocomotionProviders.Count; i++)
             {
-                LocomotionSystem.EnabledLocomotionProviders[i].OnInputUp(eventData);
+                LocomotionService.EnabledLocomotionProviders[i].OnInputUp(eventData);
             }
         }
 

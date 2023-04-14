@@ -21,7 +21,7 @@ namespace RealityToolkit.Locomotion.Interfaces
         /// for a specific input source. The teleport provider can then query this provider for a target whenever
         /// <see cref="ITeleportTargetProvider.InputSource"/> requests it.
         /// </summary>
-        /// <param name="teleportTargetProvider">The <see cref="ITeleportTargetProvider"/> answering a <see cref="ILocomotionServiceHandler.OnTeleportTargetRequested(Services.LocomotionSystem.LocomotionEventData)"/> request.</param>
+        /// <param name="teleportTargetProvider">The <see cref="ITeleportTargetProvider"/> answering a <see cref="ILocomotionServiceHandler.OnTeleportTargetRequested(Definitions.LocomotionEventData)"/> request.</param>
         void SetTargetProvider(ITeleportTargetProvider teleportTargetProvider);
     }
 }

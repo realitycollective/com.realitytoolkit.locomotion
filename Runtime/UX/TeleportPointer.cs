@@ -36,10 +36,10 @@ namespace RealityToolkit.Locomotion.UX
         private ITeleportValidationServiceModule validationDataProvider;
         private ITeleportValidationServiceModule ValidationDataProvider => validationDataProvider ?? (validationDataProvider = ServiceManager.Instance.GetService<ITeleportValidationServiceModule>());
 
-        private ILocomotionService locomotionSystem = null;
+        private ILocomotionService locomotionService = null;
 
-        protected ILocomotionService LocomotionSystem
-            => locomotionSystem ?? (locomotionSystem = ServiceManager.Instance.GetService<ILocomotionService>());
+        protected ILocomotionService LocomotionService
+            => locomotionService ?? (locomotionService = ServiceManager.Instance.GetService<ILocomotionService>());
 
         /// <inheritdoc />
         public ILocomotionProvider RequestingLocomotionProvider { get; private set; }
@@ -123,9 +123,9 @@ namespace RealityToolkit.Locomotion.UX
             base.OnEnable();
 
             if (!lateRegisterTeleport &&
-                ServiceManager.Instance.TryGetService(out locomotionSystem))
+                ServiceManager.Instance.TryGetService(out locomotionService))
             {
-                locomotionSystem.Register(gameObject);
+                locomotionService.Register(gameObject);
             }
         }
 
@@ -138,8 +138,8 @@ namespace RealityToolkit.Locomotion.UX
             {
                 try
                 {
-                    locomotionSystem = await ServiceManager.Instance.GetServiceAsync<ILocomotionService>();
-                    LocomotionSystem?.Register(gameObject);
+                    locomotionService = await ServiceManager.Instance.GetServiceAsync<ILocomotionService>();
+                    LocomotionService?.Register(gameObject);
                 }
                 catch
                 {
@@ -155,7 +155,7 @@ namespace RealityToolkit.Locomotion.UX
         /// <inheritdoc />
         protected override void OnDisable()
         {
-            LocomotionSystem?.Unregister(gameObject);
+            LocomotionService?.Unregister(gameObject);
             base.OnDisable();
         }
 

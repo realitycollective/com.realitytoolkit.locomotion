@@ -56,11 +56,6 @@ namespace RealityToolkit.Locomotion
         /// <inheritdoc />
         public IReadOnlyList<ILocomotionProvider> EnabledLocomotionProviders => enabledLocomotionProviders.SelectMany(kv => kv.Value).ToList();
 
-        /// <summary>
-        /// Gets the currently active locomotion target override, if any.
-        /// </summary>
-        public LocomotionTargetOverride LocomotionTargetOverride { get; set; }
-
         /// <inheritdoc />
         public override void Initialize()
         {

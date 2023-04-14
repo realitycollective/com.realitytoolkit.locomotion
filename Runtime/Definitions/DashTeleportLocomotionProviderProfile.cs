@@ -6,7 +6,7 @@ using UnityEngine;
 namespace RealityToolkit.Locomotion.Definitions
 {
     /// <summary>
-    /// Configuration profile for the <see cref="Providers.LocomotionSystem.DashTeleportLocomotionProvider"/>.
+    /// Configuration profile for the <see cref="Modules.DashTeleportLocomotionProvider"/>.
     /// </summary>
     public class DashTeleportLocomotionProviderProfile : BaseTeleportLocomotionProviderProfile
     {

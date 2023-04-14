@@ -66,7 +66,7 @@ namespace RealityToolkit.Locomotion.Modules
             // When being disabled, cancel any in progress teleport.
             foreach (var openRequest in OpenTargetRequests)
             {
-                LocomotionSystem.RaiseTeleportCanceled(this, openRequest.Value);
+                LocomotionService.RaiseTeleportCanceled(this, openRequest.Value);
             }
 
             AvailableTargetProviders.Clear();
@@ -248,7 +248,7 @@ namespace RealityToolkit.Locomotion.Modules
         private void RaiseTeleportTargetRequest(IMixedRealityInputSource inputSource)
         {
             OpenTargetRequests.Add(inputSource.SourceId, inputSource);
-            LocomotionSystem.RaiseTeleportTargetRequest(this, inputSource);
+            LocomotionService.RaiseTeleportTargetRequest(this, inputSource);
             canRotate = false;
         }
 
@@ -264,12 +264,12 @@ namespace RealityToolkit.Locomotion.Modules
                 if (teleportTargetProvider.TargetPose.HasValue)
                 {
                     // We have a valid teleport target, we can start teleportation.
-                    LocomotionSystem.RaiseTeleportStarted(this, inputSource, teleportTargetProvider.TargetPose.Value, teleportTargetProvider.Anchor);
+                    LocomotionService.RaiseTeleportStarted(this, inputSource, teleportTargetProvider.TargetPose.Value, teleportTargetProvider.Anchor);
                 }
                 else
                 {
                     // Input was released without a valid teleport target, cancel teleport.
-                    LocomotionSystem.RaiseTeleportCanceled(this, inputSource);
+                    LocomotionService.RaiseTeleportCanceled(this, inputSource);
                 }
             }
             else

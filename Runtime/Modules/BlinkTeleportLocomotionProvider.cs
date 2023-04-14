@@ -151,7 +151,7 @@ namespace RealityToolkit.Locomotion.Modules
 
             LocomotionTargetTransform.position = targetPose.position;
             LocomotionTargetTransform.RotateAround(LocomotionTargetTransform.position, Vector3.up, targetPose.rotation.eulerAngles.y - LocomotionTargetTransform.eulerAngles.y);
-            LocomotionSystem.RaiseTeleportCompleted(this, inputSource, targetPose, targetAnchor);
+            LocomotionService.RaiseTeleportCompleted(this, inputSource, targetPose, targetAnchor);
         }
 
         private void FadeOut()

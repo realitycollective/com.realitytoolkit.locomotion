@@ -6,7 +6,7 @@ using UnityEngine;
 namespace RealityToolkit.Locomotion.Definitions
 {
     /// <summary>
-    /// Configuration profile for the <see cref="Providers.LocomotionSystem.BlinkTeleportLocomotionProvider"/>.
+    /// Configuration profile for the <see cref="Modules.BlinkTeleportLocomotionProvider"/>.
     /// </summary>
     public class BlinkTeleportLocomotionProviderProfile : BaseTeleportLocomotionProviderProfile
     {

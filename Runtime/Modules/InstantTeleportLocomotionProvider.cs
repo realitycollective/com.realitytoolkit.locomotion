@@ -45,7 +45,7 @@ namespace RealityToolkit.Locomotion.Modules
                 LocomotionTargetTransform.RotateAround(CameraTransform.position, Vector3.up, targetRotation.y - CameraTransform.eulerAngles.y);
 
                 var inputSource = OpenTargetRequests[eventData.EventSource.SourceId];
-                LocomotionSystem.RaiseTeleportCompleted(this, inputSource, eventData.Pose.Value, eventData.Anchor);
+                LocomotionService.RaiseTeleportCompleted(this, inputSource, eventData.Pose.Value, eventData.Anchor);
             }
 
             base.OnTeleportStarted(eventData);

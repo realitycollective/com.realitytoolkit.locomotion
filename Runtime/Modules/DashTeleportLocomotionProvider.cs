@@ -45,7 +45,7 @@ namespace RealityToolkit.Locomotion.Modules
 
                 if (t >= 1f)
                 {
-                    LocomotionSystem.RaiseTeleportCompleted(this, (IMixedRealityInputSource)locomotionEventData.EventSource, locomotionEventData.Pose.Value, locomotionEventData.Anchor);
+                    LocomotionService.RaiseTeleportCompleted(this, (IMixedRealityInputSource)locomotionEventData.EventSource, locomotionEventData.Pose.Value, locomotionEventData.Anchor);
                     return;
                 }
 
