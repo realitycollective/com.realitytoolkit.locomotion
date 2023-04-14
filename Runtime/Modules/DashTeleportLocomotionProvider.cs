@@ -17,7 +17,7 @@ namespace RealityToolkit.Locomotion.Modules
     public class DashTeleportLocomotionProvider : BaseTeleportLocomotionProvider, IDashTeleportLocomotionProvider
     {
         /// <inheritdoc />
-        public DashTeleportLocomotionProvider(string name, uint priority, DashTeleportLocomotionProviderProfile profile, ILocomotionSystem parentService)
+        public DashTeleportLocomotionProvider(string name, uint priority, DashTeleportLocomotionProviderProfile profile, ILocomotionService parentService)
             : base(name, priority, profile, parentService)
         {
             dashDuration = profile.DashDuration;

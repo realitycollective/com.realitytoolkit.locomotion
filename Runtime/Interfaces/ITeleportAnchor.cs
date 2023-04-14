@@ -6,7 +6,7 @@ using UnityEngine;
 namespace RealityToolkit.Locomotion.Interfaces
 {
     /// <summary>
-    /// Interface for teleportation anchors supported by the <see cref="ILocomotionSystem"/>.
+    /// Interface for teleportation anchors supported by the <see cref="ILocomotionService"/>.
     /// A teleport anchor is a predefined teleportatio location and thus always a valid
     /// teleport target when enabled.
     /// </summary>

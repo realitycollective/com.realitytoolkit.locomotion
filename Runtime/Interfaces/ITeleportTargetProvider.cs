@@ -13,7 +13,7 @@ namespace RealityToolkit.Locomotion.Interfaces
     /// requests a teleportation target, the target provider will answer the request, if both share
     /// the same <see cref="IMixedRealityInputSource"/> connectinon.
     /// </summary>
-    public interface ITeleportTargetProvider : ILocomotionSystemHandler
+    public interface ITeleportTargetProvider : ILocomotionServiceHandler
     {
         /// <summary>
         /// Gets the <see cref="ILocomotionProvider"/> that is currently requesting a teleport target

@@ -5,7 +5,6 @@ using RealityCollective.Definitions.Utilities;
 using RealityCollective.Extensions;
 using RealityCollective.ServiceFramework.Modules;
 using RealityCollective.ServiceFramework.Services;
-using RealityToolkit.CameraService.Interfaces;
 using RealityToolkit.EventDatum.Input;
 using RealityToolkit.InputSystem.Definitions;
 using RealityToolkit.Locomotion.Definitions;
@@ -17,7 +16,7 @@ namespace RealityToolkit.Locomotion.Modules
     public abstract class BaseLocomotionProvider : BaseServiceModule, ILocomotionProvider
     {
         /// <inheritdoc />
-        public BaseLocomotionProvider(string name, uint priority, BaseLocomotionProviderProfile profile, ILocomotionSystem parentService)
+        public BaseLocomotionProvider(string name, uint priority, BaseLocomotionProviderProfile profile, ILocomotionService parentService)
             : base(name, priority, profile, parentService)
         {
             startupBehaviour = profile.StartupBehaviour;
@@ -36,7 +35,7 @@ namespace RealityToolkit.Locomotion.Modules
         /// <summary>
         /// Gets the active <see cref="Services.LocomotionSystem.LocomotionSystem"/> instance.
         /// </summary>
-        protected virtual LocomotionSystem LocomotionSystem => (LocomotionSystem)ParentService;
+        protected virtual LocomotionService LocomotionSystem => (LocomotionService)ParentService;
 
         /// <summary>
         /// Gets the player camera <see cref="Transform"/>.

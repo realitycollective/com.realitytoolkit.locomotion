@@ -21,12 +21,12 @@ namespace RealityToolkit.Locomotion
     /// </summary>
     public class LocomotionTargetOverride : MonoBehaviour
     {
-        private LocomotionSystem locomotionSystem = null;
+        private LocomotionService locomotionSystem = null;
         /// <summary>
         /// Gets the currently active <see cref="Services.LocomotionSystem.LocomotionSystem"/> instance.
         /// </summary>
-        protected LocomotionSystem LocomotionSystem
-            => locomotionSystem ?? (locomotionSystem = ServiceManager.Instance.GetService<ILocomotionSystem>() as LocomotionSystem);
+        protected LocomotionService LocomotionSystem
+            => locomotionSystem ?? (locomotionSystem = ServiceManager.Instance.GetService<ILocomotionService>() as LocomotionService);
 
         /// <summary>
         /// This method is called just before any of the update methods is

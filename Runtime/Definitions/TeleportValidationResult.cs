@@ -6,7 +6,7 @@ using System;
 namespace RealityToolkit.Locomotion.Definitions
 {
     /// <summary>
-    /// Possible validation outcomes by the <see cref="LocomotionSystem.Interfaces.ITeleportValidationProvider"/>.
+    /// Possible validation outcomes by the <see cref="LocomotionService.Interfaces.ITeleportValidationProvider"/>.
     /// </summary>
     [Serializable]
     public enum TeleportValidationResult

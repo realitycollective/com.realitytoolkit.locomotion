@@ -10,7 +10,7 @@ using UnityEngine.EventSystems;
 namespace RealityToolkit.Locomotion.Definitions
 {
     /// <summary>
-    /// Describes a locomotion event raised by the <see cref="ILocomotionSystem"/>.
+    /// Describes a locomotion event raised by the <see cref="ILocomotionService"/>.
     /// </summary>
     public class LocomotionEventData : GenericBaseEventData
     {

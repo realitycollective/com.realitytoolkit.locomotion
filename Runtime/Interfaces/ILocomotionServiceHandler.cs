@@ -7,9 +7,9 @@ using UnityEngine.EventSystems;
 namespace RealityToolkit.Locomotion.Interfaces
 {
     /// <summary>
-    /// Interface to implement for handling locomotion events by the <see cref="ILocomotionSystem"/>.
+    /// Interface to implement for handling locomotion events by the <see cref="ILocomotionService"/>.
     /// </summary>
-    public interface ILocomotionSystemHandler : IEventSystemHandler
+    public interface ILocomotionServiceHandler : IEventSystemHandler
     {
         /// <summary>
         /// Raised when a <see cref="ITeleportLocomotionProvider"/> requests a

@@ -10,11 +10,15 @@ using UnityEngine;
 namespace RealityToolkit.Locomotion.Interfaces
 {
     /// <summary>
-    /// System interface for a locomotion system in the Reality Toolkit.
-    /// All replacement systems for providing locomotion functionality should derive from this interface.
+    /// A service implementing locomotion for immersive experiences.
     /// </summary>
-    public interface ILocomotionSystem : IEventService
+    public interface ILocomotionService : IEventService
     {
+        /// <summary>
+        /// The active <see cref="ILocomotionTarget"/>.
+        /// </summary>
+        ILocomotionTarget LocomotionTarget { get; }
+
         /// <summary>
         /// Gets whether teleport locomotion is currently in cooldown. While in cooldown,
         /// no new teleport can be requested.
@@ -70,7 +74,7 @@ namespace RealityToolkit.Locomotion.Interfaces
         void RaiseTeleportTargetRequest(ITeleportLocomotionProvider teleportLocomotionProvider, IMixedRealityInputSource inputSource);
 
         /// <summary>
-        /// Raises a teleportation started event for <see cref="ILocomotionSystemHandler"/>s.
+        /// Raises a teleportation started event for <see cref="ILocomotionServiceHandler"/>s.
         /// </summary>
         /// <param name="locomotionProvider">The <see cref="ITeleportLocomotionProvider"/> that started teleportation.</param>
         /// <param name="inputSource">The <see cref="IMixedRealityInputSource"/> the <paramref name="locomotionProvider"/>'s teleport request originated from.</param>
@@ -79,7 +83,7 @@ namespace RealityToolkit.Locomotion.Interfaces
         void RaiseTeleportStarted(ITeleportLocomotionProvider locomotionProvider, IMixedRealityInputSource inputSource, Pose pose, ITeleportAnchor anchor);
 
         /// <summary>
-        /// Raises a teleportation completed event for <see cref="ILocomotionSystemHandler"/>s.
+        /// Raises a teleportation completed event for <see cref="ILocomotionServiceHandler"/>s.
         /// </summary>
         /// <param name="locomotionProvider">The <see cref="ITeleportLocomotionProvider"/> whose teleportation has completed.</param>
         /// <param name="inputSource">The <see cref="IMixedRealityInputSource"/> the <paramref name="locomotionProvider"/>'s teleport request originated from.</param>
@@ -88,7 +92,7 @@ namespace RealityToolkit.Locomotion.Interfaces
         void RaiseTeleportCompleted(ITeleportLocomotionProvider locomotionProvider, IMixedRealityInputSource inputSource, Pose pose, ITeleportAnchor anchor);
 
         /// <summary>
-        /// Raises a teleportation canceled event for <see cref="ILocomotionSystemHandler"/>s.
+        /// Raises a teleportation canceled event for <see cref="ILocomotionServiceHandler"/>s.
         /// </summary>
         /// <param name="locomotionProvider">The <see cref="ITeleportLocomotionProvider"/> that canceled a previously started teleport.</param>
         /// <param name="inputSource">The <see cref="IMixedRealityInputSource"/> the <paramref name="locomotionProvider"/>'s teleport request originated from.</param>

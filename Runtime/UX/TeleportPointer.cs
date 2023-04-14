@@ -15,7 +15,7 @@ using UnityEngine.Serialization;
 
 namespace RealityToolkit.Locomotion.UX
 {
-    public class TeleportPointer : LinePointer, ILocomotionSystemHandler, ITeleportTargetProvider
+    public class TeleportPointer : LinePointer, ILocomotionServiceHandler, ITeleportTargetProvider
     {
         [SerializeField]
         [Tooltip("Gradient color to apply when targeting an anchor.")]
@@ -36,10 +36,10 @@ namespace RealityToolkit.Locomotion.UX
         private ITeleportValidationServiceModule validationDataProvider;
         private ITeleportValidationServiceModule ValidationDataProvider => validationDataProvider ?? (validationDataProvider = ServiceManager.Instance.GetService<ITeleportValidationServiceModule>());
 
-        private ILocomotionSystem locomotionSystem = null;
+        private ILocomotionService locomotionSystem = null;
 
-        protected ILocomotionSystem LocomotionSystem
-            => locomotionSystem ?? (locomotionSystem = ServiceManager.Instance.GetService<ILocomotionSystem>());
+        protected ILocomotionService LocomotionSystem
+            => locomotionSystem ?? (locomotionSystem = ServiceManager.Instance.GetService<ILocomotionService>());
 
         /// <inheritdoc />
         public ILocomotionProvider RequestingLocomotionProvider { get; private set; }
@@ -138,7 +138,7 @@ namespace RealityToolkit.Locomotion.UX
             {
                 try
                 {
-                    locomotionSystem = await ServiceManager.Instance.GetServiceAsync<ILocomotionSystem>();
+                    locomotionSystem = await ServiceManager.Instance.GetServiceAsync<ILocomotionService>();
                     LocomotionSystem?.Register(gameObject);
                 }
                 catch

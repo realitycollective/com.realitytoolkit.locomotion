@@ -18,11 +18,11 @@ using UnityEngine.EventSystems;
 namespace RealityToolkit.Locomotion
 {
     /// <summary>
-    /// The Reality Toolkit's specific implementation of the <see cref="ILocomotionSystem"/>
+    /// The Reality Toolkit's specific implementation of the <see cref="ILocomotionService"/>
     /// </summary>
     [RuntimePlatform(typeof(AllPlatforms))]
     [System.Runtime.InteropServices.Guid("9453c088-285e-47aa-bfbb-dafd9109fdd5")]
-    public class LocomotionSystem : BaseEventService, ILocomotionSystem
+    public class LocomotionService : BaseEventService, ILocomotionService
     {
         /// <summary>
         /// Constructor.
@@ -30,7 +30,7 @@ namespace RealityToolkit.Locomotion
         /// <param name="name">The service display name.</param>
         /// <param name="priority">The service initialization priority.</param>
         /// <param name="profile">The service configuration profile.</param>
-        public LocomotionSystem(string name, uint priority, LocomotionSystemProfile profile)
+        public LocomotionService(string name, uint priority, LocomotionServiceProfile profile)
             : base(name, priority, profile)
         {
             teleportCooldown = profile.TeleportCooldown;
@@ -46,6 +46,9 @@ namespace RealityToolkit.Locomotion
             { typeof(ITeleportLocomotionProvider), new List<ILocomotionProvider>() },
             { typeof(IOnRailsLocomotionProvider), new List<ILocomotionProvider>() }
         };
+
+        /// <inheritdoc />
+        public ILocomotionTarget LocomotionTarget { get; }
 
         /// <inheritdoc />
         public bool IsTeleportCoolingDown => currentTeleportCooldown > 0f;
@@ -289,8 +292,8 @@ namespace RealityToolkit.Locomotion
             }
         }
 
-        private static readonly ExecuteEvents.EventFunction<ILocomotionSystemHandler> OnTeleportRequestHandler =
-            delegate (ILocomotionSystemHandler handler, BaseEventData eventData)
+        private static readonly ExecuteEvents.EventFunction<ILocomotionServiceHandler> OnTeleportRequestHandler =
+            delegate (ILocomotionServiceHandler handler, BaseEventData eventData)
             {
                 var casted = ExecuteEvents.ValidateEventData<LocomotionEventData>(eventData);
                 handler.OnTeleportTargetRequested(casted);
@@ -308,8 +311,8 @@ namespace RealityToolkit.Locomotion
             HandleEvent(teleportEventData, OnTeleportRequestHandler);
         }
 
-        private static readonly ExecuteEvents.EventFunction<ILocomotionSystemHandler> OnTeleportStartedHandler =
-            delegate (ILocomotionSystemHandler handler, BaseEventData eventData)
+        private static readonly ExecuteEvents.EventFunction<ILocomotionServiceHandler> OnTeleportStartedHandler =
+            delegate (ILocomotionServiceHandler handler, BaseEventData eventData)
             {
                 var casted = ExecuteEvents.ValidateEventData<LocomotionEventData>(eventData);
                 handler.OnTeleportStarted(casted);
@@ -322,8 +325,8 @@ namespace RealityToolkit.Locomotion
             HandleEvent(teleportEventData, OnTeleportStartedHandler);
         }
 
-        private static readonly ExecuteEvents.EventFunction<ILocomotionSystemHandler> OnTeleportCompletedHandler =
-            delegate (ILocomotionSystemHandler handler, BaseEventData eventData)
+        private static readonly ExecuteEvents.EventFunction<ILocomotionServiceHandler> OnTeleportCompletedHandler =
+            delegate (ILocomotionServiceHandler handler, BaseEventData eventData)
             {
                 var casted = ExecuteEvents.ValidateEventData<LocomotionEventData>(eventData);
                 handler.OnTeleportCompleted(casted);
@@ -337,8 +340,8 @@ namespace RealityToolkit.Locomotion
             HandleEvent(teleportEventData, OnTeleportCompletedHandler);
         }
 
-        private static readonly ExecuteEvents.EventFunction<ILocomotionSystemHandler> OnTeleportCanceledHandler =
-            delegate (ILocomotionSystemHandler handler, BaseEventData eventData)
+        private static readonly ExecuteEvents.EventFunction<ILocomotionServiceHandler> OnTeleportCanceledHandler =
+            delegate (ILocomotionServiceHandler handler, BaseEventData eventData)
             {
                 var casted = ExecuteEvents.ValidateEventData<LocomotionEventData>(eventData);
                 handler.OnTeleportCanceled(casted);

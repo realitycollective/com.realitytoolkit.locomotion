@@ -17,7 +17,7 @@ namespace RealityToolkit.Locomotion.Modules
     public class SmoothLocomotionProvider : BaseLocomotionProvider, ISmoothLocomotionProvider
     {
         /// <inheritdoc />
-        public SmoothLocomotionProvider(string name, uint priority, SmoothLocomotionProviderProfile profile, ILocomotionSystem parentService)
+        public SmoothLocomotionProvider(string name, uint priority, SmoothLocomotionProviderProfile profile, ILocomotionService parentService)
             : base(name, priority, profile, parentService)
         {
             speed = profile.Speed;

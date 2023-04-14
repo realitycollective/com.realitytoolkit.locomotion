@@ -15,7 +15,7 @@ namespace RealityToolkit.Locomotion.Modules
     public class InstantTeleportLocomotionProvider : BaseTeleportLocomotionProvider, IInstantTeleportLocomotionProvider
     {
         /// <inheritdoc />
-        public InstantTeleportLocomotionProvider(string name, uint priority, BaseTeleportLocomotionProviderProfile profile, ILocomotionSystem parentService)
+        public InstantTeleportLocomotionProvider(string name, uint priority, BaseTeleportLocomotionProviderProfile profile, ILocomotionService parentService)
             : base(name, priority, profile, parentService) { }
 
         /// <inheritdoc />

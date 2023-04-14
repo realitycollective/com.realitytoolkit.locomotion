@@ -13,7 +13,7 @@ namespace RealityToolkit.Locomotion.Editor
 {
     /// <summary>
     /// Installs <see cref="ILocomotionServiceModule"/>s coming from a third party package
-    /// into the <see cref="LocomotionSystemProfile"/> in the <see cref="ServiceManager.ActiveProfile"/>.
+    /// into the <see cref="LocomotionServiceProfile"/> in the <see cref="ServiceManager.ActiveProfile"/>.
     /// </summary>
     [InitializeOnLoad]
     public sealed class LocomotionPackageModulesInstaller : IPackageModulesInstaller
@@ -57,9 +57,9 @@ namespace RealityToolkit.Locomotion.Editor
                 return false;
             }
 
-            if (!ServiceManager.Instance.TryGetServiceProfile<ILocomotionSystem, LocomotionSystemProfile>(out var locomotionServiceProfile))
+            if (!ServiceManager.Instance.TryGetServiceProfile<ILocomotionService, LocomotionServiceProfile>(out var locomotionServiceProfile))
             {
-                UnityEngine.Debug.LogWarning($"Could not install {serviceConfiguration.InstancedType.Type.Name}.{nameof(LocomotionSystemProfile)} not found.");
+                UnityEngine.Debug.LogWarning($"Could not install {serviceConfiguration.InstancedType.Type.Name}.{nameof(LocomotionServiceProfile)} not found.");
                 return false;
             }
 

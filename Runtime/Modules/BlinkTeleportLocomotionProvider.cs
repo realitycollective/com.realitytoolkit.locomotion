@@ -19,7 +19,7 @@ namespace RealityToolkit.Locomotion.Modules
     public class BlinkTeleportLocomotionProvider : BaseTeleportLocomotionProvider, IBlinkTeleportLocomotionProvider
     {
         /// <inheritdoc />
-        public BlinkTeleportLocomotionProvider(string name, uint priority, BlinkTeleportLocomotionProviderProfile profile, ILocomotionSystem parentService)
+        public BlinkTeleportLocomotionProvider(string name, uint priority, BlinkTeleportLocomotionProviderProfile profile, ILocomotionService parentService)
             : base(name, priority, profile, parentService)
         {
             fadeDuration = profile.FadeDuration;

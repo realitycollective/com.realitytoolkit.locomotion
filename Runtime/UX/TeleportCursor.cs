@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace RealityToolkit.Locomotion.UX
 {
-    public class TeleportCursor : AnimatedCursor, ILocomotionSystemHandler
+    public class TeleportCursor : AnimatedCursor, ILocomotionServiceHandler
     {
         [SerializeField]
         [Tooltip("Arrow Transform to point in the Teleporting direction.")]

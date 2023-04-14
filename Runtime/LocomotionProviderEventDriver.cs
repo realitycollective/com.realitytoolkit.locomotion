@@ -12,15 +12,15 @@ using UnityEngine;
 namespace RealityToolkit.Locomotion
 {
     /// <summary>
-    /// This component is attached to the main <see cref="Camera"/> by the <see cref="ILocomotionSystem"/>
+    /// This component is attached to the main <see cref="Camera"/> by the <see cref="ILocomotionService"/>
     /// and provides an event bridge to active <see cref="ILocomotionProvider"/> implementations.
-    /// It has a hard dependency on the <see cref="ILocomotionSystem"/> as well as the <see cref="IMixedRealityInputSystem"/>
+    /// It has a hard dependency on the <see cref="ILocomotionService"/> as well as the <see cref="IMixedRealityInputSystem"/>
     /// and cannot work without both being active and enabled in the application.
     /// Furthermore it expects that the <see cref="GameObject"/> it is attached to is a global <see cref="IMixedRealityInputSystem"/> listener. It will
     /// not take care of registration itself.
     /// </summary>
     public class LocomotionProviderEventDriver : MonoBehaviour,
-        ILocomotionSystemHandler,
+        ILocomotionServiceHandler,
         IMixedRealityInputHandler,
         IMixedRealityInputHandler<float>,
         IMixedRealityInputHandler<Vector2>
@@ -32,12 +32,12 @@ namespace RealityToolkit.Locomotion
         protected IMixedRealityInputSystem InputService
             => inputService ??= ServiceManager.Instance.GetService<IMixedRealityInputSystem>();
 
-        private ILocomotionSystem locomotionSystem = null;
+        private ILocomotionService locomotionSystem = null;
         /// <summary>
         /// Gets the currently active <see cref="Services.LocomotionSystem.LocomotionSystem"/> instance.
         /// </summary>
-        protected ILocomotionSystem LocomotionSystem
-            => locomotionSystem ??= ServiceManager.Instance.GetService<ILocomotionSystem>();
+        protected ILocomotionService LocomotionSystem
+            => locomotionSystem ??= ServiceManager.Instance.GetService<ILocomotionService>();
 
         /// <summary>
         /// This method is called just before any of the update methods is called the first time.
@@ -46,7 +46,7 @@ namespace RealityToolkit.Locomotion
         {
             try
             {
-                locomotionSystem = await ServiceManager.Instance.GetServiceAsync<ILocomotionSystem>();
+                locomotionSystem = await ServiceManager.Instance.GetServiceAsync<ILocomotionService>();
             }
             catch (System.Exception e)
             {

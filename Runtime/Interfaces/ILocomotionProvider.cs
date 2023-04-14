@@ -8,10 +8,10 @@ using UnityEngine;
 namespace RealityToolkit.Locomotion.Interfaces
 {
     /// <summary>
-    /// The base interface to define locomotion providers for the <see cref="ILocomotionSystem"/>.
+    /// The base interface to define locomotion providers for the <see cref="ILocomotionService"/>.
     /// </summary>
     public interface ILocomotionProvider : ILocomotionServiceModule,
-        ILocomotionSystemHandler,
+        ILocomotionServiceHandler,
         IMixedRealityInputHandler,
         IMixedRealityInputHandler<float>,
         IMixedRealityInputHandler<Vector2>

@@ -16,7 +16,7 @@ namespace RealityToolkit.Locomotion.Modules
     public class TeleportValidationServiceModule : BaseServiceModule, ITeleportValidationServiceModule
     {
         /// <inheritdoc />
-        public TeleportValidationServiceModule(string name, uint priority, TeleportValidationServiceModuleProfile profile, ILocomotionSystem parentService)
+        public TeleportValidationServiceModule(string name, uint priority, TeleportValidationServiceModuleProfile profile, ILocomotionService parentService)
             : base(name, priority, profile, parentService)
         {
             anchorsOnly = profile.AnchorsOnly;
