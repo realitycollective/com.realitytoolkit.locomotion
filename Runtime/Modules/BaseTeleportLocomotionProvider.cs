@@ -196,7 +196,7 @@ namespace RealityToolkit.Locomotion.Modules
                         {
                             canRotate = false;
                             // Rotate the camera by the rotation amount. If our angle is positive then rotate in the positive direction, otherwise in the opposite direction.
-                            LocomotionTargetTransform.RotateAround(CameraTransform.position, Vector3.up, angle >= 0.0f ? rotationAmount : -rotationAmount);
+                            LocomotionService.LocomotionTarget.MoveTransform.RotateAround(LocomotionService.LocomotionTarget.OrientationTransform.position, Vector3.up, angle >= 0.0f ? rotationAmount : -rotationAmount);
                         }
                     }
                 }

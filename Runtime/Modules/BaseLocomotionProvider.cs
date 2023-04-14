@@ -2,9 +2,7 @@
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 
 using RealityCollective.Definitions.Utilities;
-using RealityCollective.Extensions;
 using RealityCollective.ServiceFramework.Modules;
-using RealityCollective.ServiceFramework.Services;
 using RealityToolkit.EventDatum.Input;
 using RealityToolkit.InputSystem.Definitions;
 using RealityToolkit.Locomotion.Definitions;
@@ -37,36 +35,6 @@ namespace RealityToolkit.Locomotion.Modules
         /// Gets the active <see cref="ILocomotionService"/> instance.
         /// </summary>
         protected ILocomotionService LocomotionService { get; }
-
-        /// <summary>
-        /// Gets the player camera <see cref="Transform"/>.
-        /// </summary>
-        protected virtual Transform CameraTransform
-        {
-            get
-            {
-                return ServiceManager.Instance.TryGetService<ICameraService>(out var cameraSystem)
-                    ? cameraSystem.CameraRig.CameraTransform
-                    : Camera.main.transform;
-            }
-        }
-
-        /// <summary>
-        /// Gets the target <see cref="Transform"/> for locomotion.
-        /// </summary>
-        protected virtual Transform LocomotionTargetTransform
-        {
-            get
-            {
-                var targetOverride = LocomotionService.LocomotionTarget.LocomotionTargetTransform.GetComponentInParent<LocomotionTargetOverride>();
-                if (targetOverride.IsNotNull())
-                {
-                    return targetOverride.transform;
-                }
-
-                return LocomotionService.LocomotionTarget.LocomotionTargetTransform;
-            }
-        }
 
         /// <inheritdoc />
         public override void Enable()

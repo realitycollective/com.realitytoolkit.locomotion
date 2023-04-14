@@ -32,14 +32,14 @@ namespace RealityToolkit.Locomotion.Modules
 
             if (eventData.MixedRealityInputAction == InputAction)
             {
-                var forwardDirection = CameraTransform.forward;
+                var forwardDirection = LocomotionService.LocomotionTarget.OrientationTransform.forward;
                 forwardDirection.y = 0f;
 
-                var rightDirection = CameraTransform.right;
+                var rightDirection = LocomotionService.LocomotionTarget.OrientationTransform.right;
                 rightDirection.y = 0f;
 
                 var combinedDirection = (forwardDirection * eventData.InputData.y + rightDirection * eventData.InputData.x).normalized;
-                LocomotionTargetTransform.Translate(combinedDirection * speed * Time.deltaTime, Space.World);
+                LocomotionService.LocomotionTarget.MoveTransform.Translate(combinedDirection * speed * Time.deltaTime, Space.World);
             }
         }
     }

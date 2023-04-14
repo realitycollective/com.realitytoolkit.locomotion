@@ -143,14 +143,14 @@ namespace RealityToolkit.Locomotion.Modules
         private void PerformTeleport()
         {
             var height = targetPose.position.y;
-            targetPose.position -= LocomotionTargetTransform.position - LocomotionTargetTransform.position;
+            targetPose.position -= LocomotionService.LocomotionTarget.MoveTransform.position - LocomotionService.LocomotionTarget.MoveTransform.position;
 
             var targetPosition = targetPose.position;
             targetPosition.y = height;
             targetPose.position = targetPosition;
 
-            LocomotionTargetTransform.position = targetPose.position;
-            LocomotionTargetTransform.RotateAround(LocomotionTargetTransform.position, Vector3.up, targetPose.rotation.eulerAngles.y - LocomotionTargetTransform.eulerAngles.y);
+            LocomotionService.LocomotionTarget.MoveTransform.position = targetPose.position;
+            LocomotionService.LocomotionTarget.MoveTransform.RotateAround(LocomotionService.LocomotionTarget.MoveTransform.position, Vector3.up, targetPose.rotation.eulerAngles.y - LocomotionService.LocomotionTarget.MoveTransform.eulerAngles.y);
             LocomotionService.RaiseTeleportCompleted(this, inputSource, targetPose, targetAnchor);
         }
 
@@ -178,7 +178,7 @@ namespace RealityToolkit.Locomotion.Modules
                 // we can fade in/out to simulate the camera fading to black.
                 fadeSphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
                 fadeSphere.name = $"{nameof(BlinkTeleportLocomotionProvider)}_Fade";
-                fadeSphere.transform.SetParent(CameraTransform);
+                fadeSphere.transform.SetParent(Camera.main.transform);
                 fadeSphere.transform.localPosition = Vector3.zero;
                 fadeSphere.transform.localRotation = Quaternion.identity;
                 fadeSphere.transform.localScale = new Vector3(.5f, .5f, .5f);

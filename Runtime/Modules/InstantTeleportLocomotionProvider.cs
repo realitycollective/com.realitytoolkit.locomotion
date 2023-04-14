@@ -39,10 +39,10 @@ namespace RealityToolkit.Locomotion.Modules
                 }
 
                 var height = targetPosition.y;
-                targetPosition -= CameraTransform.position - LocomotionTargetTransform.position;
+                targetPosition -= LocomotionService.LocomotionTarget.OrientationTransform.position - LocomotionService.LocomotionTarget.MoveTransform.position;
                 targetPosition.y = height;
-                LocomotionTargetTransform.position = targetPosition;
-                LocomotionTargetTransform.RotateAround(CameraTransform.position, Vector3.up, targetRotation.y - CameraTransform.eulerAngles.y);
+                LocomotionService.LocomotionTarget.MoveTransform.position = targetPosition;
+                LocomotionService.LocomotionTarget.MoveTransform.RotateAround(LocomotionService.LocomotionTarget.OrientationTransform.position, Vector3.up, targetRotation.y - LocomotionService.LocomotionTarget.OrientationTransform.eulerAngles.y);
 
                 var inputSource = OpenTargetRequests[eventData.EventSource.SourceId];
                 LocomotionService.RaiseTeleportCompleted(this, inputSource, eventData.Pose.Value, eventData.Anchor);

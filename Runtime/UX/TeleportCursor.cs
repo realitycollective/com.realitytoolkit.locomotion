@@ -47,6 +47,12 @@ namespace RealityToolkit.Locomotion.UX
         /// <inheritdoc />
         public override Vector3 LocalScale => PrimaryCursorVisual.localScale;
 
+        private ILocomotionService locomotionService;
+        /// <summary>
+        /// Gets the active <see cref="ILocomotionService"/> instance.
+        /// </summary>
+        protected ILocomotionService LocomotionService => locomotionService ??= ServiceManager.Instance.GetService<ILocomotionService>();
+
         /// <inheritdoc />
         public override CursorStateEnum CheckCursorState()
         {
@@ -101,10 +107,7 @@ namespace RealityToolkit.Locomotion.UX
 
             transform.position = focusDetails.EndPoint;
 
-            var cameraTransform = ServiceManager.Instance.TryGetService<ICameraService>(out var cameraSystem)
-                ? cameraSystem.CameraRig.CameraTransform
-                : Camera.main.transform;
-            var forward = cameraTransform.forward;
+            var forward = LocomotionService.LocomotionTarget.OrientationTransform.forward;
             forward.y = 0f;
 
             // Smooth out rotation just a tad to prevent jarring transitions

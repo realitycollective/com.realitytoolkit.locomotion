@@ -12,8 +12,14 @@ namespace RealityToolkit.Locomotion.Interfaces
     public interface ILocomotionTarget
     {
         /// <summary>
-        /// Gets the target <see cref="Transform"/> for locomotion.
+        /// Gets the <see cref="Transform"/> that should be moved by locomotion.
         /// </summary>
-        Transform LocomotionTargetTransform { get; }
+        Transform MoveTransform { get; }
+
+        /// <summary>
+        /// Gets the <see cref="Transform"/> that should be used to determine orientation when performing locomotion.
+        /// May or may not be the same as <see cref="MoveTransform"/>.
+        /// </summary>
+        Transform OrientationTransform { get; }
     }
 }
