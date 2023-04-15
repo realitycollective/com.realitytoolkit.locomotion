@@ -107,7 +107,7 @@ namespace RealityToolkit.Locomotion.UX
 
             transform.position = focusDetails.EndPoint;
 
-            var forward = LocomotionService.LocomotionTarget.OrientationTransform.forward;
+            var forward = Camera.main.transform.forward;
             forward.y = 0f;
 
             // Smooth out rotation just a tad to prevent jarring transitions
