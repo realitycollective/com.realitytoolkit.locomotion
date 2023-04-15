@@ -142,15 +142,7 @@ namespace RealityToolkit.Locomotion.Modules
 
         private void PerformTeleport()
         {
-            var height = targetPose.position.y;
-            targetPose.position -= LocomotionService.LocomotionTarget.MoveTransform.position - LocomotionService.LocomotionTarget.MoveTransform.position;
-
-            var targetPosition = targetPose.position;
-            targetPosition.y = height;
-            targetPose.position = targetPosition;
-
-            LocomotionService.LocomotionTarget.MoveTransform.position = targetPose.position;
-            LocomotionService.LocomotionTarget.MoveTransform.RotateAround(LocomotionService.LocomotionTarget.MoveTransform.position, Vector3.up, targetPose.rotation.eulerAngles.y - LocomotionService.LocomotionTarget.MoveTransform.eulerAngles.y);
+            LocomotionService.LocomotionTarget.SetPositionAndRotation(targetPose.position, targetPose.rotation);
             LocomotionService.RaiseTeleportCompleted(this, inputSource, targetPose, targetAnchor);
         }
 

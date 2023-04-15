@@ -38,12 +38,7 @@ namespace RealityToolkit.Locomotion.Modules
                     }
                 }
 
-                var height = targetPosition.y;
-                targetPosition -= LocomotionService.LocomotionTarget.OrientationTransform.position - LocomotionService.LocomotionTarget.MoveTransform.position;
-                targetPosition.y = height;
-                LocomotionService.LocomotionTarget.MoveTransform.position = targetPosition;
-                LocomotionService.LocomotionTarget.MoveTransform.RotateAround(LocomotionService.LocomotionTarget.OrientationTransform.position, Vector3.up, targetRotation.y - LocomotionService.LocomotionTarget.OrientationTransform.eulerAngles.y);
-
+                LocomotionService.LocomotionTarget.SetPositionAndRotation(targetPosition, targetRotation);
                 var inputSource = OpenTargetRequests[eventData.EventSource.SourceId];
                 LocomotionService.RaiseTeleportCompleted(this, inputSource, eventData.Pose.Value, eventData.Anchor);
             }

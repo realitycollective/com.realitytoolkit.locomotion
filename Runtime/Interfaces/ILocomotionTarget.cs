@@ -12,14 +12,44 @@ namespace RealityToolkit.Locomotion.Interfaces
     public interface ILocomotionTarget
     {
         /// <summary>
-        /// Gets the <see cref="Transform"/> that should be moved by locomotion.
+        /// The <see cref="ILocomotionTarget"/>'s pose in world space.
         /// </summary>
-        Transform MoveTransform { get; }
+        Pose Pose { get; }
 
         /// <summary>
-        /// Gets the <see cref="Transform"/> that should be used to determine orientation when performing locomotion.
-        /// May or may not be the same as <see cref="MoveTransform"/>.
+        /// Rotates the <see cref="ILocomotionTarget"/> at its current position
+        /// around <paramref name="axis"/> by <paramref name="angle"/>.
         /// </summary>
-        Transform OrientationTransform { get; }
+        /// <param name="axis">Axis to rotate around.</param>
+        /// <param name="angle">Angle to rotate.</param>
+        void RotateAround(Vector3 axis, float angle);
+
+        /// <summary>
+        /// Sets the world space position and rotation of the <see cref="ILocomotionTarget"/>.
+        /// </summary>
+        /// <param name="position">The world space position.</param>
+        /// <param name="rotation">The world space rotation.</param>
+        void SetPositionAndRotation(Vector3 position, Quaternion rotation);
+
+        /// <summary>
+        /// Sets the world space position and rotation of the <see cref="ILocomotionTarget"/>.
+        /// </summary>
+        /// <param name="position">The world space position.</param>
+        /// <param name="rotation">The world space rotation.</param>
+        void SetPositionAndRotation(Vector3 position, Vector3 rotation);
+
+        /// <summary>
+        /// Moves the <see cref="ILocomotionTarget"/> in <paramref name="direction"/>.
+        /// </summary>
+        /// <param name="direction">The direction <see cref="Vector2"/>.</param>
+        /// <param name="speed">The speed multiplier for the movement. Defaults to <c>1f</c>.</param>
+        void Move(Vector2 direction, float speed = 1f);
+
+        /// <summary>
+        /// Moves the <see cref="ILocomotionTarget"/> in <paramref name="direction"/>.
+        /// </summary>
+        /// <param name="direction">The direction <see cref="Vector3"/>.</param>
+        /// <param name="speed">The speed multiplier for the movement. Defaults to <c>1f</c>.</param>
+        void Move(Vector3 direction, float speed = 1f);
     }
 }

@@ -39,9 +39,7 @@ namespace RealityToolkit.Locomotion.Modules
             if (IsTeleporting)
             {
                 var t = dashTime / dashDuration;
-
-                LocomotionService.LocomotionTarget.MoveTransform.position = Vector3.Lerp(startPosition, targetPosition, t);
-                LocomotionService.LocomotionTarget.MoveTransform.rotation = Quaternion.Lerp(startRotation, targetRotation, t);
+                LocomotionService.LocomotionTarget.SetPositionAndRotation(Vector3.Lerp(startPosition, targetPosition, t), Quaternion.Lerp(startRotation, targetRotation, t));
 
                 if (t >= 1f)
                 {
@@ -76,8 +74,8 @@ namespace RealityToolkit.Locomotion.Modules
 
                 this.targetRotation = Quaternion.Euler(targetRotation);
 
-                startPosition = LocomotionService.LocomotionTarget.MoveTransform.position;
-                startRotation = LocomotionService.LocomotionTarget.MoveTransform.rotation;
+                startPosition = LocomotionService.LocomotionTarget.Pose.position;
+                startRotation = LocomotionService.LocomotionTarget.Pose.rotation;
                 dashTime = 0f;
             }
 
