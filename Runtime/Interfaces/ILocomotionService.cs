@@ -17,7 +17,7 @@ namespace RealityToolkit.Locomotion.Interfaces
         /// <summary>
         /// The active <see cref="ILocomotionTarget"/>.
         /// </summary>
-        ILocomotionTarget LocomotionTarget { get; }
+        ILocomotionTarget LocomotionTarget { get; set; }
 
         /// <summary>
         /// Gets whether teleport locomotion is currently in cooldown. While in cooldown,

@@ -48,7 +48,7 @@ namespace RealityToolkit.Locomotion
         };
 
         /// <inheritdoc />
-        public ILocomotionTarget LocomotionTarget { get; }
+        public ILocomotionTarget LocomotionTarget { get; set; }
 
         /// <inheritdoc />
         public bool IsTeleportCoolingDown => currentTeleportCooldown > 0f;
