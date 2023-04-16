@@ -11,6 +11,8 @@ namespace RealityToolkit.Locomotion
     /// Default implementation for <see cref="ITeleportAnchor"/>.
     /// Place the component on a game object to make it an anchor for teleportation.
     /// </summary>
+    [DisallowMultipleComponent]
+    [RequireComponent(typeof(BoxCollider))]
     public class TeleportAnchor : BaseFocusHandler, ITeleportAnchor
     {
         [SerializeField]

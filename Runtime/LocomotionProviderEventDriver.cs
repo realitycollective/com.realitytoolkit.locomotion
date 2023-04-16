@@ -150,19 +150,13 @@ namespace RealityToolkit.Locomotion
 
         private void TogglePointers(bool isOn, IMixedRealityInputSource targetInputSource = null)
         {
-            if (targetInputSource != null)
-            {
-                foreach (var pointer in targetInputSource.Pointers)
-                {
-                    pointer.IsTeleportRequestActive = !isOn;
-                    pointer.BaseCursor?.SetVisibility(isOn);
-                }
-
-                return;
-            }
-
             foreach (var inputSource in InputService.DetectedInputSources)
             {
+                if (targetInputSource != null && inputSource.SourceId == targetInputSource.SourceId)
+                {
+                    continue;
+                }
+
                 foreach (var pointer in inputSource.Pointers)
                 {
                     pointer.IsTeleportRequestActive = !isOn;
