@@ -70,7 +70,7 @@ namespace RealityToolkit.Locomotion
         {
             if (InputService.TryGetInputSource(eventData.EventSource.SourceId, out var inputSource))
             {
-                TogglePointers(false, inputSource);
+                TogglePointers(false, true, inputSource);
             }
 
             for (int i = 0; i < LocomotionService.EnabledLocomotionProviders.Count; i++)
@@ -82,7 +82,10 @@ namespace RealityToolkit.Locomotion
         /// <inheritdoc />
         public virtual void OnTeleportStarted(LocomotionEventData eventData)
         {
-            TogglePointers(false);
+            if (InputService.TryGetInputSource(eventData.EventSource.SourceId, out var inputSource))
+            {
+                TogglePointers(false, true, inputSource);
+            }
 
             for (int i = 0; i < LocomotionService.EnabledLocomotionProviders.Count; i++)
             {
@@ -93,7 +96,10 @@ namespace RealityToolkit.Locomotion
         /// <inheritdoc />
         public virtual void OnTeleportCompleted(LocomotionEventData eventData)
         {
-            TogglePointers(true);
+            if (InputService.TryGetInputSource(eventData.EventSource.SourceId, out var inputSource))
+            {
+                TogglePointers(true, false, inputSource);
+            }
 
             for (int i = 0; i < LocomotionService.EnabledLocomotionProviders.Count; i++)
             {
@@ -104,7 +110,10 @@ namespace RealityToolkit.Locomotion
         /// <inheritdoc />
         public virtual void OnTeleportCanceled(LocomotionEventData eventData)
         {
-            TogglePointers(true);
+            if (InputService.TryGetInputSource(eventData.EventSource.SourceId, out var inputSource))
+            {
+                TogglePointers(true, false, inputSource);
+            }
 
             for (int i = 0; i < LocomotionService.EnabledLocomotionProviders.Count; i++)
             {
@@ -148,19 +157,25 @@ namespace RealityToolkit.Locomotion
             }
         }
 
-        private void TogglePointers(bool isOn, IMixedRealityInputSource targetInputSource = null)
+        private void TogglePointers(bool isOn, bool teleportInProgress, IMixedRealityInputSource teleportInputSource = null)
         {
             foreach (var inputSource in InputService.DetectedInputSources)
             {
-                if (targetInputSource != null && inputSource.SourceId == targetInputSource.SourceId)
-                {
-                    continue;
-                }
+                var isTeleportInputSource = inputSource.SourceId == teleportInputSource.SourceId;
 
                 foreach (var pointer in inputSource.Pointers)
                 {
-                    pointer.IsTeleportRequestActive = !isOn;
-                    pointer.BaseCursor?.SetVisibility(isOn);
+                    if (isTeleportInputSource && pointer is ITeleportTargetProvider _)
+                    {
+                        continue;
+                    }
+
+                    pointer.IsTeleportRequestActive = teleportInProgress;
+
+                    if (pointer.BaseCursor != null)
+                    {
+                        pointer.BaseCursor.IsVisible = isOn;
+                    }
                 }
             }
         }

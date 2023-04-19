@@ -90,7 +90,12 @@ namespace RealityToolkit.Locomotion.UX
         {
             IsTargeting = false;
             IsTeleportRequestActive = false;
-            BaseCursor?.SetVisibility(false);
+
+            if (BaseCursor != null)
+            {
+                BaseCursor.IsVisible = false;
+            }
+
             RequestingLocomotionProvider = null;
             PointerOrientation = 0f;
         }
@@ -236,11 +241,19 @@ namespace RealityToolkit.Locomotion.UX
 
                     // Clamp the end of the parabola to the result hit's point
                     LineBase.LineEndClamp = LineBase.GetNormalizedLengthFromWorldLength(clearWorldLength, LineCastResolution);
-                    BaseCursor?.SetVisibility(ValidationResult == TeleportValidationResult.Valid || ValidationResult == TeleportValidationResult.Anchor);
+
+                    if (BaseCursor != null)
+                    {
+                        BaseCursor.IsVisible = ValidationResult == TeleportValidationResult.Valid || ValidationResult == TeleportValidationResult.Anchor;
+                    }
                 }
                 else
                 {
-                    BaseCursor?.SetVisibility(false);
+                    if (BaseCursor != null)
+                    {
+                        BaseCursor.IsVisible = false;
+                    }
+
                     LineBase.LineEndClamp = 1f;
                 }
 
