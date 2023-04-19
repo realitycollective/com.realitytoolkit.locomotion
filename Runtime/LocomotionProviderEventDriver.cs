@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Reality Collective. All rights reserved.
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 
+using RealityCollective.Extensions;
 using RealityCollective.ServiceFramework.Services;
 using RealityToolkit.EventDatum.Input;
 using RealityToolkit.InputSystem.Interfaces;
@@ -12,12 +13,12 @@ using UnityEngine;
 namespace RealityToolkit.Locomotion
 {
     /// <summary>
-    /// This component is attached to the main <see cref="Camera"/> by the <see cref="ILocomotionService"/>
-    /// and provides an event bridge to active <see cref="ILocomotionProvider"/> implementations.
+    /// This component is an event bridge to active <see cref="ILocomotionProvider"/> implementations.
     /// It has a hard dependency on the <see cref="ILocomotionService"/> as well as the <see cref="IMixedRealityInputSystem"/>
-    /// and cannot work without both being active and enabled in the application.
-    /// Furthermore it expects that the <see cref="GameObject"/> it is attached to is a global <see cref="IMixedRealityInputSystem"/> listener. It will
-    /// not take care of registration itself.
+    /// and cannot work without both being active and enabled in the application. It will additionally manage active <see cref="IMixedRealityPointer"/>s
+    /// while a teleport locomotion is active.
+    /// The <see cref="ILocomotionService"/> will ensure a <see cref="GameObject"/> with this component attached is created, when the
+    /// service is enabled. You do not need to manually place it in the scene.
     /// </summary>
     public class LocomotionProviderEventDriver : MonoBehaviour,
         ILocomotionServiceHandler,
@@ -54,8 +55,11 @@ namespace RealityToolkit.Locomotion
                 return;
             }
 
-            // We've been destroyed during the await.
-            if (this == null) { return; }
+            if (this.IsNull())
+            {
+                // We've been destroyed during the await.
+                return;
+            }
 
             LocomotionService?.Register(gameObject);
         }
@@ -167,6 +171,8 @@ namespace RealityToolkit.Locomotion
                 {
                     if (isTeleportInputSource && pointer is ITeleportTargetProvider _)
                     {
+                        // If this pointer is the one handling the teleport and providing a target,
+                        // we do not want to mess with its state as it will manage it internally.
                         continue;
                     }
 
