@@ -180,7 +180,9 @@ namespace RealityToolkit.Locomotion
 
                     if (pointer.BaseCursor != null)
                     {
-                        pointer.BaseCursor.IsVisible = isOn;
+                        // The pointer might be a teleport target provider, in which case we do not want
+                        // to enable it in any case.
+                        pointer.BaseCursor.IsVisible = isOn && !(pointer is ITeleportTargetProvider);
                     }
                 }
             }
