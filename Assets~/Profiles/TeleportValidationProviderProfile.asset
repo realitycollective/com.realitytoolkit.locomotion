@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e4a3b46462f88f47ae4fd4e024c1f82, type: 3}
   m_Name: TeleportValidationProviderProfile
   m_EditorClassIdentifier: 
-  hotSpotsOnly: 0
+  anchorsOnly: 0
   validLayers:
     serializedVersion: 2
     m_Bits: 4294967291

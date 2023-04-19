@@ -39,7 +39,7 @@ namespace RealityToolkit.Locomotion.Interfaces
         void SetPositionAndRotation(Vector3 position, Vector3 rotation);
 
         /// <summary>
-        /// Moves the <see cref="ILocomotionTarget"/> in <paramref name="direction"/>.
+        /// Moves the <see cref="ILocomotionTarget"/> in <paramref name="direction"/> on the (X,Z) plane..
         /// </summary>
         /// <param name="direction">The direction <see cref="Vector2"/>.</param>
         /// <param name="speed">The speed multiplier for the movement. Defaults to <c>1f</c>.</param>
