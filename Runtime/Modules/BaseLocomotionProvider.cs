@@ -4,7 +4,7 @@
 using RealityCollective.Definitions.Utilities;
 using RealityCollective.ServiceFramework.Modules;
 using RealityToolkit.EventDatum.Input;
-using RealityToolkit.InputSystem.Definitions;
+using RealityToolkit.Input.Definitions;
 using RealityToolkit.Locomotion.Definitions;
 using RealityToolkit.Locomotion.Interfaces;
 using UnityEngine;
@@ -29,7 +29,7 @@ namespace RealityToolkit.Locomotion.Modules
         public bool IsActive { get; protected set; }
 
         /// <inheritdoc />
-        public MixedRealityInputAction InputAction { get; }
+        public InputAction InputAction { get; }
 
         /// <summary>
         /// Gets the active <see cref="ILocomotionService"/> instance.

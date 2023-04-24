@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 
 using RealityCollective.ServiceFramework.Interfaces;
-using RealityToolkit.InputSystem.Interfaces;
+using RealityToolkit.Input.Interfaces;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -70,32 +70,32 @@ namespace RealityToolkit.Locomotion.Interfaces
         /// Raise a teleportation target request event.
         /// </summary>
         /// <param name="teleportLocomotionProvider">The <see cref="ITeleportLocomotionProvider"/> that requests a teleport target.</param>
-        /// <param name="inputSource">The <see cref="IMixedRealityInputSource"/> the <paramref name="teleportLocomotionProvider"/> requests the teleport location from.</param>
-        void RaiseTeleportTargetRequest(ITeleportLocomotionProvider teleportLocomotionProvider, IMixedRealityInputSource inputSource);
+        /// <param name="inputSource">The <see cref="IInputSource"/> the <paramref name="teleportLocomotionProvider"/> requests the teleport location from.</param>
+        void RaiseTeleportTargetRequest(ITeleportLocomotionProvider teleportLocomotionProvider, IInputSource inputSource);
 
         /// <summary>
         /// Raises a teleportation started event for <see cref="ILocomotionServiceHandler"/>s.
         /// </summary>
         /// <param name="locomotionProvider">The <see cref="ITeleportLocomotionProvider"/> that started teleportation.</param>
-        /// <param name="inputSource">The <see cref="IMixedRealityInputSource"/> the <paramref name="locomotionProvider"/>'s teleport request originated from.</param>
+        /// <param name="inputSource">The <see cref="IInputSource"/> the <paramref name="locomotionProvider"/>'s teleport request originated from.</param>
         /// <param name="pose">The target <see cref="Pose"/> the teleportation is going for.</param>
         /// <param name="anchor">The teleport target anchor, if any.</param>
-        void RaiseTeleportStarted(ITeleportLocomotionProvider locomotionProvider, IMixedRealityInputSource inputSource, Pose pose, ITeleportAnchor anchor);
+        void RaiseTeleportStarted(ITeleportLocomotionProvider locomotionProvider, IInputSource inputSource, Pose pose, ITeleportAnchor anchor);
 
         /// <summary>
         /// Raises a teleportation completed event for <see cref="ILocomotionServiceHandler"/>s.
         /// </summary>
         /// <param name="locomotionProvider">The <see cref="ITeleportLocomotionProvider"/> whose teleportation has completed.</param>
-        /// <param name="inputSource">The <see cref="IMixedRealityInputSource"/> the <paramref name="locomotionProvider"/>'s teleport request originated from.</param>
+        /// <param name="inputSource">The <see cref="IInputSource"/> the <paramref name="locomotionProvider"/>'s teleport request originated from.</param>
         /// <param name="pose">The target <see cref="Pose"/> the teleportation was going for.</param>
         /// <param name="anchor">The teleport target anchor, if any.</param>
-        void RaiseTeleportCompleted(ITeleportLocomotionProvider locomotionProvider, IMixedRealityInputSource inputSource, Pose pose, ITeleportAnchor anchor);
+        void RaiseTeleportCompleted(ITeleportLocomotionProvider locomotionProvider, IInputSource inputSource, Pose pose, ITeleportAnchor anchor);
 
         /// <summary>
         /// Raises a teleportation canceled event for <see cref="ILocomotionServiceHandler"/>s.
         /// </summary>
         /// <param name="locomotionProvider">The <see cref="ITeleportLocomotionProvider"/> that canceled a previously started teleport.</param>
-        /// <param name="inputSource">The <see cref="IMixedRealityInputSource"/> the <paramref name="locomotionProvider"/>'s teleport request originated from.</param>
-        void RaiseTeleportCanceled(ITeleportLocomotionProvider locomotionProvider, IMixedRealityInputSource inputSource);
+        /// <param name="inputSource">The <see cref="IInputSource"/> the <paramref name="locomotionProvider"/>'s teleport request originated from.</param>
+        void RaiseTeleportCanceled(ITeleportLocomotionProvider locomotionProvider, IInputSource inputSource);
     }
 }

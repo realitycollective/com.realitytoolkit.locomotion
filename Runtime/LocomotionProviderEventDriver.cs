@@ -4,8 +4,8 @@
 using RealityCollective.Extensions;
 using RealityCollective.ServiceFramework.Services;
 using RealityToolkit.EventDatum.Input;
-using RealityToolkit.InputSystem.Interfaces;
-using RealityToolkit.InputSystem.Interfaces.Handlers;
+using RealityToolkit.Input.Interfaces;
+using RealityToolkit.Input.Interfaces.Handlers;
 using RealityToolkit.Locomotion.Definitions;
 using RealityToolkit.Locomotion.Interfaces;
 using UnityEngine;
@@ -14,24 +14,24 @@ namespace RealityToolkit.Locomotion
 {
     /// <summary>
     /// This component is an event bridge to active <see cref="ILocomotionProvider"/> implementations.
-    /// It has a hard dependency on the <see cref="ILocomotionService"/> as well as the <see cref="IMixedRealityInputSystem"/>
-    /// and cannot work without both being active and enabled in the application. It will additionally manage active <see cref="IMixedRealityPointer"/>s
+    /// It has a hard dependency on the <see cref="ILocomotionService"/> as well as the <see cref="IInputService"/>
+    /// and cannot work without both being active and enabled in the application. It will additionally manage active <see cref="IPointer"/>s
     /// while a teleport locomotion is active.
     /// The <see cref="ILocomotionService"/> will ensure a <see cref="GameObject"/> with this component attached is created, when the
     /// service is enabled. You do not need to manually place it in the scene.
     /// </summary>
     public class LocomotionProviderEventDriver : MonoBehaviour,
         ILocomotionServiceHandler,
-        IMixedRealityInputHandler,
-        IMixedRealityInputHandler<float>,
-        IMixedRealityInputHandler<Vector2>
+        IInputHandler,
+        IInputHandler<float>,
+        IInputHandler<Vector2>
     {
-        private IMixedRealityInputSystem inputService = null;
+        private IInputService inputService = null;
         /// <summary>
-        /// Gets the currently active <see cref="IMixedRealityInputSystem"/> instance.
+        /// Gets the currently active <see cref="IInputService"/> instance.
         /// </summary>
-        protected IMixedRealityInputSystem InputService
-            => inputService ??= ServiceManager.Instance.GetService<IMixedRealityInputSystem>();
+        protected IInputService InputService
+            => inputService ??= ServiceManager.Instance.GetService<IInputService>();
 
         private ILocomotionService locomotionService = null;
         /// <summary>
@@ -161,7 +161,7 @@ namespace RealityToolkit.Locomotion
             }
         }
 
-        private void TogglePointers(bool isOn, bool teleportInProgress, IMixedRealityInputSource teleportInputSource = null)
+        private void TogglePointers(bool isOn, bool teleportInProgress, IInputSource teleportInputSource = null)
         {
             foreach (var inputSource in InputService.DetectedInputSources)
             {

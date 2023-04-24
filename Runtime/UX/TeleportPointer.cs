@@ -4,7 +4,7 @@
 using RealityCollective.ServiceFramework.Services;
 using RealityToolkit.Definitions.Physics;
 using RealityToolkit.EventDatum.Input;
-using RealityToolkit.InputSystem.Interfaces;
+using RealityToolkit.Input.Interfaces;
 using RealityToolkit.Locomotion.Definitions;
 using RealityToolkit.Locomotion.Interfaces;
 using RealityToolkit.Utilities.Physics;
@@ -45,7 +45,7 @@ namespace RealityToolkit.Locomotion.UX
         public ILocomotionProvider RequestingLocomotionProvider { get; private set; }
 
         /// <inheritdoc />
-        public IMixedRealityInputSource InputSource => InputSourceParent;
+        public IInputSource InputSource => InputSourceParent;
 
         /// <inheritdoc />
         public Pose? TargetPose { get; private set; }
@@ -100,7 +100,7 @@ namespace RealityToolkit.Locomotion.UX
             PointerOrientation = 0f;
         }
 
-        #region IMixedRealityPointer Implementation
+        #region IPointer Implementation
 
         /// <inheritdoc />
         public override bool IsInteractionEnabled => !IsTeleportRequestActive && IsTargeting;
@@ -220,7 +220,7 @@ namespace RealityToolkit.Locomotion.UX
                     {
                         if (i == Result.RayStepIndex)
                         {
-                            if (MixedRealityRaycaster.DebugEnabled)
+                            if (Raycaster.DebugEnabled)
                             {
                                 Color debugColor = ValidationResult != TeleportValidationResult.None
                                     ? Color.yellow
@@ -269,9 +269,9 @@ namespace RealityToolkit.Locomotion.UX
             }
         }
 
-        #endregion IMixedRealityPointer Implementation
+        #endregion IPointer Implementation
 
-        #region IMixedRealityInputHandler Implementation
+        #region IInputHandler Implementation
 
         /// <inheritdoc />
         public override void OnInputChanged(InputEventData<Vector2> eventData)
@@ -287,15 +287,15 @@ namespace RealityToolkit.Locomotion.UX
             if (RequestingLocomotionProvider != null &&
                 eventData.SourceId == InputSource.SourceId &&
                 eventData.Handedness == Handedness &&
-                eventData.MixedRealityInputAction == RequestingLocomotionProvider.InputAction)
+                eventData.InputAction == RequestingLocomotionProvider.InputAction)
             {
                 PointerOrientation = Mathf.Atan2(eventData.InputData.x, eventData.InputData.y) * Mathf.Rad2Deg;
             }
         }
 
-        #endregion IMixedRealityInputHandler Implementation
+        #endregion IInputHandler Implementation
 
-        #region IMixedRealityTeleportHandler Implementation
+        #region ITeleportHandler Implementation
 
         /// <inheritdoc />
         public void OnTeleportTargetRequested(LocomotionEventData eventData)
@@ -336,6 +336,6 @@ namespace RealityToolkit.Locomotion.UX
             }
         }
 
-        #endregion IMixedRealityTeleportHandler Implementation
+        #endregion ITeleportHandler Implementation
     }
 }

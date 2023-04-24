@@ -61,7 +61,7 @@ namespace RealityToolkit.Locomotion.UX
 
         #endregion MonoBehaviour Implementation
 
-        #region IMixedRealityPointer Implementation
+        #region IPointer Implementation
 
         /// <inheritdoc />
         public override void OnPreRaycast()
@@ -91,6 +91,6 @@ namespace RealityToolkit.Locomotion.UX
             base.OnPreRaycast();
         }
 
-        #endregion IMixedRealityPointer Implementation
+        #endregion IPointer Implementation
     }
 }
