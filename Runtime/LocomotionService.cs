@@ -5,8 +5,8 @@ using RealityCollective.Extensions;
 using RealityCollective.ServiceFramework.Attributes;
 using RealityCollective.ServiceFramework.Definitions.Platforms;
 using RealityCollective.ServiceFramework.Services;
-using RealityToolkit.InputSystem.Interfaces;
-using RealityToolkit.InputSystem.Listeners;
+using RealityToolkit.Input.Interfaces;
+using RealityToolkit.Input.Listeners;
 using RealityToolkit.Locomotion.Definitions;
 using RealityToolkit.Locomotion.Interfaces;
 using System;
@@ -274,7 +274,7 @@ namespace RealityToolkit.Locomotion
         {
             if (eventDriver.IsNull())
             {
-                eventDriver = new GameObject(nameof(LocomotionProviderEventDriver), typeof(LocomotionProviderEventDriver), typeof(InputSystemGlobalListener));
+                eventDriver = new GameObject(nameof(LocomotionProviderEventDriver), typeof(LocomotionProviderEventDriver), typeof(InputServiceGlobalListener));
                 UnityEngine.Object.DontDestroyOnLoad(eventDriver);
             }
         }
@@ -295,7 +295,7 @@ namespace RealityToolkit.Locomotion
             };
 
         /// <inheritdoc />
-        public void RaiseTeleportTargetRequest(ITeleportLocomotionProvider teleportLocomotionProvider, IMixedRealityInputSource inputSource)
+        public void RaiseTeleportTargetRequest(ITeleportLocomotionProvider teleportLocomotionProvider, IInputSource inputSource)
         {
             if (IsTeleportCoolingDown)
             {
@@ -314,7 +314,7 @@ namespace RealityToolkit.Locomotion
             };
 
         /// <inheritdoc />
-        public void RaiseTeleportStarted(ITeleportLocomotionProvider locomotionProvider, IMixedRealityInputSource inputSource, Pose pose, ITeleportAnchor anchor)
+        public void RaiseTeleportStarted(ITeleportLocomotionProvider locomotionProvider, IInputSource inputSource, Pose pose, ITeleportAnchor anchor)
         {
             teleportEventData.Initialize(locomotionProvider, inputSource, pose, anchor);
             HandleEvent(teleportEventData, OnTeleportStartedHandler);
@@ -328,7 +328,7 @@ namespace RealityToolkit.Locomotion
             };
 
         /// <inheritdoc />
-        public void RaiseTeleportCompleted(ITeleportLocomotionProvider locomotionProvider, IMixedRealityInputSource inputSource, Pose pose, ITeleportAnchor anchor)
+        public void RaiseTeleportCompleted(ITeleportLocomotionProvider locomotionProvider, IInputSource inputSource, Pose pose, ITeleportAnchor anchor)
         {
             currentTeleportCooldown = teleportCooldown;
             teleportEventData.Initialize(locomotionProvider, inputSource, pose, anchor);
@@ -343,7 +343,7 @@ namespace RealityToolkit.Locomotion
             };
 
         /// <inheritdoc />
-        public void RaiseTeleportCanceled(ITeleportLocomotionProvider locomotionProvider, IMixedRealityInputSource inputSource)
+        public void RaiseTeleportCanceled(ITeleportLocomotionProvider locomotionProvider, IInputSource inputSource)
         {
             teleportEventData.Initialize(locomotionProvider, inputSource);
             HandleEvent(teleportEventData, OnTeleportCanceledHandler);

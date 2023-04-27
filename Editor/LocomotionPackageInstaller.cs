@@ -14,21 +14,21 @@ namespace RealityToolkit.Locomotion.Editor
     [InitializeOnLoad]
     internal static class LocomotionPackageInstaller
     {
-        private static readonly string destinationPath = $"{MixedRealityPreferences.ProfileGenerationPath}Locomotion";
-        private static readonly string sourcePath = Path.GetFullPath($"{PathFinderUtility.ResolvePath<IPathFinder>(typeof(LocomotionPackagePathFinder)).ForwardSlashes()}{Path.DirectorySeparatorChar}{MixedRealityPreferences.HIDDEN_PACKAGE_ASSETS_PATH}");
+        private static readonly string destinationPath = $"{RealityToolkitPreferences.ProfileGenerationPath}Locomotion";
+        private static readonly string sourcePath = Path.GetFullPath($"{PathFinderUtility.ResolvePath<IPathFinder>(typeof(LocomotionPackagePathFinder)).ForwardSlashes()}{Path.DirectorySeparatorChar}{RealityToolkitPreferences.HIDDEN_PACKAGE_ASSETS_PATH}");
 
         static LocomotionPackageInstaller()
         {
             EditorApplication.delayCall += CheckPackage;
         }
 
-        [MenuItem(MixedRealityPreferences.Editor_Menu_Keyword + "/Packages / Install Locomotion Package Assets...", true)]
+        [MenuItem(RealityToolkitPreferences.Editor_Menu_Keyword + "/Packages / Install Locomotion Package Assets...", true)]
         private static bool ImportPackageAssetsValidation()
         {
             return !Directory.Exists($"{destinationPath}{Path.DirectorySeparatorChar}");
         }
 
-        [MenuItem(MixedRealityPreferences.Editor_Menu_Keyword + "/Packages / Install Locomotion Package Assets...")]
+        [MenuItem(RealityToolkitPreferences.Editor_Menu_Keyword + "/Packages / Install Locomotion Package Assets...")]
         private static void ImportPackageAssets()
         {
             EditorPreferences.Set($"{nameof(LocomotionPackageInstaller)}.Assets", false);

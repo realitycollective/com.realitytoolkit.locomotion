@@ -30,7 +30,7 @@ namespace RealityToolkit.Locomotion.Modules
         {
             base.OnInputChanged(eventData);
 
-            if (eventData.MixedRealityInputAction == InputAction)
+            if (eventData.InputAction == InputAction)
             {
                 LocomotionService.LocomotionTarget.Move(eventData.InputData, speed);
             }

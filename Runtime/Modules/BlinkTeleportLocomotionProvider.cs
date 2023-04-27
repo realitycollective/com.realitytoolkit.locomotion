@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 
 using RealityCollective.Extensions;
-using RealityToolkit.InputSystem.Interfaces;
+using RealityToolkit.Input.Interfaces;
 using RealityToolkit.Locomotion.Definitions;
 using RealityToolkit.Locomotion.Interfaces;
 using UnityEngine;
@@ -32,7 +32,7 @@ namespace RealityToolkit.Locomotion.Modules
         private readonly Material fadeMaterial;
         private readonly Color fadeInColor;
         private readonly Color fadeOutColor;
-        private IMixedRealityInputSource inputSource;
+        private IInputSource inputSource;
         private Pose targetPose;
         private ITeleportAnchor targetAnchor;
         private GameObject fadeSphere;
@@ -99,7 +99,7 @@ namespace RealityToolkit.Locomotion.Modules
             // actually expect a teleport to start?
             if (OpenTargetRequests.ContainsKey(eventData.EventSource.SourceId))
             {
-                inputSource = (IMixedRealityInputSource)eventData.EventSource;
+                inputSource = (IInputSource)eventData.EventSource;
                 targetPose = eventData.Pose.Value;
                 targetAnchor = eventData.Anchor;
 

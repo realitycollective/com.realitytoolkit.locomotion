@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 
 using RealityToolkit.EventDatum;
-using RealityToolkit.InputSystem.Interfaces;
+using RealityToolkit.Input.Interfaces;
 using RealityToolkit.Locomotion.Interfaces;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -39,10 +39,10 @@ namespace RealityToolkit.Locomotion.Definitions
         /// Used to initialize/reset the event and populate the data.
         /// </summary>
         /// <param name="locomotionProvider">The <see cref="ILocomotionProvider"/> the event data is addressed at or coming from.</param>
-        /// /// <param name="inputSource">The <see cref="IMixedRealityInputSource"/> the event originated from.</param>
+        /// /// <param name="inputSource">The <see cref="IInputSource"/> the event originated from.</param>
         /// <param name="pose">Optional <see cref="Pose"/> providing a teleport target.</param>
         /// <param name="anchor">Optional <see cref="ITeleportAnchor"/> at the teleport target location.</param>
-        public void Initialize(ILocomotionProvider locomotionProvider, IMixedRealityInputSource inputSource, Pose pose, ITeleportAnchor anchor)
+        public void Initialize(ILocomotionProvider locomotionProvider, IInputSource inputSource, Pose pose, ITeleportAnchor anchor)
         {
             BaseInitialize(inputSource);
             LocomotionProvider = locomotionProvider;
@@ -54,8 +54,8 @@ namespace RealityToolkit.Locomotion.Definitions
         /// Used to initialize/reset the event and populate the data.
         /// </summary>
         /// <param name="locomotionProvider">The <see cref="ILocomotionProvider"/> the event data is addressed at or coming from.</param>
-        /// <param name="inputSource">The <see cref="IMixedRealityInputSource"/> the event originated from.</param>
-        public void Initialize(ILocomotionProvider locomotionProvider, IMixedRealityInputSource inputSource)
+        /// <param name="inputSource">The <see cref="IInputSource"/> the event originated from.</param>
+        public void Initialize(ILocomotionProvider locomotionProvider, IInputSource inputSource)
         {
             BaseInitialize(inputSource);
             LocomotionProvider = locomotionProvider;

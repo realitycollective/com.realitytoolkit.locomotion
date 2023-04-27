@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 
 using RealityToolkit.EventDatum.Input;
-using RealityToolkit.InputSystem.Interfaces;
+using RealityToolkit.Input.Interfaces;
 using RealityToolkit.Locomotion.Definitions;
 using RealityToolkit.Locomotion.Interfaces;
 using System.Collections.Generic;
@@ -44,7 +44,7 @@ namespace RealityToolkit.Locomotion.Modules
         /// Key is an input source ID.
         /// Value is the input source itself.
         /// </remarks>
-        protected Dictionary<uint, IMixedRealityInputSource> OpenTargetRequests { get; } = new Dictionary<uint, IMixedRealityInputSource>();
+        protected Dictionary<uint, IInputSource> OpenTargetRequests { get; } = new Dictionary<uint, IInputSource>();
 
         /// <summary>
         /// This registry keeps track of <see cref="ITeleportTargetProvider"/>s that have answered
@@ -87,7 +87,7 @@ namespace RealityToolkit.Locomotion.Modules
         {
             // Is this the input action this provider is configured to look out for?
             // And did we already request a teleport target for the input source that raised it?
-            if (eventData.MixedRealityInputAction != InputAction ||
+            if (eventData.InputAction != InputAction ||
                 OpenTargetRequests.ContainsKey(eventData.SourceId))
             {
                 return;
@@ -103,7 +103,7 @@ namespace RealityToolkit.Locomotion.Modules
         {
             // Has our configured teleport input action been released
             // and we have an open target request for the input source?
-            if (eventData.MixedRealityInputAction == InputAction &&
+            if (eventData.InputAction == InputAction &&
                 OpenTargetRequests.ContainsKey(eventData.SourceId))
             {
                 var inputSource = OpenTargetRequests[eventData.SourceId];
@@ -117,7 +117,7 @@ namespace RealityToolkit.Locomotion.Modules
         public override void OnInputChanged(InputEventData<float> eventData)
         {
             // Is this the input action this provider is configured to look out for?
-            if (eventData.MixedRealityInputAction == InputAction)
+            if (eventData.InputAction == InputAction)
             {
                 // Depending on the input position we either raise a new request
                 // for a teleportation target or we start/cancel an existing
@@ -150,7 +150,7 @@ namespace RealityToolkit.Locomotion.Modules
         public override void OnInputChanged(InputEventData<Vector2> eventData)
         {
             // Is this the input action this provider is configured to look out for?
-            if (eventData.MixedRealityInputAction == InputAction)
+            if (eventData.InputAction == InputAction)
             {
                 // Depending on the input position we either raise a new request
                 // for a teleportation target or we start/cancel an existing
@@ -159,7 +159,7 @@ namespace RealityToolkit.Locomotion.Modules
                 if (Mathf.Abs(dualAxisPosition.y) > inputThreshold ||
                     Mathf.Abs(dualAxisPosition.x) > inputThreshold)
                 {
-                    // Get the angle of the dual axis input.
+                    // Get the angle of the dual axis UnityEngine.Input.
                     var angle = Mathf.Atan2(dualAxisPosition.x, dualAxisPosition.y) * Mathf.Rad2Deg;
 
                     // Offset the angle so it's 'forward' facing.
@@ -245,14 +245,14 @@ namespace RealityToolkit.Locomotion.Modules
             base.OnTeleportCompleted(eventData);
         }
 
-        private void RaiseTeleportTargetRequest(IMixedRealityInputSource inputSource)
+        private void RaiseTeleportTargetRequest(IInputSource inputSource)
         {
             OpenTargetRequests.Add(inputSource.SourceId, inputSource);
             LocomotionService.RaiseTeleportTargetRequest(this, inputSource);
             canRotate = false;
         }
 
-        private void ProcessTeleportRequest(IMixedRealityInputSource inputSource)
+        private void ProcessTeleportRequest(IInputSource inputSource)
         {
             // Is a target provider available for the input source?
             if (AvailableTargetProviders.ContainsKey(inputSource.SourceId))

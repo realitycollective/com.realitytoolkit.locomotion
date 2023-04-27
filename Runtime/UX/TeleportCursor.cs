@@ -2,8 +2,8 @@
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 
 using RealityCollective.ServiceFramework.Services;
-using RealityToolkit.InputSystem.Definitions;
-using RealityToolkit.InputSystem.Interfaces;
+using RealityToolkit.Input.Definitions;
+using RealityToolkit.Input.Interfaces;
 using RealityToolkit.Locomotion.Definitions;
 using RealityToolkit.Locomotion.Interfaces;
 using RealityToolkit.Utilities.UX.Cursors;
@@ -21,7 +21,7 @@ namespace RealityToolkit.Locomotion.UX
         private Vector3 cursorOrientation = Vector3.zero;
 
         /// <inheritdoc />
-        public override IMixedRealityPointer Pointer
+        public override IPointer Pointer
         {
             get => pointer;
             set
@@ -90,9 +90,9 @@ namespace RealityToolkit.Locomotion.UX
                 return;
             }
 
-            if (!InputSystem.FocusProvider.TryGetFocusDetails(Pointer, out var focusDetails))
+            if (!InputService.FocusProvider.TryGetFocusDetails(Pointer, out var focusDetails))
             {
-                if (InputSystem.FocusProvider.IsPointerRegistered(Pointer))
+                if (InputService.FocusProvider.IsPointerRegistered(Pointer))
                 {
                     Debug.LogError($"{gameObject.name}: Unable to get focus details for {pointer.GetType().Name}!");
                 }

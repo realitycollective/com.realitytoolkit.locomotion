@@ -3,7 +3,7 @@
 
 using RealityCollective.Definitions.Utilities;
 using RealityCollective.ServiceFramework.Definitions;
-using RealityToolkit.InputSystem.Definitions;
+using RealityToolkit.Input.Definitions;
 using UnityEngine;
 
 namespace RealityToolkit.Locomotion.Definitions
@@ -29,12 +29,12 @@ namespace RealityToolkit.Locomotion.Definitions
 
         [SerializeField]
         [Tooltip("Input action to perform locomotion using this provider.")]
-        private MixedRealityInputAction inputAction = MixedRealityInputAction.None;
+        private InputAction inputAction = InputAction.None;
 
         /// <summary>
         /// Gets input action to perform locomotion using this provider.
         /// </summary>
-        public MixedRealityInputAction InputAction
+        public InputAction InputAction
         {
             get => inputAction;
             internal set => inputAction = value;

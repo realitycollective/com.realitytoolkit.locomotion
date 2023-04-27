@@ -1,8 +1,8 @@
 // Copyright (c) Reality Collective. All rights reserved.
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 
-using RealityToolkit.InputSystem.Definitions;
-using RealityToolkit.InputSystem.Interfaces.Handlers;
+using RealityToolkit.Input.Definitions;
+using RealityToolkit.Input.Interfaces.Handlers;
 using UnityEngine;
 
 namespace RealityToolkit.Locomotion.Interfaces
@@ -12,9 +12,9 @@ namespace RealityToolkit.Locomotion.Interfaces
     /// </summary>
     public interface ILocomotionProvider : ILocomotionServiceModule,
         ILocomotionServiceHandler,
-        IMixedRealityInputHandler,
-        IMixedRealityInputHandler<float>,
-        IMixedRealityInputHandler<Vector2>
+        IInputHandler,
+        IInputHandler<float>,
+        IInputHandler<Vector2>
     {
         /// <summary>
         /// Gets whether this <see cref="ILocomotionProvider"/> is currently active.
@@ -24,6 +24,6 @@ namespace RealityToolkit.Locomotion.Interfaces
         /// <summary>
         /// The input action used to perform locomotion using this provider.
         /// </summary>
-        MixedRealityInputAction InputAction { get; }
+        InputAction InputAction { get; }
     }
 }
