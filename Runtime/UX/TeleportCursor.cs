@@ -2,11 +2,11 @@
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 
 using RealityCollective.ServiceFramework.Services;
+using RealityToolkit.Input.Cursors;
 using RealityToolkit.Input.Definitions;
 using RealityToolkit.Input.Interfaces;
 using RealityToolkit.Locomotion.Definitions;
 using RealityToolkit.Locomotion.Interfaces;
-using RealityToolkit.Utilities.UX.Cursors;
 using System;
 using UnityEngine;
 
