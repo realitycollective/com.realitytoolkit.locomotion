@@ -45,7 +45,7 @@ namespace RealityToolkit.Locomotion.UX
         public ILocomotionProvider RequestingLocomotionProvider { get; private set; }
 
         /// <inheritdoc />
-        public IInputSource InputSource => InputSourceParent;
+        public IInputSource InputSource => base.InputSource;
 
         /// <inheritdoc />
         public Pose? TargetPose { get; private set; }
