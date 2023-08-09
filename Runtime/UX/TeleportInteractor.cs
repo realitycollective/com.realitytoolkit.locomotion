@@ -8,6 +8,7 @@ using RealityToolkit.Input.Interactions.Interactors;
 using RealityToolkit.Input.Interfaces;
 using RealityToolkit.Locomotion.Definitions;
 using RealityToolkit.Locomotion.Interfaces;
+using RealityToolkit.Utilities.Lines.DataProviders;
 using RealityToolkit.Utilities.Physics;
 using System;
 using UnityEngine;
@@ -15,8 +16,24 @@ using UnityEngine.Serialization;
 
 namespace RealityToolkit.Locomotion.UX
 {
-    public class TeleportPointer : LinePointer, ILocomotionServiceHandler, ITeleportTargetProvider
+    [RequireComponent(typeof(ParabolaPhysicalLineDataProvider))]
+    public class TeleportInteractor : FarInteractor, ILocomotionServiceHandler, ITeleportTargetProvider
     {
+        [SerializeField]
+        private float minParabolaVelocity = 1f;
+
+        [SerializeField]
+        private float maxParabolaVelocity = 5f;
+
+        [SerializeField]
+        private float minDistanceModifier = 1f;
+
+        [SerializeField]
+        private float maxDistanceModifier = 5f;
+
+        [SerializeField]
+        private ParabolaPhysicalLineDataProvider parabolicLineData;
+
         [SerializeField]
         [Tooltip("Gradient color to apply when targeting an anchor.")]
         [FormerlySerializedAs("lineColorHotSpot")]
@@ -122,6 +139,17 @@ namespace RealityToolkit.Locomotion.UX
             set => base.PointerOrientation = value;
         }
 
+        protected override void OnValidate()
+        {
+            base.OnValidate();
+            EnsureSetup();
+
+            if (Application.isPlaying && parabolicLineData.LineTransform == transform)
+            {
+                Debug.LogWarning("Missing Parabolic line helper.\nThe Parabolic Teleport Pointer requires an empty GameObject child for calculating the parabola arc.");
+            }
+        }
+
         /// <inheritdoc />
         protected override void OnEnable()
         {
@@ -131,6 +159,16 @@ namespace RealityToolkit.Locomotion.UX
                 ServiceManager.Instance.TryGetService(out locomotionService))
             {
                 locomotionService.Register(gameObject);
+            }
+
+            EnsureSetup();
+
+            if (parabolicLineData.LineTransform == transform)
+            {
+                var pointerHelper = new GameObject("ParabolicLinePointerHelper");
+                pointerHelper.transform.SetParent(transform);
+                pointerHelper.transform.localPosition = Vector3.zero;
+                parabolicLineData.LineTransform = pointerHelper.transform;
             }
         }
 
@@ -164,8 +202,39 @@ namespace RealityToolkit.Locomotion.UX
             base.OnDisable();
         }
 
+        private void EnsureSetup()
+        {
+            if (parabolicLineData == null)
+            {
+                parabolicLineData = GetComponent<ParabolaPhysicalLineDataProvider>();
+            }
+        }
+
         public override void OnPreRaycast()
         {
+            var transformForward = transform.forward;
+            parabolicLineData.LineTransform.rotation = Quaternion.identity;
+            parabolicLineData.Direction = transformForward;
+
+            // when pointing straight up, upDot should be close to 1.
+            // when pointing straight down, upDot should be close to -1.
+            // when pointing straight forward in any direction, upDot should be 0.
+            var upDot = Vector3.Dot(transformForward, Vector3.up);
+
+            var velocity = minParabolaVelocity;
+            var distance = minDistanceModifier;
+
+            // If we're pointing below the horizon, always use the minimum modifiers.
+            if (upDot > 0f)
+            {
+                // Increase the modifier multipliers the higher we point.
+                velocity = Mathf.Lerp(minParabolaVelocity, maxParabolaVelocity, upDot);
+                distance = Mathf.Lerp(minDistanceModifier, maxDistanceModifier, upDot);
+            }
+
+            parabolicLineData.Velocity = velocity;
+            parabolicLineData.DistanceMultiplier = distance;
+
             if (LineBase == null)
             {
                 return;

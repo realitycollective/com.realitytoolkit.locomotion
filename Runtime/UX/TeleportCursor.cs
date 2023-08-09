@@ -26,17 +26,16 @@ namespace RealityToolkit.Locomotion.UX
             get => pointer;
             set
             {
-                Debug.Assert(value.GetType() == typeof(TeleportPointer) ||
-                             value.GetType() == typeof(ParabolicTeleportPointer),
+                Debug.Assert(value.GetType() == typeof(TeleportInteractor),
                     "Teleport Cursor's Pointer must derive from a TeleportPointer type.");
 
-                pointer = (TeleportPointer)value;
+                pointer = (TeleportInteractor)value;
                 pointer.BaseCursor = this;
                 RegisterManagers();
             }
         }
 
-        private TeleportPointer pointer;
+        private TeleportInteractor pointer;
 
         /// <inheritdoc />
         public override Vector3 Position => PrimaryCursorVisual.position;

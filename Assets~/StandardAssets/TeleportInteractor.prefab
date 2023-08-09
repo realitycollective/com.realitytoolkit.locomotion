@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 114225980339285346}
   - component: {fileID: 114917070612713698}
   m_Layer: 0
-  m_Name: ParabolicTeleportPointer
+  m_Name: TeleportInteractor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
