@@ -4,7 +4,7 @@
 using RealityCollective.ServiceFramework.Services;
 using RealityToolkit.Input.Cursors;
 using RealityToolkit.Input.Definitions;
-using RealityToolkit.Input.Interfaces;
+using RealityToolkit.Input.Interactions.Interactors;
 using RealityToolkit.Locomotion.Definitions;
 using RealityToolkit.Locomotion.Interfaces;
 using System;
