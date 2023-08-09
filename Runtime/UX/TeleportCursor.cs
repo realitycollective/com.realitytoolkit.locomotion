@@ -21,7 +21,7 @@ namespace RealityToolkit.Locomotion.UX
         private Vector3 cursorOrientation = Vector3.zero;
 
         /// <inheritdoc />
-        public override IPointer Pointer
+        public override IInteractor Pointer
         {
             get => pointer;
             set
