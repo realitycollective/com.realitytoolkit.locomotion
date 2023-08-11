@@ -4,7 +4,7 @@
 using RealityCollective.ServiceFramework.Services;
 using RealityToolkit.Definitions.Physics;
 using RealityToolkit.EventDatum.Input;
-using RealityToolkit.Input.Interactions.Interactors;
+using RealityToolkit.Input.Interactors;
 using RealityToolkit.Input.Interfaces;
 using RealityToolkit.Locomotion.Definitions;
 using RealityToolkit.Locomotion.Interfaces;
