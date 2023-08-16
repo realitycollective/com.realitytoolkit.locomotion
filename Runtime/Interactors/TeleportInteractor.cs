@@ -14,7 +14,7 @@ using System;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace RealityToolkit.Locomotion.UX
+namespace RealityToolkit.Locomotion.Interactors
 {
     [RequireComponent(typeof(ParabolaPhysicalLineDataProvider))]
     public class TeleportInteractor : FarInteractor, ILocomotionServiceHandler, ITeleportTargetProvider

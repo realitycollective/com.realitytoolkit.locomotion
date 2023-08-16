@@ -6,11 +6,12 @@ using RealityToolkit.Input.Cursors;
 using RealityToolkit.Input.Definitions;
 using RealityToolkit.Input.Interactors;
 using RealityToolkit.Locomotion.Definitions;
+using RealityToolkit.Locomotion.Interactors;
 using RealityToolkit.Locomotion.Interfaces;
 using System;
 using UnityEngine;
 
-namespace RealityToolkit.Locomotion.UX
+namespace RealityToolkit.Locomotion.Cursors
 {
     public class TeleportCursor : AnimatedCursor, ILocomotionServiceHandler
     {
