@@ -2,15 +2,16 @@
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 
 using RealityCollective.ServiceFramework.Services;
+using RealityToolkit.Input.Cursors;
 using RealityToolkit.Input.Definitions;
-using RealityToolkit.Input.Interfaces;
+using RealityToolkit.Input.Interactors;
 using RealityToolkit.Locomotion.Definitions;
+using RealityToolkit.Locomotion.Interactors;
 using RealityToolkit.Locomotion.Interfaces;
-using RealityToolkit.Utilities.UX.Cursors;
 using System;
 using UnityEngine;
 
-namespace RealityToolkit.Locomotion.UX
+namespace RealityToolkit.Locomotion.Cursors
 {
     public class TeleportCursor : AnimatedCursor, ILocomotionServiceHandler
     {
@@ -21,22 +22,21 @@ namespace RealityToolkit.Locomotion.UX
         private Vector3 cursorOrientation = Vector3.zero;
 
         /// <inheritdoc />
-        public override IPointer Pointer
+        public override IInteractor Pointer
         {
             get => pointer;
             set
             {
-                Debug.Assert(value.GetType() == typeof(TeleportPointer) ||
-                             value.GetType() == typeof(ParabolicTeleportPointer),
+                Debug.Assert(value.GetType() == typeof(TeleportInteractor),
                     "Teleport Cursor's Pointer must derive from a TeleportPointer type.");
 
-                pointer = (TeleportPointer)value;
+                pointer = (TeleportInteractor)value;
                 pointer.BaseCursor = this;
                 RegisterManagers();
             }
         }
 
-        private TeleportPointer pointer;
+        private TeleportInteractor pointer;
 
         /// <inheritdoc />
         public override Vector3 Position => PrimaryCursorVisual.position;
