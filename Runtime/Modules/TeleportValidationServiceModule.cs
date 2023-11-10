@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 
 using RealityCollective.ServiceFramework.Modules;
-using RealityToolkit.Input.Interfaces;
+using RealityToolkit.Input.Interactors;
 using RealityToolkit.Locomotion.Definitions;
 using RealityToolkit.Locomotion.Interfaces;
 using UnityEngine;
@@ -35,7 +35,7 @@ namespace RealityToolkit.Locomotion.Modules
         private readonly float maxHeightDistance;
 
         /// <inheritdoc />
-        public TeleportValidationResult IsValid(IPointerResult pointerResult, ITeleportAnchor anchor = null)
+        public TeleportValidationResult IsValid(IInteractorResult pointerResult, ITeleportAnchor anchor = null)
         {
             TeleportValidationResult teleportValidationResult;
 
@@ -51,7 +51,7 @@ namespace RealityToolkit.Locomotion.Modules
                 teleportValidationResult = TeleportValidationResult.Invalid;
             }
             // Check if it's in our valid layers
-            else if (((1 << pointerResult.CurrentPointerTarget.layer) & validLayers.value) != 0)
+            else if (((1 << pointerResult.CurrentTarget.layer) & validLayers.value) != 0)
             {
                 // See if it's a hot spot
                 if (anchor != null && anchor.IsActive)
@@ -67,7 +67,7 @@ namespace RealityToolkit.Locomotion.Modules
                         : TeleportValidationResult.Invalid;
                 }
             }
-            else if (((1 << pointerResult.CurrentPointerTarget.layer) & invalidLayers) != 0)
+            else if (((1 << pointerResult.CurrentTarget.layer) & invalidLayers) != 0)
             {
                 teleportValidationResult = TeleportValidationResult.Invalid;
             }

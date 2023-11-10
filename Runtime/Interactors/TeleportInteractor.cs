@@ -20,6 +20,36 @@ namespace RealityToolkit.Locomotion.Interactors
     public class TeleportInteractor : FarInteractor, ILocomotionServiceHandler, ITeleportTargetProvider
     {
         [SerializeField]
+        [FormerlySerializedAs("LineColorValid")]
+        private Gradient lineColorValid = new Gradient();
+
+        protected Gradient LineColorValid
+        {
+            get => lineColorValid;
+            set => lineColorValid = value;
+        }
+
+        [SerializeField]
+        [FormerlySerializedAs("LineColorInvalid")]
+        private Gradient lineColorInvalid = new Gradient();
+
+        protected Gradient LineColorInvalid
+        {
+            get => lineColorInvalid;
+            set => lineColorInvalid = value;
+        }
+
+        [SerializeField]
+        [FormerlySerializedAs("LineColorNoTarget")]
+        private Gradient lineColorNoTarget = new Gradient();
+
+        protected Gradient LineColorNoTarget
+        {
+            get => lineColorNoTarget;
+            set => lineColorNoTarget = value;
+        }
+
+        [SerializeField]
         private float minParabolaVelocity = 1f;
 
         [SerializeField]
@@ -269,10 +299,10 @@ namespace RealityToolkit.Locomotion.Interactors
                 LineBase.enabled = true;
 
                 // If we hit something
-                if (Result.CurrentPointerTarget != null)
+                if (Result.CurrentTarget != null)
                 {
                     // Check for anchor hit.
-                    Anchor = Result.CurrentPointerTarget.GetComponent<ITeleportAnchor>();
+                    Anchor = Result.CurrentTarget.GetComponent<ITeleportAnchor>();
 
                     // Validate whether hit target is a valid teleportation target.
                     ValidationResult = ValidationDataProvider.IsValid(Result, Anchor);
