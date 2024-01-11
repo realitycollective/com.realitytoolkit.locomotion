@@ -65,11 +65,11 @@ namespace RealityToolkit.Locomotion.Definitions
 
         [SerializeField]
         [Range(5f, 180f)]
-        [Tooltip("The amount to rotate the camera when rotation is activated.")]
+        [Tooltip("The amount to rotate the player when rotation is activated.")]
         private float rotationAmount = 90f;
 
         /// <summary>
-        /// The amount to rotate the camera when rotation is activated.
+        /// The amount to rotate the player when rotation is activated.
         /// </summary>
         public float RotationAmount
         {

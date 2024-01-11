@@ -34,7 +34,7 @@ namespace RealityToolkit.Locomotion.Interfaces
         bool OverrideTargetOrientation { get; }
 
         /// <summary>
-        /// If <see cref="OverrideTargetOrientation"/> is set, this will specify the camera's target
+        /// If <see cref="OverrideTargetOrientation"/> is set, this will specify the player's target
         /// orientation on the Y-axis.
         /// </summary>
         float TargetOrientation { get; }

@@ -166,7 +166,7 @@ namespace RealityToolkit.Locomotion.Modules
         {
             if (fadeSphere.IsNull())
             {
-                // We use a simple sphere around the camera / head, which
+                // We use a simple sphere around the player / head, which
                 // we can fade in/out to simulate the camera fading to black.
                 fadeSphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
                 fadeSphere.name = $"{nameof(BlinkTeleportLocomotionProvider)}_Fade";
