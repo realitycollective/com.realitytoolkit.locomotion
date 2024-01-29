@@ -1,32 +1,36 @@
 # Reality Toolkit - Locomotion
 
-![com.realitytoolkit.locomotion](https://user-images.githubusercontent.com/9565734/233169992-c9804c91-a573-45af-966f-340f80224009.png)
+![com.realitytoolkit.locomotion](https://github.com/realitycollective/realitycollective.logo/blob/main/RealityToolkit/RepoBanners/com.realitytoolkit.locomotion.png?raw=true)
 
-Locomotion System for use with the [Reality Toolkit](https://www.realitytoolkit.io/).
+The locomotion system for use with the [Reality Toolkit](https://www.realitytoolkit.io/).
 
 [![openupm](https://img.shields.io/npm/v/com.realitytoolkit.locomotion?label=openupm&registry_uri=https://package.openupm.com)](https://openupm.com/packages/com.realitytoolkit.locomotion/) [![Discord](https://img.shields.io/discord/597064584980987924.svg?label=&logo=discord&logoColor=ffffff&color=7389D8&labelColor=6A7EC2)](https://discord.gg/hF7TtRCFmB)
 [![Publish main branch and increment version](https://github.com/realitycollective/com.realitytoolkit.locomotion/actions/workflows/main-publish.yml/badge.svg)](https://github.com/realitycollective/com.realitytoolkit.locomotion/actions/workflows/main-publish.yml)
 [![Publish development branch on Merge](https://github.com/realitycollective/com.realitytoolkit.locomotion/actions/workflows/development-publish.yml/badge.svg)](https://github.com/realitycollective/com.realitytoolkit.locomotion/actions/workflows/development-publish.yml)
 [![Build and test UPM packages for platforms, all branches except main](https://github.com/realitycollective/com.realitytoolkit.locomotion/actions/workflows/development-buildandtestupmrelease.yml/badge.svg)](https://github.com/realitycollective/com.realitytoolkit.locomotion/actions/workflows/development-buildandtestupmrelease.yml)
 
-## What is included?
+## Installation
 
-### Teleport Locomotion Providers
+Make sure to always use the same source for all toolkit modules. Avoid using different installation sources within the same project. We provide the following ways to install Reality Toolkit modules:
 
-- Blink Teleport
-- Dash Teleport
-- Instant Teleport
+### Method 1: Using Package Manager for git users
 
-### Free Locomotion Providers
+1. Open the Package Manager using the Window menu -> Package Manager
 
-- Smooth Locomotion
+2. Inside the Package Manager, click on the "+" button on the top left and select "Add package from git URL..."
 
-## Requirements
+3. Input the following URL: https://github.com/realitycollective/com.realitytoolkit.locomotion.git and click "Add".
 
-- [RealityToolkit.Core](https://github.com/realitycollective/com.realitytoolkit.core)
-
-### OpenUPM
+### Method 2: OpenUPM
 
 ```text
     openupm add com.realitytoolkit.locomotion
 ```
+
+### Method 3: Unity Asset Store
+
+This option will be available soon.
+
+## Getting Started
+
+Check the ["Getting Started"](https://www.realitytoolkit.io/) documentation for the Reality Toolkit and to learn more about this module.
