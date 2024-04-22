@@ -177,7 +177,7 @@ namespace RealityToolkit.Locomotion.Teleportation
                         inputPreviouslyDownDict[eventData.SourceId] = true;
                         RaiseTeleportTargetRequest(eventData.InputSource);
                     }
-                    else if (canRotate)
+                    else if (LocomotionService.TeleportationEnabled && canRotate)
                     {
                         // wrap the angle value.
                         if (absoluteAngle > 180f)
