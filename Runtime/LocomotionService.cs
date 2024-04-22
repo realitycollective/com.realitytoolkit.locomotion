@@ -34,9 +34,9 @@ namespace RealityToolkit.Locomotion
         public LocomotionService(string name, uint priority, LocomotionServiceProfile profile)
             : base(name, priority, profile)
         {
-            LocomotionEnabled = profile.StartupBehaviour == AutoStartBehavior.AutoStart;
-            MovementEnabled = LocomotionEnabled;
-            TeleportationEnabled = LocomotionEnabled;
+            LocomotionEnabled = profile.LocomotionStartupBehaviour == AutoStartBehavior.AutoStart;
+            MovementEnabled = profile.MovementStartupBehaviour == AutoStartBehavior.AutoStart;
+            TeleportationEnabled = profile.TeleportationStartupBehaviour == AutoStartBehavior.AutoStart;
             teleportCooldown = profile.TeleportCooldown;
         }
 

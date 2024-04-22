@@ -13,16 +13,44 @@ namespace RealityToolkit.Locomotion
     public class LocomotionServiceProfile : BaseServiceProfile<ILocomotionServiceModule>
     {
         [SerializeField]
-        [Tooltip("Sets startup behaviour for locomotion.")]
-        private AutoStartBehavior startupBehaviour = AutoStartBehavior.AutoStart;
+        [Tooltip("Sets startup behaviour for locomotion in general.")]
+        private AutoStartBehavior locomotionStartupBehaviour = AutoStartBehavior.AutoStart;
 
         /// <summary>
-        /// Gets startup behaviour for locomotion.
+        /// Gets startup behaviour for locomotion in general.
         /// </summary>
-        public AutoStartBehavior StartupBehaviour
+        public AutoStartBehavior LocomotionStartupBehaviour
         {
-            get => startupBehaviour;
-            internal set => startupBehaviour = value;
+            get => locomotionStartupBehaviour;
+            internal set => locomotionStartupBehaviour = value;
+        }
+
+        [Header("Movement")]
+        [SerializeField]
+        [Tooltip("Sets startup behaviour for free movement.")]
+        private AutoStartBehavior movementStartupBehaviour = AutoStartBehavior.AutoStart;
+
+        /// <summary>
+        /// Gets startup behaviour for free movement.
+        /// </summary>
+        public AutoStartBehavior MovementStartupBehaviour
+        {
+            get => movementStartupBehaviour;
+            internal set => movementStartupBehaviour = value;
+        }
+
+        [Header("Teleportation")]
+        [SerializeField]
+        [Tooltip("Sets startup behaviour for teleportation.")]
+        private AutoStartBehavior teleportationStartupBehaviour = AutoStartBehavior.AutoStart;
+
+        /// <summary>
+        /// Gets startup behaviour for teleportation.
+        /// </summary>
+        public AutoStartBehavior TeleportationStartupBehaviour
+        {
+            get => teleportationStartupBehaviour;
+            internal set => teleportationStartupBehaviour = value;
         }
 
         [SerializeField]
