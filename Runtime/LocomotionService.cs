@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Reality Collective. All rights reserved.
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 
+using RealityCollective.Definitions.Utilities;
 using RealityCollective.Extensions;
 using RealityCollective.ServiceFramework.Attributes;
 using RealityCollective.ServiceFramework.Definitions.Platforms;
@@ -33,6 +34,9 @@ namespace RealityToolkit.Locomotion
         public LocomotionService(string name, uint priority, LocomotionServiceProfile profile)
             : base(name, priority, profile)
         {
+            LocomotionEnabled = profile.StartupBehaviour == AutoStartBehavior.AutoStart;
+            MovementEnabled = LocomotionEnabled;
+            TeleportationEnabled = LocomotionEnabled;
             teleportCooldown = profile.TeleportCooldown;
         }
 
@@ -45,6 +49,25 @@ namespace RealityToolkit.Locomotion
             { typeof(IFreeLocomotionProvider), new List<ILocomotionProvider>() },
             { typeof(ITeleportLocomotionProvider), new List<ILocomotionProvider>() }
         };
+
+        /// <inheritdoc />
+        public bool LocomotionEnabled { get; set; }
+
+        private bool movementEnabled;
+        /// <inheritdoc />
+        public bool MovementEnabled
+        {
+            get => LocomotionEnabled && movementEnabled;
+            set => movementEnabled = value;
+        }
+
+        private bool teleportationEnabled;
+        /// <inheritdoc />
+        public bool TeleportationEnabled
+        {
+            get => LocomotionEnabled && teleportationEnabled;
+            set => teleportationEnabled = value;
+        }
 
         /// <inheritdoc />
         public ILocomotionTarget LocomotionTarget { get; set; }

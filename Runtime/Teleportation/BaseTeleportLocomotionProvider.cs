@@ -85,7 +85,9 @@ namespace RealityToolkit.Locomotion.Teleportation
         {
             // Is this the input action this provider is configured to look out for?
             // And did we already request a teleport target for the input source that raised it?
-            if (eventData.InputAction != InputAction ||
+            // Is teleportation gloabally disabled?
+            if (!LocomotionService.TeleportationEnabled ||
+                eventData.InputAction != InputAction ||
                 OpenTargetRequests.ContainsKey(eventData.SourceId))
             {
                 return;
@@ -121,7 +123,8 @@ namespace RealityToolkit.Locomotion.Teleportation
                 // for a teleportation target or we start/cancel an existing
                 // request for the input source, if any.
                 var singleAxisPosition = eventData.InputData;
-                if (singleAxisPosition > inputThreshold &&
+                if (LocomotionService.TeleportationEnabled &&
+                    singleAxisPosition > inputThreshold &&
                     !WasInputPreviouslyDown(eventData.SourceId) &&
                     !OpenTargetRequests.ContainsKey(eventData.SourceId))
                 {
@@ -164,7 +167,8 @@ namespace RealityToolkit.Locomotion.Teleportation
                     angle += angleOffset;
 
                     var absoluteAngle = Mathf.Abs(angle);
-                    if (absoluteAngle < teleportActivationAngle &&
+                    if (LocomotionService.TeleportationEnabled &&
+                        absoluteAngle < teleportActivationAngle &&
                         !WasInputPreviouslyDown(eventData.SourceId) &&
                         !OpenTargetRequests.ContainsKey(eventData.SourceId))
                     {

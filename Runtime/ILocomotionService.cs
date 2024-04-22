@@ -16,6 +16,21 @@ namespace RealityToolkit.Locomotion
     public interface ILocomotionService : IEventService
     {
         /// <summary>
+        /// Controls whether locomotion in general is globally enabled/disabled.
+        /// </summary>
+        bool LocomotionEnabled { get; set; }
+
+        /// <summary>
+        /// Controls whether movement is globally enabled/disabled.
+        /// </summary>
+        bool MovementEnabled { get; set; }
+
+        /// <summary>
+        /// Controls whether teleportation is globally enabled/disabled.
+        /// </summary>
+        bool TeleportationEnabled { get; set; }
+
+        /// <summary>
         /// The active <see cref="ILocomotionTarget"/>.
         /// </summary>
         ILocomotionTarget LocomotionTarget { get; set; }
