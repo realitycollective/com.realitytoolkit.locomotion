@@ -1,9 +1,9 @@
-// Copyright (c) Reality Collective. All rights reserved.
+﻿// Copyright (c) Reality Collective. All rights reserved.
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 
 using UnityEngine;
 
-namespace RealityToolkit.Locomotion.Interfaces
+namespace RealityToolkit.Locomotion
 {
     /// <summary>
     /// A <see cref="ILocomotionTarget"/> is the target object being moved by the

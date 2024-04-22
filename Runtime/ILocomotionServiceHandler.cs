@@ -4,7 +4,7 @@
 using RealityToolkit.Locomotion.Definitions;
 using UnityEngine.EventSystems;
 
-namespace RealityToolkit.Locomotion.Interfaces
+namespace RealityToolkit.Locomotion
 {
     /// <summary>
     /// Interface to implement for handling locomotion events by the <see cref="ILocomotionService"/>.

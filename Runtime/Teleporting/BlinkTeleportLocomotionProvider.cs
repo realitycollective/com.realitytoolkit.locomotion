@@ -8,7 +8,7 @@ using RealityToolkit.Locomotion.Interfaces;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-namespace RealityToolkit.Locomotion.Modules
+namespace RealityToolkit.Locomotion.Teleporting
 {
     /// <summary>
     /// A <see cref="ITeleportLocomotionProvider"/> implementation that teleports the player rig

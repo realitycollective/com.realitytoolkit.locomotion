@@ -3,7 +3,7 @@
 
 using RealityToolkit.EventDatum;
 using RealityToolkit.Input.Interfaces;
-using RealityToolkit.Locomotion.Interfaces;
+using RealityToolkit.Locomotion.Teleporting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 

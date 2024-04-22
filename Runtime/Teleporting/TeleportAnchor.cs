@@ -2,10 +2,9 @@
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 
 using RealityToolkit.Input.Handlers;
-using RealityToolkit.Locomotion.Interfaces;
 using UnityEngine;
 
-namespace RealityToolkit.Locomotion
+namespace RealityToolkit.Locomotion.Teleporting
 {
     /// <summary>
     /// Default implementation for <see cref="ITeleportAnchor"/>.

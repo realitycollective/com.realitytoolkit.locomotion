@@ -5,7 +5,7 @@ using RealityToolkit.Input.Interactors;
 using RealityToolkit.Locomotion.Definitions;
 using UnityEngine;
 
-namespace RealityToolkit.Locomotion.Interfaces
+namespace RealityToolkit.Locomotion.Teleporting
 {
     /// <summary>
     /// Interface to define teleportation validation service modules. A <see cref="ITeleportValidationServiceModule"/>

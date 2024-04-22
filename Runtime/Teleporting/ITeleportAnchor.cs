@@ -3,7 +3,7 @@
 
 using UnityEngine;
 
-namespace RealityToolkit.Locomotion.Interfaces
+namespace RealityToolkit.Locomotion.Teleporting
 {
     /// <summary>
     /// Interface for teleportation anchors supported by the <see cref="ILocomotionService"/>.

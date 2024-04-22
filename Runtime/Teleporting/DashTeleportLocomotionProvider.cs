@@ -6,7 +6,7 @@ using RealityToolkit.Locomotion.Definitions;
 using RealityToolkit.Locomotion.Interfaces;
 using UnityEngine;
 
-namespace RealityToolkit.Locomotion.Modules
+namespace RealityToolkit.Locomotion.Teleporting
 {
     /// <summary>
     /// A <see cref="ITeleportLocomotionProvider"/> implementation that dashes to a target location

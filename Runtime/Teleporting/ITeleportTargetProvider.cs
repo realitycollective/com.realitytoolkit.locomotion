@@ -5,7 +5,7 @@ using RealityToolkit.Input.Interfaces;
 using RealityToolkit.Locomotion.Definitions;
 using UnityEngine;
 
-namespace RealityToolkit.Locomotion.Interfaces
+namespace RealityToolkit.Locomotion.Teleporting
 {
     /// <summary>
     /// Interface definition for components and services providing teleportation targets for

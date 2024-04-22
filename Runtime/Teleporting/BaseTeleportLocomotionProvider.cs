@@ -8,7 +8,7 @@ using RealityToolkit.Locomotion.Interfaces;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace RealityToolkit.Locomotion.Modules
+namespace RealityToolkit.Locomotion.Teleporting
 {
     /// <summary>
     /// Provides a base implementation for <see cref="ITeleportLocomotionProvider"/>s with functionality

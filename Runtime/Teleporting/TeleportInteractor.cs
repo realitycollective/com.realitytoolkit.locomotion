@@ -7,14 +7,13 @@ using RealityToolkit.EventDatum.Input;
 using RealityToolkit.Input.Interactors;
 using RealityToolkit.Input.Interfaces;
 using RealityToolkit.Locomotion.Definitions;
-using RealityToolkit.Locomotion.Interfaces;
 using RealityToolkit.Utilities.Lines.DataProviders;
 using RealityToolkit.Utilities.Physics;
 using System;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace RealityToolkit.Locomotion.Interactors
+namespace RealityToolkit.Locomotion.Teleporting
 {
     [RequireComponent(typeof(ParabolaPhysicalLineDataProvider))]
     public class TeleportInteractor : FarInteractor, ILocomotionServiceHandler, ITeleportTargetProvider

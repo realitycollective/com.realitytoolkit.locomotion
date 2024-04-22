@@ -5,7 +5,7 @@ using RealityToolkit.Locomotion.Definitions;
 using RealityToolkit.Locomotion.Interfaces;
 using UnityEngine;
 
-namespace RealityToolkit.Locomotion.Modules
+namespace RealityToolkit.Locomotion.Teleporting
 {
     /// <summary>
     /// A simple <see cref="ITeleportLocomotionProvider"/> implementation that teleports

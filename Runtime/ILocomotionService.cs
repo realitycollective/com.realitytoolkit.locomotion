@@ -3,11 +3,12 @@
 
 using RealityCollective.ServiceFramework.Interfaces;
 using RealityToolkit.Input.Interfaces;
+using RealityToolkit.Locomotion.Teleporting;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace RealityToolkit.Locomotion.Interfaces
+namespace RealityToolkit.Locomotion
 {
     /// <summary>
     /// A service implementing locomotion for immersive experiences.

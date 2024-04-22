@@ -3,7 +3,7 @@
 
 using RealityCollective.ServiceFramework.Interfaces;
 
-namespace RealityToolkit.Locomotion.Interfaces
+namespace RealityToolkit.Locomotion
 {
     /// <summary>
     /// The base interface to define modules for the <see cref="LocomotionService"/>.
