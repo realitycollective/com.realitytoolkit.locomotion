@@ -5,8 +5,6 @@ using RealityCollective.Definitions.Utilities;
 using RealityCollective.ServiceFramework.Modules;
 using RealityToolkit.EventDatum.Input;
 using RealityToolkit.Input.Definitions;
-using RealityToolkit.Locomotion.Definitions;
-using RealityToolkit.Locomotion.Interfaces;
 using UnityEngine;
 
 namespace RealityToolkit.Locomotion

@@ -6,8 +6,7 @@ using RealityCollective.ServiceFramework.Services;
 using RealityToolkit.EventDatum.Input;
 using RealityToolkit.Input.Interfaces;
 using RealityToolkit.Input.Interfaces.Handlers;
-using RealityToolkit.Locomotion.Definitions;
-using RealityToolkit.Locomotion.Teleporting;
+using RealityToolkit.Locomotion.Teleportation;
 using UnityEngine;
 
 namespace RealityToolkit.Locomotion

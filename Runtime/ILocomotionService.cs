@@ -3,7 +3,7 @@
 
 using RealityCollective.ServiceFramework.Interfaces;
 using RealityToolkit.Input.Interfaces;
-using RealityToolkit.Locomotion.Teleporting;
+using RealityToolkit.Locomotion.Teleportation;
 using System;
 using System.Collections.Generic;
 using UnityEngine;

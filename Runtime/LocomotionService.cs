@@ -7,9 +7,8 @@ using RealityCollective.ServiceFramework.Definitions.Platforms;
 using RealityCollective.ServiceFramework.Services;
 using RealityToolkit.Input.Interfaces;
 using RealityToolkit.Input.Listeners;
-using RealityToolkit.Locomotion.Definitions;
-using RealityToolkit.Locomotion.Interfaces;
-using RealityToolkit.Locomotion.Teleporting;
+using RealityToolkit.Locomotion.Movement;
+using RealityToolkit.Locomotion.Teleportation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,8 +43,7 @@ namespace RealityToolkit.Locomotion
         private readonly Dictionary<Type, List<ILocomotionProvider>> enabledLocomotionProviders = new Dictionary<Type, List<ILocomotionProvider>>()
         {
             { typeof(IFreeLocomotionProvider), new List<ILocomotionProvider>() },
-            { typeof(ITeleportLocomotionProvider), new List<ILocomotionProvider>() },
-            { typeof(IOnRailsLocomotionProvider), new List<ILocomotionProvider>() }
+            { typeof(ITeleportLocomotionProvider), new List<ILocomotionProvider>() }
         };
 
         /// <inheritdoc />
@@ -156,44 +154,10 @@ namespace RealityToolkit.Locomotion
         {
             var enabledLocomotionProvidersSnapshot = new Dictionary<Type, List<ILocomotionProvider>>(enabledLocomotionProviders);
 
-            if (locomotionProvider is IOnRailsLocomotionProvider)
-            {
-                // On rails locomotion providers are exclusive, meaning whenever an on rails
-                // provider is enabled, any other providers must be disabled.
-                foreach (var typeList in enabledLocomotionProvidersSnapshot)
-                {
-                    for (var i = 0; i < typeList.Value.Count; i++)
-                    {
-                        var provider = typeList.Value[i];
-
-                        // Making sure to not disable the provider that just got enabled,
-                        // in case it is already in the list.
-                        if (provider != locomotionProvider)
-                        {
-                            provider.Disable();
-                        }
-                    }
-                }
-
-                // Ensure the now enabled provider gets added to the managed enabled
-                // providers list.
-                if (!enabledLocomotionProvidersSnapshot[typeof(IOnRailsLocomotionProvider)].Contains(locomotionProvider))
-                {
-                    enabledLocomotionProviders[typeof(IOnRailsLocomotionProvider)].Add(locomotionProvider);
-                }
-            }
-            else if (locomotionProvider is ITeleportLocomotionProvider ||
+            if (locomotionProvider is ITeleportLocomotionProvider ||
                 locomotionProvider is IFreeLocomotionProvider)
             {
-                // Free / teleport locomotion excludes on rails locomotion,
-                // disable any active on rails locomotion providers.
-                var onRailsLocomotionProviders = enabledLocomotionProvidersSnapshot[typeof(IOnRailsLocomotionProvider)];
-                for (var i = 0; i < onRailsLocomotionProviders.Count; i++)
-                {
-                    onRailsLocomotionProviders[i].Disable();
-                }
-
-                // Free / Teleport providers behave like a commong toggle group. There can only
+                // Free / Teleport providers behave like a toggle group. There can only
                 // ever be one active provider for free locomotion and one active for teleprot locomotion.
                 // So all we have to do is disable all other providers of the respective type.
                 if (locomotionProvider is ITeleportLocomotionProvider)
@@ -254,10 +218,6 @@ namespace RealityToolkit.Locomotion
             else if (locomotionProvider is IFreeLocomotionProvider)
             {
                 type = typeof(IFreeLocomotionProvider);
-            }
-            else if (locomotionProvider is IOnRailsLocomotionProvider)
-            {
-                type = typeof(IOnRailsLocomotionProvider);
             }
             else
             {
