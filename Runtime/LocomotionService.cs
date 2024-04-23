@@ -1,14 +1,15 @@
-// Copyright (c) Reality Collective. All rights reserved.
+﻿// Copyright (c) Reality Collective. All rights reserved.
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 
+using RealityCollective.Definitions.Utilities;
 using RealityCollective.Extensions;
 using RealityCollective.ServiceFramework.Attributes;
 using RealityCollective.ServiceFramework.Definitions.Platforms;
 using RealityCollective.ServiceFramework.Services;
-using RealityToolkit.InputSystem.Interfaces;
-using RealityToolkit.InputSystem.Listeners;
-using RealityToolkit.Locomotion.Definitions;
-using RealityToolkit.Locomotion.Interfaces;
+using RealityToolkit.Input.Interfaces;
+using RealityToolkit.Input.Listeners;
+using RealityToolkit.Locomotion.Movement;
+using RealityToolkit.Locomotion.Teleportation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,6 +34,9 @@ namespace RealityToolkit.Locomotion
         public LocomotionService(string name, uint priority, LocomotionServiceProfile profile)
             : base(name, priority, profile)
         {
+            LocomotionEnabled = profile.LocomotionStartupBehaviour == AutoStartBehavior.AutoStart;
+            MovementEnabled = profile.MovementStartupBehaviour == AutoStartBehavior.AutoStart;
+            TeleportationEnabled = profile.TeleportationStartupBehaviour == AutoStartBehavior.AutoStart;
             teleportCooldown = profile.TeleportCooldown;
         }
 
@@ -43,9 +47,27 @@ namespace RealityToolkit.Locomotion
         private readonly Dictionary<Type, List<ILocomotionProvider>> enabledLocomotionProviders = new Dictionary<Type, List<ILocomotionProvider>>()
         {
             { typeof(IFreeLocomotionProvider), new List<ILocomotionProvider>() },
-            { typeof(ITeleportLocomotionProvider), new List<ILocomotionProvider>() },
-            { typeof(IOnRailsLocomotionProvider), new List<ILocomotionProvider>() }
+            { typeof(ITeleportLocomotionProvider), new List<ILocomotionProvider>() }
         };
+
+        /// <inheritdoc />
+        public bool LocomotionEnabled { get; set; }
+
+        private bool movementEnabled;
+        /// <inheritdoc />
+        public bool MovementEnabled
+        {
+            get => LocomotionEnabled && movementEnabled;
+            set => movementEnabled = value;
+        }
+
+        private bool teleportationEnabled;
+        /// <inheritdoc />
+        public bool TeleportationEnabled
+        {
+            get => LocomotionEnabled && teleportationEnabled;
+            set => teleportationEnabled = value;
+        }
 
         /// <inheritdoc />
         public ILocomotionTarget LocomotionTarget { get; set; }
@@ -69,26 +91,12 @@ namespace RealityToolkit.Locomotion
         }
 
         /// <inheritdoc />
-        public override void Enable()
-        {
-            base.Enable();
-            EnsureEventDriver();
-        }
-
-        /// <inheritdoc />
         public override void Update()
         {
             if (IsTeleportCoolingDown)
             {
                 currentTeleportCooldown -= Time.deltaTime;
             }
-        }
-
-        /// <inheritdoc />
-        public override void Disable()
-        {
-            DestroyEventDriver();
-            base.Disable();
         }
 
         /// <inheritdoc />
@@ -104,7 +112,7 @@ namespace RealityToolkit.Locomotion
             var provider = ServiceManager.Instance.GetService<T>();
             if (!provider.IsActive)
             {
-                provider.Enable();
+                provider.IsActive = true;
             }
         }
 
@@ -119,7 +127,7 @@ namespace RealityToolkit.Locomotion
                 var provider = locomotionProviders[i];
                 if (provider.GetType() == locomotionProviderType && !provider.IsActive)
                 {
-                    provider.Enable();
+                    provider.IsActive = true;
                 }
             }
         }
@@ -130,7 +138,7 @@ namespace RealityToolkit.Locomotion
             var provider = ServiceManager.Instance.GetService<T>();
             if (provider.IsActive)
             {
-                provider.Disable();
+                provider.IsActive = false;
             }
         }
 
@@ -145,7 +153,7 @@ namespace RealityToolkit.Locomotion
                 var provider = locomotionProviders[i];
                 if (provider.GetType() == locomotionProviderType && provider.IsActive)
                 {
-                    provider.Disable();
+                    provider.IsActive = false;
                 }
             }
         }
@@ -155,44 +163,10 @@ namespace RealityToolkit.Locomotion
         {
             var enabledLocomotionProvidersSnapshot = new Dictionary<Type, List<ILocomotionProvider>>(enabledLocomotionProviders);
 
-            if (locomotionProvider is IOnRailsLocomotionProvider)
-            {
-                // On rails locomotion providers are exclusive, meaning whenever an on rails
-                // provider is enabled, any other providers must be disabled.
-                foreach (var typeList in enabledLocomotionProvidersSnapshot)
-                {
-                    for (var i = 0; i < typeList.Value.Count; i++)
-                    {
-                        var provider = typeList.Value[i];
-
-                        // Making sure to not disable the provider that just got enabled,
-                        // in case it is already in the list.
-                        if (provider != locomotionProvider)
-                        {
-                            provider.Disable();
-                        }
-                    }
-                }
-
-                // Ensure the now enabled provider gets added to the managed enabled
-                // providers list.
-                if (!enabledLocomotionProvidersSnapshot[typeof(IOnRailsLocomotionProvider)].Contains(locomotionProvider))
-                {
-                    enabledLocomotionProviders[typeof(IOnRailsLocomotionProvider)].Add(locomotionProvider);
-                }
-            }
-            else if (locomotionProvider is ITeleportLocomotionProvider ||
+            if (locomotionProvider is ITeleportLocomotionProvider ||
                 locomotionProvider is IFreeLocomotionProvider)
             {
-                // Free / teleport locomotion excludes on rails locomotion,
-                // disable any active on rails locomotion providers.
-                var onRailsLocomotionProviders = enabledLocomotionProvidersSnapshot[typeof(IOnRailsLocomotionProvider)];
-                for (var i = 0; i < onRailsLocomotionProviders.Count; i++)
-                {
-                    onRailsLocomotionProviders[i].Disable();
-                }
-
-                // Free / Teleport providers behave like a commong toggle group. There can only
+                // Free / Teleport providers behave like a toggle group. There can only
                 // ever be one active provider for free locomotion and one active for teleprot locomotion.
                 // So all we have to do is disable all other providers of the respective type.
                 if (locomotionProvider is ITeleportLocomotionProvider)
@@ -206,7 +180,7 @@ namespace RealityToolkit.Locomotion
                         // in case it is already in the list.
                         if (teleportLocomotionProvider != locomotionProvider)
                         {
-                            teleportLocomotionProvider.Disable();
+                            teleportLocomotionProvider.IsActive = false;
                         }
                     }
 
@@ -228,7 +202,7 @@ namespace RealityToolkit.Locomotion
                         // in case it is already in the list.
                         if (freeLocomotionProvider != locomotionProvider)
                         {
-                            freeLocomotionProvider.Disable();
+                            freeLocomotionProvider.IsActive = false;
                         }
                     }
 
@@ -254,10 +228,6 @@ namespace RealityToolkit.Locomotion
             {
                 type = typeof(IFreeLocomotionProvider);
             }
-            else if (locomotionProvider is IOnRailsLocomotionProvider)
-            {
-                type = typeof(IOnRailsLocomotionProvider);
-            }
             else
             {
                 type = typeof(ILocomotionProvider);
@@ -274,7 +244,7 @@ namespace RealityToolkit.Locomotion
         {
             if (eventDriver.IsNull())
             {
-                eventDriver = new GameObject(nameof(LocomotionProviderEventDriver), typeof(LocomotionProviderEventDriver), typeof(InputSystemGlobalListener));
+                eventDriver = new GameObject(nameof(LocomotionProviderEventDriver), typeof(LocomotionProviderEventDriver), typeof(InputServiceGlobalListener));
                 UnityEngine.Object.DontDestroyOnLoad(eventDriver);
             }
         }
@@ -295,7 +265,7 @@ namespace RealityToolkit.Locomotion
             };
 
         /// <inheritdoc />
-        public void RaiseTeleportTargetRequest(ITeleportLocomotionProvider teleportLocomotionProvider, IMixedRealityInputSource inputSource)
+        public void RaiseTeleportTargetRequest(ITeleportLocomotionProvider teleportLocomotionProvider, IInputSource inputSource)
         {
             if (IsTeleportCoolingDown)
             {
@@ -314,7 +284,7 @@ namespace RealityToolkit.Locomotion
             };
 
         /// <inheritdoc />
-        public void RaiseTeleportStarted(ITeleportLocomotionProvider locomotionProvider, IMixedRealityInputSource inputSource, Pose pose, ITeleportAnchor anchor)
+        public void RaiseTeleportStarted(ITeleportLocomotionProvider locomotionProvider, IInputSource inputSource, Pose pose, ITeleportAnchor anchor)
         {
             teleportEventData.Initialize(locomotionProvider, inputSource, pose, anchor);
             HandleEvent(teleportEventData, OnTeleportStartedHandler);
@@ -328,7 +298,7 @@ namespace RealityToolkit.Locomotion
             };
 
         /// <inheritdoc />
-        public void RaiseTeleportCompleted(ITeleportLocomotionProvider locomotionProvider, IMixedRealityInputSource inputSource, Pose pose, ITeleportAnchor anchor)
+        public void RaiseTeleportCompleted(ITeleportLocomotionProvider locomotionProvider, IInputSource inputSource, Pose pose, ITeleportAnchor anchor)
         {
             currentTeleportCooldown = teleportCooldown;
             teleportEventData.Initialize(locomotionProvider, inputSource, pose, anchor);
@@ -343,7 +313,7 @@ namespace RealityToolkit.Locomotion
             };
 
         /// <inheritdoc />
-        public void RaiseTeleportCanceled(ITeleportLocomotionProvider locomotionProvider, IMixedRealityInputSource inputSource)
+        public void RaiseTeleportCanceled(ITeleportLocomotionProvider locomotionProvider, IInputSource inputSource)
         {
             teleportEventData.Initialize(locomotionProvider, inputSource);
             HandleEvent(teleportEventData, OnTeleportCanceledHandler);

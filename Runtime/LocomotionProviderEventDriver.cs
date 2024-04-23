@@ -4,34 +4,33 @@
 using RealityCollective.Extensions;
 using RealityCollective.ServiceFramework.Services;
 using RealityToolkit.EventDatum.Input;
-using RealityToolkit.InputSystem.Interfaces;
-using RealityToolkit.InputSystem.Interfaces.Handlers;
-using RealityToolkit.Locomotion.Definitions;
-using RealityToolkit.Locomotion.Interfaces;
+using RealityToolkit.Input.Interfaces;
+using RealityToolkit.Input.Interfaces.Handlers;
+using RealityToolkit.Locomotion.Teleportation;
 using UnityEngine;
 
 namespace RealityToolkit.Locomotion
 {
     /// <summary>
     /// This component is an event bridge to active <see cref="ILocomotionProvider"/> implementations.
-    /// It has a hard dependency on the <see cref="ILocomotionService"/> as well as the <see cref="IMixedRealityInputSystem"/>
-    /// and cannot work without both being active and enabled in the application. It will additionally manage active <see cref="IMixedRealityPointer"/>s
+    /// It has a hard dependency on the <see cref="ILocomotionService"/> as well as the <see cref="IInputService"/>
+    /// and cannot work without both being active and enabled in the application. It will additionally manage active <see cref="Input.Interactors.IInteractor"/>s
     /// while a teleport locomotion is active.
     /// The <see cref="ILocomotionService"/> will ensure a <see cref="GameObject"/> with this component attached is created, when the
     /// service is enabled. You do not need to manually place it in the scene.
     /// </summary>
     public class LocomotionProviderEventDriver : MonoBehaviour,
         ILocomotionServiceHandler,
-        IMixedRealityInputHandler,
-        IMixedRealityInputHandler<float>,
-        IMixedRealityInputHandler<Vector2>
+        IInputHandler,
+        IInputHandler<float>,
+        IInputHandler<Vector2>
     {
-        private IMixedRealityInputSystem inputService = null;
+        private IInputService inputService = null;
         /// <summary>
-        /// Gets the currently active <see cref="IMixedRealityInputSystem"/> instance.
+        /// Gets the currently active <see cref="IInputService"/> instance.
         /// </summary>
-        protected IMixedRealityInputSystem InputService
-            => inputService ??= ServiceManager.Instance.GetService<IMixedRealityInputSystem>();
+        protected IInputService InputService
+            => inputService ??= ServiceManager.Instance.GetService<IInputService>();
 
         private ILocomotionService locomotionService = null;
         /// <summary>
@@ -74,7 +73,7 @@ namespace RealityToolkit.Locomotion
         {
             if (InputService.TryGetInputSource(eventData.EventSource.SourceId, out var inputSource))
             {
-                TogglePointers(false, true, inputSource);
+                ToggleInteractors(false, true, inputSource);
             }
 
             for (int i = 0; i < LocomotionService.EnabledLocomotionProviders.Count; i++)
@@ -88,7 +87,7 @@ namespace RealityToolkit.Locomotion
         {
             if (InputService.TryGetInputSource(eventData.EventSource.SourceId, out var inputSource))
             {
-                TogglePointers(false, true, inputSource);
+                ToggleInteractors(false, true, inputSource);
             }
 
             for (int i = 0; i < LocomotionService.EnabledLocomotionProviders.Count; i++)
@@ -102,7 +101,7 @@ namespace RealityToolkit.Locomotion
         {
             if (InputService.TryGetInputSource(eventData.EventSource.SourceId, out var inputSource))
             {
-                TogglePointers(true, false, inputSource);
+                ToggleInteractors(true, false, inputSource);
             }
 
             for (int i = 0; i < LocomotionService.EnabledLocomotionProviders.Count; i++)
@@ -116,7 +115,7 @@ namespace RealityToolkit.Locomotion
         {
             if (InputService.TryGetInputSource(eventData.EventSource.SourceId, out var inputSource))
             {
-                TogglePointers(true, false, inputSource);
+                ToggleInteractors(true, false, inputSource);
             }
 
             for (int i = 0; i < LocomotionService.EnabledLocomotionProviders.Count; i++)
@@ -161,28 +160,28 @@ namespace RealityToolkit.Locomotion
             }
         }
 
-        private void TogglePointers(bool isOn, bool teleportInProgress, IMixedRealityInputSource teleportInputSource = null)
+        private void ToggleInteractors(bool isOn, bool teleportInProgress, IInputSource teleportInputSource = null)
         {
             foreach (var inputSource in InputService.DetectedInputSources)
             {
                 var isTeleportInputSource = inputSource.SourceId == teleportInputSource.SourceId;
 
-                foreach (var pointer in inputSource.Pointers)
+                foreach (var interactor in inputSource.Pointers)
                 {
-                    if (isTeleportInputSource && pointer is ITeleportTargetProvider _)
+                    if (isTeleportInputSource && interactor is ITeleportTargetProvider _)
                     {
-                        // If this pointer is the one handling the teleport and providing a target,
+                        // If this interactor is the one handling the teleport and providing a target,
                         // we do not want to mess with its state as it will manage it internally.
                         continue;
                     }
 
-                    pointer.IsTeleportRequestActive = teleportInProgress;
+                    interactor.IsTeleportRequestActive = teleportInProgress;
 
-                    if (pointer.BaseCursor != null)
+                    if (interactor.BaseCursor != null)
                     {
-                        // The pointer might be a teleport target provider, in which case we do not want
+                        // The interactor might be a teleport target provider, in which case we do not want
                         // to enable it in any case.
-                        pointer.BaseCursor.IsVisible = isOn && !(pointer is ITeleportTargetProvider);
+                        interactor.BaseCursor.IsVisible = isOn && !(interactor is ITeleportTargetProvider);
                     }
                 }
             }
