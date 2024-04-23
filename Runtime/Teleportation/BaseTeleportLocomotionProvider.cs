@@ -58,8 +58,7 @@ namespace RealityToolkit.Locomotion.Teleportation
         /// <inheritdoc />
         public bool IsTeleporting { get; protected set; }
 
-        /// <inheritdoc />
-        public override void Disable()
+        protected override void OnDeactivated()
         {
             // When being disabled, cancel any in progress teleport.
             foreach (var openRequest in OpenTargetRequests)
@@ -68,7 +67,7 @@ namespace RealityToolkit.Locomotion.Teleportation
             }
 
             AvailableTargetProviders.Clear();
-            base.Disable();
+            base.OnDeactivated();
         }
 
         /// <inheritdoc />
@@ -86,7 +85,7 @@ namespace RealityToolkit.Locomotion.Teleportation
             // Is this the input action this provider is configured to look out for?
             // And did we already request a teleport target for the input source that raised it?
             // Is teleportation gloabally disabled?
-            if (!LocomotionService.TeleportationEnabled ||
+            if (!IsActive || !LocomotionService.TeleportationEnabled ||
                 eventData.InputAction != InputAction ||
                 OpenTargetRequests.ContainsKey(eventData.SourceId))
             {
@@ -123,7 +122,7 @@ namespace RealityToolkit.Locomotion.Teleportation
                 // for a teleportation target or we start/cancel an existing
                 // request for the input source, if any.
                 var singleAxisPosition = eventData.InputData;
-                if (LocomotionService.TeleportationEnabled &&
+                if (IsActive && LocomotionService.TeleportationEnabled &&
                     singleAxisPosition > inputThreshold &&
                     !WasInputPreviouslyDown(eventData.SourceId) &&
                     !OpenTargetRequests.ContainsKey(eventData.SourceId))
@@ -167,7 +166,7 @@ namespace RealityToolkit.Locomotion.Teleportation
                     angle += angleOffset;
 
                     var absoluteAngle = Mathf.Abs(angle);
-                    if (LocomotionService.TeleportationEnabled &&
+                    if (IsActive && LocomotionService.TeleportationEnabled &&
                         absoluteAngle < teleportActivationAngle &&
                         !WasInputPreviouslyDown(eventData.SourceId) &&
                         !OpenTargetRequests.ContainsKey(eventData.SourceId))
@@ -177,7 +176,7 @@ namespace RealityToolkit.Locomotion.Teleportation
                         inputPreviouslyDownDict[eventData.SourceId] = true;
                         RaiseTeleportTargetRequest(eventData.InputSource);
                     }
-                    else if (LocomotionService.TeleportationEnabled && canRotate)
+                    else if (IsActive && LocomotionService.TeleportationEnabled && canRotate)
                     {
                         // wrap the angle value.
                         if (absoluteAngle > 180f)

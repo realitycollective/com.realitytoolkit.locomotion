@@ -91,26 +91,12 @@ namespace RealityToolkit.Locomotion
         }
 
         /// <inheritdoc />
-        public override void Enable()
-        {
-            base.Enable();
-            EnsureEventDriver();
-        }
-
-        /// <inheritdoc />
         public override void Update()
         {
             if (IsTeleportCoolingDown)
             {
                 currentTeleportCooldown -= Time.deltaTime;
             }
-        }
-
-        /// <inheritdoc />
-        public override void Disable()
-        {
-            DestroyEventDriver();
-            base.Disable();
         }
 
         /// <inheritdoc />
@@ -126,7 +112,7 @@ namespace RealityToolkit.Locomotion
             var provider = ServiceManager.Instance.GetService<T>();
             if (!provider.IsActive)
             {
-                provider.Enable();
+                provider.IsActive = true;
             }
         }
 
@@ -141,7 +127,7 @@ namespace RealityToolkit.Locomotion
                 var provider = locomotionProviders[i];
                 if (provider.GetType() == locomotionProviderType && !provider.IsActive)
                 {
-                    provider.Enable();
+                    provider.IsActive = true;
                 }
             }
         }
@@ -152,7 +138,7 @@ namespace RealityToolkit.Locomotion
             var provider = ServiceManager.Instance.GetService<T>();
             if (provider.IsActive)
             {
-                provider.Disable();
+                provider.IsActive = false;
             }
         }
 
@@ -167,7 +153,7 @@ namespace RealityToolkit.Locomotion
                 var provider = locomotionProviders[i];
                 if (provider.GetType() == locomotionProviderType && provider.IsActive)
                 {
-                    provider.Disable();
+                    provider.IsActive = false;
                 }
             }
         }
@@ -194,7 +180,7 @@ namespace RealityToolkit.Locomotion
                         // in case it is already in the list.
                         if (teleportLocomotionProvider != locomotionProvider)
                         {
-                            teleportLocomotionProvider.Disable();
+                            teleportLocomotionProvider.IsActive = false;
                         }
                     }
 
@@ -216,7 +202,7 @@ namespace RealityToolkit.Locomotion
                         // in case it is already in the list.
                         if (freeLocomotionProvider != locomotionProvider)
                         {
-                            freeLocomotionProvider.Disable();
+                            freeLocomotionProvider.IsActive = false;
                         }
                     }
 

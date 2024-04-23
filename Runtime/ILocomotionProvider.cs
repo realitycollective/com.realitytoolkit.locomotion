@@ -19,7 +19,7 @@ namespace RealityToolkit.Locomotion
         /// <summary>
         /// Gets whether this <see cref="ILocomotionProvider"/> is currently active.
         /// </summary>
-        bool IsActive { get; }
+        bool IsActive { get; set; }
 
         /// <summary>
         /// The input action used to perform locomotion using this provider.

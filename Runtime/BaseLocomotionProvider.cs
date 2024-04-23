@@ -9,6 +9,9 @@ using UnityEngine;
 
 namespace RealityToolkit.Locomotion
 {
+    /// <summary>
+    /// Base implementation for any kind of <see cref="ILocomotionProvider"/>.
+    /// </summary>
     public abstract class BaseLocomotionProvider : BaseServiceModule, ILocomotionProvider
     {
         /// <inheritdoc />
@@ -21,10 +24,31 @@ namespace RealityToolkit.Locomotion
         }
 
         private readonly AutoStartBehavior startupBehaviour;
-        private bool isInitialized;
 
+        private bool isActive;
         /// <inheritdoc />
-        public bool IsActive { get; protected set; }
+        public bool IsActive
+        {
+            get => isActive;
+            set
+            {
+                if (value == isActive)
+                {
+                    return;
+                }
+
+                isActive = value;
+                if (isActive)
+                {
+                    OnActivated();
+                    LocomotionService.OnLocomotionProviderEnabled(this);
+                    return;
+                }
+
+                OnDeactivated();
+                LocomotionService.OnLocomotionProviderDisabled(this);
+            }
+        }
 
         /// <inheritdoc />
         public InputAction InputAction { get; }
@@ -35,41 +59,17 @@ namespace RealityToolkit.Locomotion
         protected ILocomotionService LocomotionService { get; }
 
         /// <inheritdoc />
-        public override void Enable()
-        {
-            base.Enable();
+        public override void Start() => IsActive = startupBehaviour == AutoStartBehavior.AutoStart;
 
-            if (IsActive)
-            {
-                return;
-            }
+        /// <summary>
+        /// This <see cref="ILocomotionProvider"/> was activated.
+        /// </summary>
+        protected virtual void OnActivated() { }
 
-            if (startupBehaviour == AutoStartBehavior.AutoStart || isInitialized)
-            {
-                IsActive = true;
-                LocomotionService.OnLocomotionProviderEnabled(this);
-            }
-            else
-            {
-                Disable();
-            }
-
-            isInitialized = true;
-        }
-
-        /// <inheritdoc />
-        public override void Disable()
-        {
-            base.Disable();
-
-            if (!IsActive)
-            {
-                return;
-            }
-
-            IsActive = false;
-            LocomotionService.OnLocomotionProviderDisabled(this);
-        }
+        /// <summary>
+        /// This <see cref="ILocomotionProvider"/> was deactivated.
+        /// </summary>
+        protected virtual void OnDeactivated() { }
 
         /// <inheritdoc />
         public virtual void OnTeleportTargetRequested(LocomotionEventData eventData) { }

@@ -40,10 +40,10 @@ namespace RealityToolkit.Locomotion.Teleportation
         private float fadeTime;
 
         /// <inheritdoc />
-        public override void Enable()
+        protected override void OnActivated()
         {
+            base.OnActivated();
             InitiailzeFadeSphere();
-            base.Enable();
         }
 
         /// <inheritdoc />

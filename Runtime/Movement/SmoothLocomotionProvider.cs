@@ -28,7 +28,9 @@ namespace RealityToolkit.Locomotion.Movement
         {
             base.OnInputChanged(eventData);
 
-            if (LocomotionService.MovementEnabled && eventData.InputAction == InputAction)
+            if (IsActive &&
+                LocomotionService.MovementEnabled &&
+                eventData.InputAction == InputAction)
             {
                 LocomotionService.LocomotionTarget.Move(eventData.InputData, speed);
             }
