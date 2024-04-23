@@ -18,10 +18,11 @@ namespace RealityToolkit.Locomotion.Movement
         public SmoothLocomotionProvider(string name, uint priority, SmoothLocomotionProviderProfile profile, ILocomotionService parentService)
             : base(name, priority, profile, parentService)
         {
-            speed = profile.Speed;
+            Speed = profile.Speed;
         }
 
-        private readonly float speed;
+        /// <inheritdoc />
+        public float Speed { get; set; }
 
         /// <inheritdoc />
         public override void OnInputChanged(InputEventData<Vector2> eventData)
@@ -32,7 +33,7 @@ namespace RealityToolkit.Locomotion.Movement
                 LocomotionService.MovementEnabled &&
                 eventData.InputAction == InputAction)
             {
-                LocomotionService.LocomotionTarget.Move(eventData.InputData, speed);
+                LocomotionService.LocomotionTarget.Move(eventData.InputData, Speed);
             }
         }
     }

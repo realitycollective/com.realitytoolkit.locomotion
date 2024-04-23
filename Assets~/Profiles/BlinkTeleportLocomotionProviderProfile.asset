@@ -25,3 +25,5 @@ MonoBehaviour:
   rotationAmount: 90
   fadeDuration: 0.25
   fadeMaterial: {fileID: 2100000, guid: 3725a8df888ad854ca0f0979c213867a, type: 2}
+  fadeInColor: {r: 0, g: 0, b: 0, a: 0}
+  fadeOutColor: {r: 0, g: 0, b: 0, a: 1}
