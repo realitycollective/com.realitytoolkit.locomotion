@@ -15,5 +15,10 @@ namespace RealityToolkit.Locomotion.Movement
         /// The movement speed.
         /// </summary>
         public float Speed { get; set; }
+
+        /// <summary>
+        /// Movement speed when running.
+        /// </summary>
+        public float RunningSpeed { get; set; }
     }
 }

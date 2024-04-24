@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 
 using RealityToolkit.EventDatum.Input;
+using RealityToolkit.Input.Definitions;
 using UnityEngine;
 
 namespace RealityToolkit.Locomotion.Movement
@@ -18,11 +19,69 @@ namespace RealityToolkit.Locomotion.Movement
         public SmoothLocomotionProvider(string name, uint priority, SmoothLocomotionProviderProfile profile, ILocomotionService parentService)
             : base(name, priority, profile, parentService)
         {
+            runInputAction = profile.RunInputAction;
             Speed = profile.Speed;
+            RunningSpeed = profile.RunningSpeed;
+        }
+
+        private bool isRunning;
+        private readonly InputAction runInputAction;
+
+        private float speed;
+        /// <inheritdoc />
+        public float Speed
+        {
+            get => speed;
+            set
+            {
+                if (value < 1f)
+                {
+                    value = 1f;
+                    Debug.LogError($"{GetType().Name}.{nameof(Speed)} must be 1 or greater.");
+                }
+
+                speed = value;
+            }
+        }
+
+        private float runningSpeed;
+        /// <inheritdoc />
+        public float RunningSpeed
+        {
+            get => runningSpeed;
+            set
+            {
+                if (value < 1f)
+                {
+                    value = 1f;
+                    Debug.LogError($"{GetType().Name}.{nameof(RunningSpeed)} must be 1 or greater.");
+                }
+
+                runningSpeed = value;
+            }
         }
 
         /// <inheritdoc />
-        public float Speed { get; set; }
+        public override void OnInputDown(InputEventData eventData)
+        {
+            base.OnInputDown(eventData);
+
+            if (eventData.InputAction == runInputAction)
+            {
+                isRunning = true;
+            }
+        }
+
+        /// <inheritdoc />
+        public override void OnInputUp(InputEventData eventData)
+        {
+            base.OnInputUp(eventData);
+
+            if (eventData.InputAction == runInputAction)
+            {
+                isRunning = false;
+            }
+        }
 
         /// <inheritdoc />
         public override void OnInputChanged(InputEventData<Vector2> eventData)
@@ -33,7 +92,7 @@ namespace RealityToolkit.Locomotion.Movement
                 LocomotionService.MovementEnabled &&
                 eventData.InputAction == InputAction)
             {
-                LocomotionService.LocomotionTarget.Move(eventData.InputData, Speed);
+                LocomotionService.LocomotionTarget.Move(eventData.InputData, isRunning ? RunningSpeed : Speed);
             }
         }
     }
