@@ -5,7 +5,6 @@ using RealityCollective.ServiceFramework.Services;
 using RealityToolkit.Definitions.Physics;
 using RealityToolkit.EventDatum.Input;
 using RealityToolkit.Input.Interactors;
-using RealityToolkit.Input.Interfaces;
 using RealityToolkit.Utilities.Lines.DataProviders;
 using RealityToolkit.Utilities.Physics;
 using System;
@@ -88,9 +87,6 @@ namespace RealityToolkit.Locomotion.Teleportation
 
         /// <inheritdoc />
         public ILocomotionProvider RequestingLocomotionProvider { get; private set; }
-
-        /// <inheritdoc />
-        public IInputSource InputSource => base.InputSource;
 
         /// <inheritdoc />
         public Pose? TargetPose { get; private set; }
