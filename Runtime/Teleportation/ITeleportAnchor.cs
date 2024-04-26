@@ -6,6 +6,8 @@ using UnityEngine;
 
 namespace RealityToolkit.Locomotion.Teleportation
 {
+    public delegate void OnTargetedChangedDelegate(bool isTargeted);
+
     /// <summary>
     /// A teleportation anchor supported by the <see cref="ILocomotionService"/>.
     /// A teleport anchor is a predefined teleportation <see cref="Position"/> and optionally <see cref="TargetOrientation"/>.
@@ -14,10 +16,14 @@ namespace RealityToolkit.Locomotion.Teleportation
     public interface ITeleportAnchor
     {
         /// <summary>
-        /// Gets whether this <see cref="ITeleportAnchor"/> is enabled and
-        /// can be teleported to.
+        /// Is this <see cref="ITeleportAnchor"/> enabled and can be teleported to?
         /// </summary>
         bool IsEnabled { get; }
+
+        /// <summary>
+        /// Is this <see cref="ITeleportAnchor"/> currently being targeted by a <see cref="ITeleportTargetProvider"/>?
+        /// </summary>
+        bool IsTargeted { get; }
 
         /// <summary>
         /// The position the teleport will end at.
@@ -41,10 +47,10 @@ namespace RealityToolkit.Locomotion.Teleportation
         float TargetOrientation { get; }
 
         /// <summary>
-        /// The <see cref="ITeleportAnchor"/> is being targeted for teleportation but teleportation
-        /// has taken place. It may not happen.
+        /// The <see cref="ITeleportAnchor"/> is being targeted by a <see cref="ITeleportTargetProvider"/>
+        /// or it has stopped targeting it.
         /// </summary>
-        event Action Targeted;
+        event OnTargetedChangedDelegate TargetedChanged;
 
         /// <summary>
         /// The <see cref="ITeleportAnchor"/> has been teleported to.

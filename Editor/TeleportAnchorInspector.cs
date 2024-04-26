@@ -32,12 +32,12 @@ namespace RealityToolkit.Locomotion.Editor
             inspector.Add(overrideOrientationField);
             inspector.Add(UIElementsUtilities.Space());
 
-            var onTargetedField = new PropertyField()
+            var onTargetedChangedField = new PropertyField()
             {
-                bindingPath = "onTargeted"
+                bindingPath = "onTargetedChanged"
             };
 
-            inspector.Add(onTargetedField);
+            inspector.Add(onTargetedChangedField);
             inspector.Add(UIElementsUtilities.Space());
 
             var onActivatedField = new PropertyField()

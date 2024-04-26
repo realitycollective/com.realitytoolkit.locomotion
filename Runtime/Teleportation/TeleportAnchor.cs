@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 
 using RealityCollective.Extensions;
+using RealityToolkit.EventDatum.Input;
 using RealityToolkit.Input.Handlers;
 using System;
 using UnityEngine;
@@ -28,14 +29,32 @@ namespace RealityToolkit.Locomotion.Teleportation
                  "Override orientation is the transform forward of the GameObject this component is attached to.")]
         private bool overrideOrientation = false;
 
-        [SerializeField, Tooltip("The anchor is being targeted for teleportation.")]
-        private UnityEvent onTargeted = null;
+        [SerializeField, Tooltip("The anchor is being targeted for teleportation or is not targeted anymore.")]
+        private UnityEvent<bool> onTargetedChanged = null;
 
         [SerializeField, Tooltip("The anchor has been teleported to.")]
         private UnityEvent onActivated = null;
 
         /// <inheritdoc />
         public bool IsEnabled => isActiveAndEnabled;
+
+        private bool isTargeted;
+        /// <inheritdoc />
+        public bool IsTargeted
+        {
+            get => isTargeted;
+            private set
+            {
+                if (isTargeted == value)
+                {
+                    return;
+                }
+
+                isTargeted = value;
+                onTargetedChanged?.Invoke(isTargeted);
+                TargetedChanged?.Invoke(isTargeted);
+            }
+        }
 
         /// <inheritdoc />
         public Vector3 Position => anchorTransform.position;
@@ -53,7 +72,7 @@ namespace RealityToolkit.Locomotion.Teleportation
         public event Action Activated;
 
         /// <inheritdoc />
-        public event Action Targeted;
+        public event OnTargetedChangedDelegate TargetedChanged;
 
         /// <summary>
         /// See <see cref="MonoBehaviour"/>.
@@ -64,6 +83,36 @@ namespace RealityToolkit.Locomotion.Teleportation
             {
                 anchorTransform = transform;
             }
+        }
+
+        /// <summary>
+        /// See <see cref="MonoBehaviour"/>.
+        /// </summary>
+        private void OnDisable()
+        {
+            IsTargeted = false;
+        }
+
+        /// <inheritdoc />
+        public override void OnFocusEnter(FocusEventData eventData)
+        {
+            if (eventData.Pointer is not TeleportInteractor _)
+            {
+                return;
+            }
+
+            IsTargeted = true;
+        }
+
+        /// <inheritdoc />
+        public override void OnFocusExit(FocusEventData eventData)
+        {
+            if (eventData.Pointer is not TeleportInteractor _)
+            {
+                return;
+            }
+
+            IsTargeted = false;
         }
 
         /// <summary>
