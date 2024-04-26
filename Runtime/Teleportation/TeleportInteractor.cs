@@ -407,10 +407,7 @@ namespace RealityToolkit.Locomotion.Teleportation
         }
 
         /// <inheritdoc />
-        public void OnTeleportStarted(LocomotionEventData eventData) { }
-
-        /// <inheritdoc />
-        public void OnTeleportCompleted(LocomotionEventData eventData)
+        public void OnTeleportStarted(LocomotionEventData eventData)
         {
             // We could be checking here whether the completed teleport
             // is this teleport provider's own teleport operation and act differently
@@ -418,6 +415,9 @@ namespace RealityToolkit.Locomotion.Teleportation
             // basically cancel out any other teleport pointer as well.
             ResetToDefaults();
         }
+
+        /// <inheritdoc />
+        public void OnTeleportCompleted(LocomotionEventData eventData) { }
 
         /// <inheritdoc />
         public void OnTeleportCanceled(LocomotionEventData eventData)
