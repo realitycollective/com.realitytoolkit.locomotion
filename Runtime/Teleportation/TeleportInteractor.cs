@@ -5,7 +5,6 @@ using RealityCollective.ServiceFramework.Services;
 using RealityToolkit.Definitions.Physics;
 using RealityToolkit.EventDatum.Input;
 using RealityToolkit.Input.Interactors;
-using RealityToolkit.Input.Interfaces;
 using RealityToolkit.Utilities.Lines.DataProviders;
 using RealityToolkit.Utilities.Physics;
 using System;
@@ -88,9 +87,6 @@ namespace RealityToolkit.Locomotion.Teleportation
 
         /// <inheritdoc />
         public ILocomotionProvider RequestingLocomotionProvider { get; private set; }
-
-        /// <inheritdoc />
-        public IInputSource InputSource => base.InputSource;
 
         /// <inheritdoc />
         public Pose? TargetPose { get; private set; }
@@ -411,10 +407,7 @@ namespace RealityToolkit.Locomotion.Teleportation
         }
 
         /// <inheritdoc />
-        public void OnTeleportStarted(LocomotionEventData eventData) { }
-
-        /// <inheritdoc />
-        public void OnTeleportCompleted(LocomotionEventData eventData)
+        public void OnTeleportStarted(LocomotionEventData eventData)
         {
             // We could be checking here whether the completed teleport
             // is this teleport provider's own teleport operation and act differently
@@ -422,6 +415,9 @@ namespace RealityToolkit.Locomotion.Teleportation
             // basically cancel out any other teleport pointer as well.
             ResetToDefaults();
         }
+
+        /// <inheritdoc />
+        public void OnTeleportCompleted(LocomotionEventData eventData) { }
 
         /// <inheritdoc />
         public void OnTeleportCanceled(LocomotionEventData eventData)

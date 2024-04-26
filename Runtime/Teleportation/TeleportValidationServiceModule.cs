@@ -44,7 +44,7 @@ namespace RealityToolkit.Locomotion.Teleportation
                 teleportValidationResult = TeleportValidationResult.Invalid;
             }
             // Check anchors only.
-            else if (anchorsOnly && (anchor == null || !anchor.IsActive))
+            else if (anchorsOnly && (anchor == null || !anchor.IsEnabled))
             {
                 teleportValidationResult = TeleportValidationResult.Invalid;
             }
@@ -52,7 +52,7 @@ namespace RealityToolkit.Locomotion.Teleportation
             else if (((1 << pointerResult.CurrentTarget.layer) & validLayers.value) != 0)
             {
                 // See if it's a hot spot
-                if (anchor != null && anchor.IsActive)
+                if (anchor != null && anchor.IsEnabled)
                 {
                     teleportValidationResult = TeleportValidationResult.Anchor;
                 }

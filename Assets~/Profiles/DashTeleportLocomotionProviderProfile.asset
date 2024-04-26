@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: be10300813b42df439ce19d38438c7fb, type: 3}
-  m_Name: DashTeleportLocomotionDataProviderProfile
+  m_Name: DashTeleportLocomotionProviderProfile
   m_EditorClassIdentifier: 
   startupBehaviour: 1
   inputThreshold: 0.5
