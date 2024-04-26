@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 
 using RealityCollective.Extensions;
+using RealityCollective.ServiceFramework.Services;
 using RealityToolkit.EventDatum.Input;
 using RealityToolkit.Input.Handlers;
 using System;
@@ -69,10 +70,10 @@ namespace RealityToolkit.Locomotion.Teleportation
         public float TargetOrientation => anchorTransform.eulerAngles.y;
 
         /// <inheritdoc />
-        public event Action Activated;
+        public event OnTargetedChangedDelegate TargetedChanged;
 
         /// <inheritdoc />
-        public event OnTargetedChangedDelegate TargetedChanged;
+        public event Action Activated;
 
         /// <summary>
         /// See <see cref="MonoBehaviour"/>.
@@ -83,6 +84,11 @@ namespace RealityToolkit.Locomotion.Teleportation
             {
                 anchorTransform = transform;
             }
+
+            if (ServiceManager.Instance.TryGetService<ILocomotionService>(out var locomotionService))
+            {
+                locomotionService.TeleportStarted += LocomotionService_TeleportStarted;
+            }
         }
 
         /// <summary>
@@ -90,6 +96,11 @@ namespace RealityToolkit.Locomotion.Teleportation
         /// </summary>
         private void OnDisable()
         {
+            if (ServiceManager.Instance.TryGetService<ILocomotionService>(out var locomotionService))
+            {
+                locomotionService.TeleportStarted -= LocomotionService_TeleportStarted;
+            }
+
             IsTargeted = false;
         }
 
@@ -113,6 +124,15 @@ namespace RealityToolkit.Locomotion.Teleportation
             }
 
             IsTargeted = false;
+        }
+
+        private void LocomotionService_TeleportStarted(LocomotionEventData eventData)
+        {
+            if (eventData.Anchor != null &&
+                eventData.Anchor == (ITeleportAnchor)this)
+            {
+                Activated?.Invoke();
+            }
         }
 
         /// <summary>
