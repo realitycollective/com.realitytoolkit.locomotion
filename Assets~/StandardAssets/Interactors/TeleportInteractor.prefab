@@ -28,6 +28,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1196247974088106}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -35,7 +36,6 @@ Transform:
   m_Children:
   - {fileID: 4736427770665110}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &114203474425088848
 MonoBehaviour:
@@ -101,6 +101,7 @@ MonoBehaviour:
   gravity: {x: 0, y: -9.8, z: 0}
 --- !u!120 &120827243805602862
 LineRenderer:
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -451,16 +452,20 @@ LineRenderer:
       atime6: 0
       atime7: 0
       m_Mode: 0
+      m_ColorSpace: -1
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
     numCornerVertices: 8
     numCapVertices: 8
     alignment: 0
     textureMode: 0
+    textureScale: {x: 1, y: 1}
     shadowBias: 0
     generateLightingData: 0
+  m_MaskInteraction: 0
   m_UseWorldSpace: 1
   m_Loop: 0
+  m_ApplyActiveColorSpace: 0
 --- !u!114 &114102700686190618
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -501,6 +506,7 @@ MonoBehaviour:
     atime6: 0
     atime7: 0
     m_Mode: 0
+    m_ColorSpace: -1
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   lineWidth:
@@ -623,9 +629,9 @@ MonoBehaviour:
     id: 4
     description: Pointer Pose
     axisConstraint: 7
-  cursorPrefab: {fileID: 1554777696564956, guid: dbcafce56f49455588eb636dbf45d3e6, type: 3}
-  disableCursorOnStart: 1
-  setCursorVisibilityOnSourceDetected: 0
+  uiLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
   raycastOrigin: {fileID: 0}
   activeHoldAction:
     profileGuid: 00000000000000000000000000000000
@@ -644,16 +650,16 @@ MonoBehaviour:
     axisConstraint: 2
   requiresHoldAction: 0
   enablePointerOnStart: 0
-  interactionMode: 1
-  nearInteractionCollider: {fileID: 0}
-  overrideGlobalPointerExtent: 0
-  defaultPointerExtent: 10
+  defaultExtent: 10
   pointerOrientation: 0
-  lineColorSelected:
+  cursorPrefab: {fileID: 1554777696564956, guid: dbcafce56f49455588eb636dbf45d3e6, type: 3}
+  disableCursorOnStart: 1
+  setCursorVisibilityOnSourceDetected: 0
+  defaultLineColor:
     serializedVersion: 2
-    key0: {r: 1, g: 1, b: 1, a: 0}
-    key1: {r: 0, g: 0, b: 1, a: 1}
-    key2: {r: 0, g: 0, b: 0, a: 1}
+    key0: {r: 1, g: 1, b: 1, a: 1}
+    key1: {r: 1, g: 1, b: 1, a: 1}
+    key2: {r: 0, g: 0, b: 0, a: 0}
     key3: {r: 0, g: 0, b: 0, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}
     key5: {r: 0, g: 0, b: 0, a: 0}
@@ -668,16 +674,51 @@ MonoBehaviour:
     ctime6: 0
     ctime7: 0
     atime0: 0
-    atime1: 1311
-    atime2: 64224
-    atime3: 65535
+    atime1: 65535
+    atime2: 0
+    atime3: 0
     atime4: 0
     atime5: 0
     atime6: 0
     atime7: 0
     m_Mode: 0
+    m_ColorSpace: -1
     m_NumColorKeys: 2
-    m_NumAlphaKeys: 4
+    m_NumAlphaKeys: 2
+  lineColorInputDown:
+    serializedVersion: 2
+    key0: {r: 1, g: 1, b: 1, a: 1}
+    key1: {r: 1, g: 1, b: 1, a: 1}
+    key2: {r: 0, g: 0, b: 0, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 65535
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_ColorSpace: -1
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 2
+  lineCastResolution: 50
+  lineBase: {fileID: 114203474425088848}
+  lineRenderers:
+  - {fileID: 114102700686190618}
   lineColorValid:
     serializedVersion: 2
     key0: {r: 0, g: 1, b: 0, a: 0}
@@ -705,6 +746,7 @@ MonoBehaviour:
     atime6: 0
     atime7: 0
     m_Mode: 0
+    m_ColorSpace: -1
     m_NumColorKeys: 2
     m_NumAlphaKeys: 4
   lineColorInvalid:
@@ -734,6 +776,7 @@ MonoBehaviour:
     atime6: 0
     atime7: 0
     m_Mode: 0
+    m_ColorSpace: -1
     m_NumColorKeys: 2
     m_NumAlphaKeys: 3
   lineColorNoTarget:
@@ -763,41 +806,14 @@ MonoBehaviour:
     atime6: 0
     atime7: 0
     m_Mode: 0
+    m_ColorSpace: -1
     m_NumColorKeys: 2
     m_NumAlphaKeys: 3
-  lineColorLockFocus:
-    serializedVersion: 2
-    key0: {r: 0, g: 0, b: 1, a: 0}
-    key1: {r: 0, g: 1, b: 0, a: 1}
-    key2: {r: 0, g: 0, b: 0, a: 1}
-    key3: {r: 0, g: 0, b: 0, a: 0}
-    key4: {r: 0, g: 0, b: 0, a: 0}
-    key5: {r: 0, g: 0, b: 0, a: 0}
-    key6: {r: 0, g: 0, b: 0, a: 0}
-    key7: {r: 0, g: 0, b: 0, a: 0}
-    ctime0: 0
-    ctime1: 65535
-    ctime2: 0
-    ctime3: 0
-    ctime4: 0
-    ctime5: 0
-    ctime6: 0
-    ctime7: 0
-    atime0: 0
-    atime1: 1311
-    atime2: 64224
-    atime3: 65535
-    atime4: 0
-    atime5: 0
-    atime6: 0
-    atime7: 0
-    m_Mode: 0
-    m_NumColorKeys: 2
-    m_NumAlphaKeys: 4
-  lineCastResolution: 100
-  lineBase: {fileID: 114203474425088848}
-  lineRenderers:
-  - {fileID: 114102700686190618}
+  minParabolaVelocity: 5
+  maxParabolaVelocity: 20
+  minDistanceModifier: 1
+  maxDistanceModifier: 20
+  parabolicLineData: {fileID: 114203474425088848}
   lineColorAnchor:
     serializedVersion: 2
     key0: {r: 0, g: 0, b: 1, a: 0}
@@ -825,13 +841,9 @@ MonoBehaviour:
     atime6: 0
     atime7: 0
     m_Mode: 0
+    m_ColorSpace: -1
     m_NumColorKeys: 2
     m_NumAlphaKeys: 4
-  minParabolaVelocity: 5
-  maxParabolaVelocity: 20
-  minDistanceModifier: 1
-  maxDistanceModifier: 20
-  parabolicLineData: {fileID: 114203474425088848}
 --- !u!1 &1402685148736964
 GameObject:
   m_ObjectHideFlags: 0
@@ -855,11 +867,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1402685148736964}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4133029787660532}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

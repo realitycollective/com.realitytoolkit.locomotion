@@ -30,7 +30,7 @@ namespace RealityToolkit.Locomotion.Editor
             };
 
             inspector.Add(overrideOrientationField);
-            inspector.Add(UIElementsUtilities.Space());
+            inspector.Add(UIElementsUtilities.VerticalSpace());
 
             var onTargetedChangedField = new PropertyField()
             {
@@ -38,7 +38,7 @@ namespace RealityToolkit.Locomotion.Editor
             };
 
             inspector.Add(onTargetedChangedField);
-            inspector.Add(UIElementsUtilities.Space());
+            inspector.Add(UIElementsUtilities.VerticalSpace());
 
             var onActivatedField = new PropertyField()
             {
