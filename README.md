@@ -31,6 +31,12 @@ Make sure to always use the same source for all toolkit modules. Avoid using dif
 
 This option will be available soon.
 
+## Requirements
+<!-- Fill in list of requirements here -->
+
+- [Unity 2022.3 and above](https://unity.com/)
+- [Reality Toolkit - Core](https://github.com/realitycollective/com.realitytoolkit.core)
+
 ## Getting Started
 
 Check the ["Getting Started"](https://www.realitytoolkit.io/) documentation for the Reality Toolkit and to learn more about this module.
