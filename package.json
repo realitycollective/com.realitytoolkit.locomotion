@@ -2,7 +2,7 @@
   "name": "com.realitytoolkit.locomotion",
   "displayName": "RealityToolkit.Locomotion",
   "description": "The Locomotion System for use with the Reality Toolkit by the Reality Collective.",
-  "version": "1.0.2-pre.2",
+  "version": "1.0.2-pre.3",
   "documentationUrl": "https://realitytoolkit.io",
   "changelogUrl": "https://github.com/realitycollective/com.realitytoolkit.locomotion/releases",
   "licensesUrl": "https://github.com/realitycollective/com.realitytoolkit.locomotion/blob/main/LICENSE.md",
