@@ -2,6 +2,10 @@
   "name": "com.realitytoolkit.locomotion",
   "displayName": "RealityToolkit.Locomotion",
   "description": "The Locomotion System for use with the Reality Toolkit by the Reality Collective.",
+  "version": "1.0.2-pre.3",
+  "documentationUrl": "https://realitytoolkit.io",
+  "changelogUrl": "https://github.com/realitycollective/com.realitytoolkit.locomotion/releases",
+  "licensesUrl": "https://github.com/realitycollective/com.realitytoolkit.locomotion/blob/main/LICENSE.md",
   "keywords": [
     "VR",
     "AR",
@@ -9,11 +13,10 @@
     "Mixed Reality",
     "Locomotion"
   ],
-  "version": "1.0.1",
   "unity": "2022.3",
   "homepage": "https://github.com/realitycollective",
   "bugs": {
-    "url": "https://github.com/realitycollective/realitytoolkit.dev/issues"
+    "url": "https://github.com/realitycollective/com.realitytoolkit.locomotion/issues"
   },
   "license": "MIT",
   "repository": {
@@ -25,8 +28,11 @@
     "email": "realitycollectivedev@gmail.com",
     "url": "https://github.com/realitycollective"
   },
+  "publishConfig": {
+    "registry": "https://package.openupm.com"
+  },
   "dependencies": {
-    "com.realitytoolkit.core": "1.0.0-pre.44"
+    "com.realitytoolkit.core": "1.0.0-pre.48"
   },
   "assets": [
     {

@@ -10,6 +10,8 @@ using UnityEngine;
 
 namespace RealityToolkit.Locomotion
 {
+    public delegate void LocomotionEventDelegate(LocomotionEventData eventData);
+
     /// <summary>
     /// A service implementing locomotion for immersive experiences.
     /// </summary>
@@ -45,6 +47,18 @@ namespace RealityToolkit.Locomotion
         /// Gets a list of currently enabled <see cref="ILocomotionProvider"/>s.
         /// </summary>
         IReadOnlyList<ILocomotionProvider> EnabledLocomotionProviders { get; }
+
+        /// <inheritdoc cref="ILocomotionServiceHandler.OnTeleportTargetRequested(LocomotionEventData)"/>
+        event LocomotionEventDelegate TeleportTargetRequested;
+
+        /// <inheritdoc cref="ILocomotionServiceHandler.OnTeleportStarted(LocomotionEventData)"/>
+        event LocomotionEventDelegate TeleportStarted;
+
+        /// <inheritdoc cref="ILocomotionServiceHandler.OnTeleportCompleted(LocomotionEventData)"/>
+        event LocomotionEventDelegate TeleportCompleted;
+
+        /// <inheritdoc cref="ILocomotionServiceHandler.OnTeleportCanceled(LocomotionEventData)"/>
+        event LocomotionEventDelegate TeleportCanceled;
 
         /// <summary>
         /// Enables a locomotion provider of type <typeparamref name="T"/>.
