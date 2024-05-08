@@ -92,7 +92,10 @@ namespace RealityToolkit.Locomotion.Movement
                 LocomotionService.MovementEnabled &&
                 eventData.InputAction == InputAction)
             {
-                LocomotionService.LocomotionTarget.Move(eventData.InputData, isRunning ? RunningSpeed : Speed);
+                var speed = isRunning ? RunningSpeed : Speed;
+
+                LocomotionService.LocomotionTarget.Move(eventData.InputData, speed);
+                LocomotionService.RaiseMoving(this, eventData.InputSource, eventData.InputData, speed);
             }
         }
     }

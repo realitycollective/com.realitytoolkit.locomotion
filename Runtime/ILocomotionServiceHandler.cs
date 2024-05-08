@@ -11,6 +11,12 @@ namespace RealityToolkit.Locomotion
     public interface ILocomotionServiceHandler : IEventSystemHandler
     {
         /// <summary>
+        /// Raised when a <see cref="Movement.IFreeLocomotionProvider"/> is executing movement.
+        /// </summary>
+        /// <param name="eventData"><see cref="LocomotionEventData"/> provided.</param>
+        void OnMoving(LocomotionEventData eventData);
+
+        /// <summary>
         /// Raised when a <see cref="Teleportation.ITeleportLocomotionProvider"/> requests a
         /// target location for teleport, but no teleportation has started.
         /// </summary>

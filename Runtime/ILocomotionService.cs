@@ -3,6 +3,7 @@
 
 using RealityCollective.ServiceFramework.Interfaces;
 using RealityToolkit.Input.Interfaces;
+using RealityToolkit.Locomotion.Movement;
 using RealityToolkit.Locomotion.Teleportation;
 using System;
 using System.Collections.Generic;
@@ -47,6 +48,9 @@ namespace RealityToolkit.Locomotion
         /// Gets a list of currently enabled <see cref="ILocomotionProvider"/>s.
         /// </summary>
         IReadOnlyList<ILocomotionProvider> EnabledLocomotionProviders { get; }
+
+        /// <inheritdoc cref="ILocomotionServiceHandler.OnMoving(LocomotionEventData)"/>
+        event LocomotionEventDelegate Moving;
 
         /// <inheritdoc cref="ILocomotionServiceHandler.OnTeleportTargetRequested(LocomotionEventData)"/>
         event LocomotionEventDelegate TeleportTargetRequested;
@@ -95,6 +99,15 @@ namespace RealityToolkit.Locomotion
         /// </summary>
         /// <param name="locomotionProvider">The disabled <see cref="ILocomotionProvider"/>.</param>
         void OnLocomotionProviderDisabled(ILocomotionProvider locomotionProvider);
+
+        /// <summary>
+        /// Raise a moving event for <see cref="ILocomotionServiceHandler"/>s.
+        /// </summary>
+        /// <param name="freeLocomotionProvider">The <see cref="IFreeLocomotionProvider"/> that is executing the movement.</param>
+        /// <param name="inputSource">The <see cref="IInputSource"/> the <paramref name="freeLocomotionProvider"/> received input from.</param>
+        /// <param name="direction">The direction of movement.</param>
+        /// <param name="speed">The movement speed.</param>
+        void RaiseMoving(IFreeLocomotionProvider freeLocomotionProvider, IInputSource inputSource, Vector3 direction, float speed);
 
         /// <summary>
         /// Raise a teleportation target request event.

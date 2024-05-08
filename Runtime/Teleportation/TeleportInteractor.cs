@@ -391,6 +391,9 @@ namespace RealityToolkit.Locomotion.Teleportation
         #region ITeleportHandler Implementation
 
         /// <inheritdoc />
+        public void OnMoving(LocomotionEventData eventData) { }
+
+        /// <inheritdoc />
         public void OnTeleportTargetRequested(LocomotionEventData eventData)
         {
             // Only enable teleport if the request is addressed at our input source.
