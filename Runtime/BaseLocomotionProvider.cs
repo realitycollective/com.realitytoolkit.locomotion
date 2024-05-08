@@ -72,6 +72,9 @@ namespace RealityToolkit.Locomotion
         protected virtual void OnDeactivated() { }
 
         /// <inheritdoc />
+        public virtual void OnMoving(LocomotionEventData eventData) { }
+
+        /// <inheritdoc />
         public virtual void OnTeleportTargetRequested(LocomotionEventData eventData) { }
 
         /// <inheritdoc />

@@ -116,6 +116,9 @@ namespace RealityToolkit.Locomotion.Teleportation
         }
 
         /// <inheritdoc />
+        public void OnMoving(LocomotionEventData eventData) { }
+
+        /// <inheritdoc />
         public void OnTeleportTargetRequested(LocomotionEventData eventData)
         {
             OnCursorStateChange(CursorStateEnum.Observe);

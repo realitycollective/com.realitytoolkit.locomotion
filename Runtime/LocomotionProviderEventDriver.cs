@@ -69,6 +69,15 @@ namespace RealityToolkit.Locomotion
         protected virtual void OnDestroy() => LocomotionService?.Unregister(gameObject);
 
         /// <inheritdoc />
+        public virtual void OnMoving(LocomotionEventData eventData)
+        {
+            for (int i = 0; i < LocomotionService.EnabledLocomotionProviders.Count; i++)
+            {
+                LocomotionService.EnabledLocomotionProviders[i].OnMoving(eventData);
+            }
+        }
+
+        /// <inheritdoc />
         public virtual void OnTeleportTargetRequested(LocomotionEventData eventData)
         {
             if (InputService.TryGetInputSource(eventData.EventSource.SourceId, out var inputSource))
