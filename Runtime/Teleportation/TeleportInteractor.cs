@@ -388,7 +388,7 @@ namespace RealityToolkit.Locomotion.Teleportation
 
         #endregion IInputHandler Implementation
 
-        #region ITeleportHandler Implementation
+        #region ILocomotionServiceHandler Implementation
 
         /// <inheritdoc />
         public void OnMoving(LocomotionEventData eventData) { }
@@ -432,6 +432,6 @@ namespace RealityToolkit.Locomotion.Teleportation
             }
         }
 
-        #endregion ITeleportHandler Implementation
+        #endregion ILocomotionServiceHandler Implementation
     }
 }
