@@ -44,11 +44,7 @@ namespace RealityToolkit.Locomotion
         private readonly float teleportCooldown;
         private float currentTeleportCooldown;
         private LocomotionEventData locomotionEventData;
-        private readonly Dictionary<Type, List<ILocomotionProvider>> enabledLocomotionProviders = new Dictionary<Type, List<ILocomotionProvider>>()
-        {
-            { typeof(IFreeLocomotionProvider), new List<ILocomotionProvider>() },
-            { typeof(ITeleportLocomotionProvider), new List<ILocomotionProvider>() }
-        };
+        private readonly List<ILocomotionProvider> locomotionProviders = new();
 
         /// <inheritdoc />
         public bool LocomotionEnabled { get; set; }
@@ -76,7 +72,7 @@ namespace RealityToolkit.Locomotion
         public bool IsTeleportCoolingDown => currentTeleportCooldown > 0f;
 
         /// <inheritdoc />
-        public IReadOnlyList<ILocomotionProvider> EnabledLocomotionProviders => enabledLocomotionProviders.SelectMany(kv => kv.Value).ToList();
+        public IReadOnlyList<ILocomotionProvider> EnabledLocomotionProviders => locomotionProviders.Where(p => p.IsActive).ToList();
 
         /// <inheritdoc />
         public event LocomotionEventDelegate Moving;
@@ -102,6 +98,8 @@ namespace RealityToolkit.Locomotion
             }
 
             locomotionEventData = new LocomotionEventData(EventSystem.current);
+            locomotionProviders.AddRange(ServiceManager.Instance.GetServices<ILocomotionProvider>());
+
             EnsureEventDriver();
         }
 
@@ -176,84 +174,40 @@ namespace RealityToolkit.Locomotion
         /// <inheritdoc />
         public void OnLocomotionProviderEnabled(ILocomotionProvider locomotionProvider)
         {
-            var enabledLocomotionProvidersSnapshot = new Dictionary<Type, List<ILocomotionProvider>>(enabledLocomotionProviders);
-
+            // Free / Teleport providers behave like a toggle group. There can only
+            // ever be one active provider for free locomotion and one active for teleprot locomotion.
+            // So we have to disable all other providers in the the respective group whenever the active
+            // provider in a group has changed.
             if (locomotionProvider is ITeleportLocomotionProvider ||
                 locomotionProvider is IFreeLocomotionProvider)
             {
-                // Free / Teleport providers behave like a toggle group. There can only
-                // ever be one active provider for free locomotion and one active for teleprot locomotion.
-                // So all we have to do is disable all other providers of the respective type.
                 if (locomotionProvider is ITeleportLocomotionProvider)
                 {
-                    var teleportLocomotionProviders = enabledLocomotionProvidersSnapshot[typeof(ITeleportLocomotionProvider)];
-                    for (var i = 0; i < teleportLocomotionProviders.Count; i++)
+                    for (var i = 0; i < locomotionProviders.Count; i++)
                     {
-                        var teleportLocomotionProvider = teleportLocomotionProviders[i];
-
-                        // Making sure to not disable the provider that just got enabled,
-                        // in case it is already in the list.
-                        if (teleportLocomotionProvider != locomotionProvider)
+                        var otherLocomotionProvider = locomotionProviders[i];
+                        if (otherLocomotionProvider is ITeleportLocomotionProvider && otherLocomotionProvider != locomotionProvider)
                         {
-                            teleportLocomotionProvider.IsActive = false;
+                            otherLocomotionProvider.IsActive = false;
                         }
-                    }
-
-                    // Ensure the now enabled provider gets added to the managed enabled
-                    // providers list.
-                    if (!teleportLocomotionProviders.Contains(locomotionProvider))
-                    {
-                        enabledLocomotionProviders[typeof(ITeleportLocomotionProvider)].Add(locomotionProvider);
                     }
                 }
                 else
                 {
-                    var freeLocomotionProviders = enabledLocomotionProvidersSnapshot[typeof(IFreeLocomotionProvider)];
-                    for (var i = 0; i < freeLocomotionProviders.Count; i++)
+                    for (var i = 0; i < locomotionProviders.Count; i++)
                     {
-                        var freeLocomotionProvider = freeLocomotionProviders[i];
-
-                        // Making sure to not disable the provider that just got enabled,
-                        // in case it is already in the list.
-                        if (freeLocomotionProvider != locomotionProvider)
+                        var otherLocomotionProvider = locomotionProviders[i];
+                        if (otherLocomotionProvider is IFreeLocomotionProvider && otherLocomotionProvider != locomotionProvider)
                         {
-                            freeLocomotionProvider.IsActive = false;
+                            otherLocomotionProvider.IsActive = false;
                         }
-                    }
-
-                    // Ensure the now enabled provider gets added to the managed enabled
-                    // providers list.
-                    if (!freeLocomotionProviders.Contains(locomotionProvider))
-                    {
-                        enabledLocomotionProviders[typeof(IFreeLocomotionProvider)].Add(locomotionProvider);
                     }
                 }
             }
         }
 
         /// <inheritdoc />
-        public void OnLocomotionProviderDisabled(ILocomotionProvider locomotionProvider)
-        {
-            Type type;
-            if (locomotionProvider is ITeleportLocomotionProvider)
-            {
-                type = typeof(ITeleportLocomotionProvider);
-            }
-            else if (locomotionProvider is IFreeLocomotionProvider)
-            {
-                type = typeof(IFreeLocomotionProvider);
-            }
-            else
-            {
-                type = typeof(ILocomotionProvider);
-            }
-
-            if (enabledLocomotionProviders.ContainsKey(type) &&
-                enabledLocomotionProviders[type].Contains(locomotionProvider))
-            {
-                enabledLocomotionProviders[type].Remove(locomotionProvider);
-            }
-        }
+        public void OnLocomotionProviderDisabled(ILocomotionProvider locomotionProvider) { }
 
         private void EnsureEventDriver()
         {
@@ -283,8 +237,8 @@ namespace RealityToolkit.Locomotion
         public void RaiseMoving(IFreeLocomotionProvider freeLocomotionProvider, IInputSource inputSource, Vector3 direction, float speed)
         {
             locomotionEventData.Initialize(freeLocomotionProvider, inputSource, direction, speed);
-            Moving?.Invoke(locomotionEventData);
             HandleEvent(locomotionEventData, OnMovingHandler);
+            Moving?.Invoke(locomotionEventData);
         }
 
         private static readonly ExecuteEvents.EventFunction<ILocomotionServiceHandler> OnTeleportRequestHandler =
@@ -303,8 +257,8 @@ namespace RealityToolkit.Locomotion
             }
 
             locomotionEventData.Initialize(teleportLocomotionProvider, inputSource);
-            TeleportTargetRequested?.Invoke(locomotionEventData);
             HandleEvent(locomotionEventData, OnTeleportRequestHandler);
+            TeleportTargetRequested?.Invoke(locomotionEventData);
         }
 
         private static readonly ExecuteEvents.EventFunction<ILocomotionServiceHandler> OnTeleportStartedHandler =
@@ -318,8 +272,8 @@ namespace RealityToolkit.Locomotion
         public void RaiseTeleportStarted(ITeleportLocomotionProvider locomotionProvider, IInputSource inputSource, Pose pose, ITeleportAnchor anchor)
         {
             locomotionEventData.Initialize(locomotionProvider, inputSource, pose, anchor);
-            TeleportStarted?.Invoke(locomotionEventData);
             HandleEvent(locomotionEventData, OnTeleportStartedHandler);
+            TeleportStarted?.Invoke(locomotionEventData);
         }
 
         private static readonly ExecuteEvents.EventFunction<ILocomotionServiceHandler> OnTeleportCompletedHandler =
@@ -334,8 +288,8 @@ namespace RealityToolkit.Locomotion
         {
             currentTeleportCooldown = teleportCooldown;
             locomotionEventData.Initialize(locomotionProvider, inputSource, pose, anchor);
-            TeleportCompleted?.Invoke(locomotionEventData);
             HandleEvent(locomotionEventData, OnTeleportCompletedHandler);
+            TeleportCompleted?.Invoke(locomotionEventData);
         }
 
         private static readonly ExecuteEvents.EventFunction<ILocomotionServiceHandler> OnTeleportCanceledHandler =
@@ -349,8 +303,8 @@ namespace RealityToolkit.Locomotion
         public void RaiseTeleportCanceled(ITeleportLocomotionProvider locomotionProvider, IInputSource inputSource)
         {
             locomotionEventData.Initialize(locomotionProvider, inputSource);
-            TeleportCanceled?.Invoke(locomotionEventData);
             HandleEvent(locomotionEventData, OnTeleportCanceledHandler);
+            TeleportCanceled?.Invoke(locomotionEventData);
         }
 
         /// <inheritdoc />
