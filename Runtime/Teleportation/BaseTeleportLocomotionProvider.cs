@@ -56,7 +56,7 @@ namespace RealityToolkit.Locomotion.Teleportation
         protected Dictionary<uint, ITeleportTargetProvider> AvailableTargetProviders { get; } = new Dictionary<uint, ITeleportTargetProvider>();
 
         /// <inheritdoc />
-        public bool IsTeleporting { get; protected set; }
+        public bool IsTeleporting { get; private set; }
 
         protected override void OnDeactivated()
         {

@@ -20,6 +20,16 @@ namespace RealityToolkit.Locomotion
         public ILocomotionProvider LocomotionProvider { get; private set; }
 
         /// <summary>
+        /// The direction of movement.
+        /// </summary>
+        public Vector3 Direction { get; private set; }
+
+        /// <summary>
+        /// The movement speed.
+        /// </summary>
+        public float Speed { get; private set; }
+
+        /// <summary>
         /// The teleport target pose, if any.
         /// </summary>
         public Pose? Pose { get; private set; }
@@ -48,6 +58,21 @@ namespace RealityToolkit.Locomotion
             LocomotionProvider = locomotionProvider;
             Pose = pose;
             Anchor = anchor;
+        }
+
+        /// <summary>
+        /// Used to initialize/reset the event and populate the data.
+        /// </summary>
+        /// <param name="locomotionProvider">The <see cref="ILocomotionProvider"/> the event data is addressed at or coming from.</param>
+        /// /// <param name="inputSource">The <see cref="IInputSource"/> the event originated from.</param>
+        /// <param name="direction">The direction of movement.</param>
+        /// <param name="speed">The movement speed applied.</param>
+        public void Initialize(ILocomotionProvider locomotionProvider, IInputSource inputSource, Vector3 direction, float speed)
+        {
+            BaseInitialize(inputSource);
+            LocomotionProvider = locomotionProvider;
+            Direction = direction;
+            Speed = speed;
         }
 
         /// <summary>

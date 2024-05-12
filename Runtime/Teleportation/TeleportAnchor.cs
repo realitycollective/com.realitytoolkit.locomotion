@@ -87,7 +87,7 @@ namespace RealityToolkit.Locomotion.Teleportation
 
             if (ServiceManager.Instance.TryGetService<ILocomotionService>(out var locomotionService))
             {
-                locomotionService.TeleportStarted += LocomotionService_TeleportStarted;
+                locomotionService.TeleportCompleted += LocomotionService_TeleportCompleted;
             }
         }
 
@@ -98,7 +98,7 @@ namespace RealityToolkit.Locomotion.Teleportation
         {
             if (ServiceManager.Instance.TryGetService<ILocomotionService>(out var locomotionService))
             {
-                locomotionService.TeleportStarted -= LocomotionService_TeleportStarted;
+                locomotionService.TeleportStarted -= LocomotionService_TeleportCompleted;
             }
 
             IsTargeted = false;
@@ -126,11 +126,11 @@ namespace RealityToolkit.Locomotion.Teleportation
             IsTargeted = false;
         }
 
-        private void LocomotionService_TeleportStarted(LocomotionEventData eventData)
+        private void LocomotionService_TeleportCompleted(LocomotionEventData eventData)
         {
-            if (eventData.Anchor != null &&
-                eventData.Anchor == (ITeleportAnchor)this)
+            if (eventData.Anchor != null && Equals(eventData.Anchor))
             {
+                onActivated?.Invoke();
                 Activated?.Invoke();
             }
         }
