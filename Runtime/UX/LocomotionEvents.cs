@@ -15,16 +15,16 @@ namespace RealityToolkit.Locomotion.UX
         [SerializeField]
         private UnityEvent<LocomotionEventData> onMoving = null;
 
-        [SerializeField]
+        [Space, SerializeField]
         private UnityEvent<LocomotionEventData> onTeleportTargetRequested = null;
 
-        [SerializeField]
+        [Space, SerializeField]
         private UnityEvent<LocomotionEventData> onTeleportStarted = null;
 
-        [SerializeField]
+        [Space, SerializeField]
         private UnityEvent<LocomotionEventData> onTeleportCompleted = null;
 
-        [SerializeField]
+        [Space, SerializeField]
         private UnityEvent<LocomotionEventData> onTeleportCanceled = null;
 
         /// <inheritdoc/>
