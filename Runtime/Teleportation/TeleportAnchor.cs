@@ -18,6 +18,7 @@ namespace RealityToolkit.Locomotion.Teleportation
     [DisallowMultipleComponent]
     [RequireComponent(typeof(BoxCollider))]
     [HelpURL("https://www.realitytoolkit.io/docs/locomotion/teleportation-anchor")]
+    [AddComponentMenu(RealityToolkitRuntimePreferences.Toolkit_AddComponentMenu + "/Locomotion/" + nameof(TeleportAnchor))]
     public class TeleportAnchor : BaseFocusHandler, ITeleportAnchor
     {
         [SerializeField, Tooltip("Defaults to the local transform. Override to specify a different transform to " +

@@ -10,6 +10,7 @@ using UnityEngine;
 
 namespace RealityToolkit.Locomotion.Teleportation
 {
+    [AddComponentMenu("")]
     public class TeleportCursor : AnimatedCursor, ILocomotionServiceHandler
     {
         [SerializeField]

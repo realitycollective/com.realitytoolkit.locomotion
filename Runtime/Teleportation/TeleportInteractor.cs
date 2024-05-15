@@ -14,6 +14,7 @@ using UnityEngine.Serialization;
 namespace RealityToolkit.Locomotion.Teleportation
 {
     [RequireComponent(typeof(ParabolaPhysicalLineDataProvider))]
+    [AddComponentMenu("")]
     public class TeleportInteractor : FarInteractor, ILocomotionServiceHandler, ITeleportTargetProvider
     {
         [SerializeField]

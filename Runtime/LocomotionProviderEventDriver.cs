@@ -19,6 +19,7 @@ namespace RealityToolkit.Locomotion
     /// The <see cref="ILocomotionService"/> will ensure a <see cref="GameObject"/> with this component attached is created, when the
     /// service is enabled. You do not need to manually place it in the scene.
     /// </summary>
+    [AddComponentMenu("")]
     public class LocomotionProviderEventDriver : MonoBehaviour,
         ILocomotionServiceHandler,
         IInputHandler,
