@@ -17,7 +17,7 @@ namespace RealityToolkit.Locomotion.Teleportation
         public TeleportValidationServiceModule(string name, uint priority, TeleportValidationServiceModuleProfile profile, ILocomotionService parentService)
             : base(name, priority, profile, parentService)
         {
-            anchorsOnly = profile.AnchorsOnly;
+            AnchorsOnly = profile.AnchorsOnly;
             validLayers = profile.ValidLayers;
             invalidLayers = profile.InvalidLayers;
             upDirectionThreshold = profile.UpDirectionThreshold;
@@ -25,12 +25,14 @@ namespace RealityToolkit.Locomotion.Teleportation
             maxHeightDistance = profile.MaxHeightDistance;
         }
 
-        private readonly bool anchorsOnly;
         private readonly LayerMask validLayers;
         private readonly LayerMask invalidLayers;
         private readonly float upDirectionThreshold;
         private readonly float maxDistanceSquare;
         private readonly float maxHeightDistance;
+
+        /// <inheritdoc />
+        public bool AnchorsOnly { get; set; }
 
         /// <inheritdoc />
         public TeleportValidationResult IsValid(IInteractorResult pointerResult, ITeleportAnchor anchor = null)
@@ -44,7 +46,7 @@ namespace RealityToolkit.Locomotion.Teleportation
                 teleportValidationResult = TeleportValidationResult.Invalid;
             }
             // Check anchors only.
-            else if (anchorsOnly && (anchor == null || !anchor.IsEnabled))
+            else if (AnchorsOnly && (anchor == null || !anchor.IsEnabled))
             {
                 teleportValidationResult = TeleportValidationResult.Invalid;
             }

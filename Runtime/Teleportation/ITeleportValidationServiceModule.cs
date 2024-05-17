@@ -13,6 +13,11 @@ namespace RealityToolkit.Locomotion.Teleportation
     public interface ITeleportValidationServiceModule : ILocomotionServiceModule
     {
         /// <summary>
+        /// Should teleportation only be allowed if the target is a <see cref="ITeleportAnchor"/>?
+        /// </summary>
+        bool AnchorsOnly { get; set; }
+
+        /// <summary>
         /// Validates a <see cref="IInteractorResult"/> and returns whether the <see cref="RaycastHit"/>
         /// qualifies for teleporation.
         /// </summary>

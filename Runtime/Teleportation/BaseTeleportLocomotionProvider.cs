@@ -25,7 +25,7 @@ namespace RealityToolkit.Locomotion.Teleportation
             rotationAmount = profile.RotationAmount;
         }
 
-        private readonly Dictionary<uint, bool> inputPreviouslyDownDict = new Dictionary<uint, bool>();
+        private readonly Dictionary<uint, bool> inputPreviouslyDownDict = new();
         private readonly float inputThreshold;
         private readonly float teleportActivationAngle;
         private readonly float angleOffset;
@@ -42,7 +42,7 @@ namespace RealityToolkit.Locomotion.Teleportation
         /// Key is an input source ID.
         /// Value is the input source itself.
         /// </remarks>
-        protected Dictionary<uint, IInputSource> OpenTargetRequests { get; } = new Dictionary<uint, IInputSource>();
+        protected Dictionary<uint, IInputSource> OpenTargetRequests { get; } = new();
 
         /// <summary>
         /// This registry keeps track of <see cref="ITeleportTargetProvider"/>s that have answered
@@ -53,11 +53,12 @@ namespace RealityToolkit.Locomotion.Teleportation
         /// Key is an input source ID.
         /// Value is the target provider that provides targets for that input source ID.
         /// </remarks>
-        protected Dictionary<uint, ITeleportTargetProvider> AvailableTargetProviders { get; } = new Dictionary<uint, ITeleportTargetProvider>();
+        protected Dictionary<uint, ITeleportTargetProvider> AvailableTargetProviders { get; } = new();
 
         /// <inheritdoc />
         public bool IsTeleporting { get; private set; }
 
+        /// <inheritdoc />
         protected override void OnDeactivated()
         {
             // When being disabled, cancel any in progress teleport.
@@ -66,7 +67,12 @@ namespace RealityToolkit.Locomotion.Teleportation
                 LocomotionService.RaiseTeleportCanceled(this, openRequest.Value);
             }
 
+            // Since we've been deativated we won't be receiving the cancellation event
+            // from the locomotion service itself, so we have to clean up manually here.
+            OpenTargetRequests.Clear();
             AvailableTargetProviders.Clear();
+            IsTeleporting = false;
+
             base.OnDeactivated();
         }
 
