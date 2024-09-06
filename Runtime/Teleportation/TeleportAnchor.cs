@@ -17,7 +17,7 @@ namespace RealityToolkit.Locomotion.Teleportation
     /// </summary>
     [DisallowMultipleComponent]
     [RequireComponent(typeof(BoxCollider))]
-    [HelpURL("https://www.realitytoolkit.io/docs/locomotion/teleportation-anchor")]
+    [HelpURL("https://realitytoolkit.realitycollective.net/docs/locomotion/teleportation-anchor")]
     [AddComponentMenu(RealityToolkitRuntimePreferences.Toolkit_AddComponentMenu + "/Locomotion/" + nameof(TeleportAnchor))]
     public class TeleportAnchor : BaseFocusHandler, ITeleportAnchor
     {

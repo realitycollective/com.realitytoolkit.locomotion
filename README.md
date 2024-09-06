@@ -2,7 +2,7 @@
 
 ![com.realitytoolkit.locomotion](https://github.com/realitycollective/realitycollective.logo/blob/main/RealityToolkit/RepoBanners/com.realitytoolkit.locomotion.png?raw=true)
 
-The locomotion system for use with the [Reality Toolkit](https://www.realitytoolkit.io/).
+The locomotion system for use with the [Reality Toolkit](https://realitytoolkit.realitycollective.net/).
 
 [![openupm](https://img.shields.io/npm/v/com.realitytoolkit.locomotion?label=openupm&registry_uri=https://package.openupm.com)](https://openupm.com/packages/com.realitytoolkit.locomotion/) [![Discord](https://img.shields.io/discord/597064584980987924.svg?label=&logo=discord&logoColor=ffffff&color=7389D8&labelColor=6A7EC2)](https://discord.gg/hF7TtRCFmB)
 [![Publish main branch and increment version](https://github.com/realitycollective/com.realitytoolkit.locomotion/actions/workflows/main-publish.yml/badge.svg)](https://github.com/realitycollective/com.realitytoolkit.locomotion/actions/workflows/main-publish.yml)
@@ -59,4 +59,4 @@ We are working on making the Reality Toolkit available via the Unity asset store
 
 ## Getting Started
 
-Check the ["Getting Started"](https://www.realitytoolkit.io/) documentation for the Reality Toolkit and to learn more about this module.
+Check the ["Getting Started"](https://realitytoolkit.realitycollective.net/) documentation for the Reality Toolkit and to learn more about this module.

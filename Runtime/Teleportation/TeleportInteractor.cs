@@ -5,8 +5,9 @@ using RealityCollective.ServiceFramework.Services;
 using RealityToolkit.Definitions.Physics;
 using RealityToolkit.EventDatum.Input;
 using RealityToolkit.Input.Interactors;
+using RealityToolkit.Input.Physics;
 using RealityToolkit.Utilities.Lines.DataProviders;
-using RealityToolkit.Utilities.Physics;
+using RealityToolkit.Utilities.Lines.Renderers;
 using System;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -15,8 +16,44 @@ namespace RealityToolkit.Locomotion.Teleportation
 {
     [RequireComponent(typeof(ParabolaPhysicalLineDataProvider))]
     [AddComponentMenu("")]
-    public class TeleportInteractor : FarInteractor, ILocomotionServiceHandler, ITeleportTargetProvider
+    public class TeleportInteractor : BaseControllerInteractor, ILocomotionServiceHandler, ITeleportTargetProvider
     {
+        [Range(2, 50)]
+        [SerializeField]
+        [FormerlySerializedAs("LineCastResolution")]
+        [Tooltip("This setting has a high performance cost. Values above 20 are not recommended.")]
+        private int lineCastResolution = 10;
+
+        protected int LineCastResolution
+        {
+            get => lineCastResolution;
+            set => lineCastResolution = value;
+        }
+
+        [SerializeField]
+        private BaseLineDataProvider lineBase;
+
+        /// <summary>
+        /// The Line Data Provider driving this pointer.
+        /// </summary>
+        public BaseLineDataProvider LineBase => lineBase;
+
+        [SerializeField]
+        [Tooltip("If no line renderers are specified, this array will be auto-populated on startup.")]
+        private BaseLineRenderer[] lineRenderers;
+
+        /// <summary>
+        /// The current line renderers that this pointer is utilizing.
+        /// </summary>
+        /// <remarks>
+        /// If no line renderers are specified, this array will be auto-populated on startup.
+        /// </remarks>
+        public BaseLineRenderer[] LineRenderers
+        {
+            get => lineRenderers;
+            set => lineRenderers = value;
+        }
+
         [SerializeField]
         [FormerlySerializedAs("LineColorValid")]
         private Gradient lineColorValid = new Gradient();
@@ -77,6 +114,9 @@ namespace RealityToolkit.Locomotion.Teleportation
             get => lineColorAnchor;
             set => lineColorAnchor = value;
         }
+
+        /// <inheritdoc />
+        public override bool IsFarInteractor => true;
 
         private ITeleportValidationServiceModule validationDataProvider;
         private ITeleportValidationServiceModule ValidationDataProvider => validationDataProvider ?? (validationDataProvider = ServiceManager.Instance.GetService<ITeleportValidationServiceModule>());
@@ -164,9 +204,8 @@ namespace RealityToolkit.Locomotion.Teleportation
             set => base.PointerOrientation = value;
         }
 
-        protected override void OnValidate()
+        protected virtual void OnValidate()
         {
-            base.OnValidate();
             EnsureSetup();
 
             if (Application.isPlaying && parabolicLineData.LineTransform == transform)
