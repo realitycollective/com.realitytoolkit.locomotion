@@ -3,7 +3,7 @@
 
 using System.Reflection;
 
-[assembly: AssemblyVersion("1.0.5")]
+[assembly: AssemblyVersion("1.0.6")]
 [assembly: AssemblyTitle("com.realitytoolkit.locomotion.editor")]
 [assembly: AssemblyCompany("Reality Collective")]
 [assembly: AssemblyCopyright("Copyright (c) Reality Collective. All rights reserved.")]
