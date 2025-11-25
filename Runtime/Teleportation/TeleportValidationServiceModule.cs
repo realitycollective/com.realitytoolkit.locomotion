@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 
 using RealityCollective.ServiceFramework.Modules;
-using RealityToolkit.Input.Interactors;
+using RealityToolkit.Interactions.Interactors;
 using UnityEngine;
 
 namespace RealityToolkit.Locomotion.Teleportation

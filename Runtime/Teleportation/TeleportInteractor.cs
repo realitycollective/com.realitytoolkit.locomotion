@@ -4,8 +4,8 @@
 using RealityCollective.ServiceFramework.Services;
 using RealityToolkit.Definitions.Physics;
 using RealityToolkit.EventDatum.Input;
-using RealityToolkit.Input.Interactors;
 using RealityToolkit.Input.Physics;
+using RealityToolkit.Interactions.Interactors;
 using RealityToolkit.Utilities.Lines.DataProviders;
 using RealityToolkit.Utilities.Lines.Renderers;
 using System;
