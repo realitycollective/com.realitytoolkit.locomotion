@@ -2,12 +2,7 @@
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 
 using RealityCollective.ServiceFramework.Services;
-using RealityToolkit.Definitions.Physics;
-using RealityToolkit.EventDatum.Input;
-using RealityToolkit.Input.Physics;
 using RealityToolkit.Interactions.Interactors;
-using RealityToolkit.Utilities.Lines.DataProviders;
-using RealityToolkit.Utilities.Lines.Renderers;
 using System;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -16,7 +11,7 @@ namespace RealityToolkit.Locomotion.Teleportation
 {
     [RequireComponent(typeof(ParabolaPhysicalLineDataProvider))]
     [AddComponentMenu("")]
-    public class TeleportInteractor : BaseControllerInteractor, ILocomotionServiceHandler, ITeleportTargetProvider
+    public class TeleportInteractor : BaseInteractor, ILocomotionServiceHandler, ITeleportTargetProvider
     {
         [Range(2, 50)]
         [SerializeField]
