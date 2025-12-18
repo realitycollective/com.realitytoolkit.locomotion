@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Reality Collective. All rights reserved.
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 
-using RealityToolkit.EventDatum.Input;
-using RealityToolkit.Input.Definitions;
+using RealityToolkit.Interactions.Utilities;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace RealityToolkit.Locomotion.Movement
 {
@@ -25,7 +25,7 @@ namespace RealityToolkit.Locomotion.Movement
         }
 
         private bool isRunning;
-        private readonly InputAction runInputAction;
+        private readonly InputActionReference runInputAction;
 
         private float speed;
         /// <inheritdoc />
@@ -62,40 +62,52 @@ namespace RealityToolkit.Locomotion.Movement
         }
 
         /// <inheritdoc />
-        public override void OnInputDown(InputEventData eventData)
+        protected override void OnActivated()
         {
-            base.OnInputDown(eventData);
+            base.OnActivated();
 
-            if (eventData.InputAction == runInputAction)
+            if (InputActionUtilities.TryGetInputAction(runInputAction, out var runAction))
             {
-                isRunning = true;
+                runAction.started += RunInputAction_Started;
+                runAction.canceled += RunInputAction_Canceled;
             }
         }
 
         /// <inheritdoc />
-        public override void OnInputUp(InputEventData eventData)
+        protected override void OnDeactivated()
         {
-            base.OnInputUp(eventData);
+            base.OnDeactivated();
 
-            if (eventData.InputAction == runInputAction)
+            if (InputActionUtilities.TryGetInputAction(runInputAction, out var inputAction))
             {
-                isRunning = false;
+                inputAction.started -= RunInputAction_Started;
+                inputAction.canceled -= RunInputAction_Canceled;
             }
         }
 
-        /// <inheritdoc />
-        public override void OnInputChanged(InputEventData<Vector2> eventData)
+        private void RunInputAction_Started(InputAction.CallbackContext context)
         {
-            base.OnInputChanged(eventData);
+            isRunning = true;
+        }
+
+        private void RunInputAction_Canceled(InputAction.CallbackContext context)
+        {
+            isRunning = false;
+        }
+
+        /// <inheritdoc />
+        protected override void OnLocomotionActionPerformed(InputAction.CallbackContext context)
+        {
+            base.OnLocomotionActionPerformed(context);
 
             if (IsActive &&
-                LocomotionService.MovementEnabled &&
-                eventData.InputAction == InputAction)
+                LocomotionService.MovementEnabled)
             {
                 var speed = isRunning ? RunningSpeed : Speed;
+                var direction = context.ReadValue<Vector2>();
 
-                LocomotionService.LocomotionTarget.Move(eventData.InputData, speed);
-                LocomotionService.RaiseMoving(this, eventData.InputSource, eventData.InputData, speed);
+                LocomotionService.LocomotionTarget.Move(direction, speed);
+                LocomotionService.RaiseMoving(this, InteractionService.GetController(context.control.device.deviceId), direction, speed);
             }
         }
     }

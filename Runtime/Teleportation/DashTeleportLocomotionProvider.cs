@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Reality Collective. All rights reserved.
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 
-using RealityToolkit.Input.Interfaces;
 using UnityEngine;
 
 namespace RealityToolkit.Locomotion.Teleportation
@@ -41,7 +40,7 @@ namespace RealityToolkit.Locomotion.Teleportation
 
                 if (t >= 1f)
                 {
-                    LocomotionService.RaiseTeleportCompleted(this, (IInputSource)locomotionEventData.EventSource, locomotionEventData.Pose.Value, locomotionEventData.Anchor);
+                    //LocomotionService.RaiseTeleportCompleted(this, (IInputSource)locomotionEventData.EventSource, locomotionEventData.Pose.Value, locomotionEventData.Anchor);
                     return;
                 }
 
@@ -54,28 +53,28 @@ namespace RealityToolkit.Locomotion.Teleportation
         {
             // Was this teleport provider's teleport started and did this provider
             // actually expect a teleport to start?
-            if (OpenTargetRequests.ContainsKey(eventData.EventSource.SourceId))
-            {
-                locomotionEventData = eventData;
-                var targetRotation = Vector3.zero;
-                targetPosition = eventData.Pose.Value.position;
-                targetRotation.y = eventData.Pose.Value.rotation.eulerAngles.y;
+            //if (OpenTargetRequests.ContainsKey(eventData.EventSource.SourceId))
+            //{
+            //    locomotionEventData = eventData;
+            //    var targetRotation = Vector3.zero;
+            //    targetPosition = eventData.Pose.Value.position;
+            //    targetRotation.y = eventData.Pose.Value.rotation.eulerAngles.y;
 
-                if (eventData.Anchor != null)
-                {
-                    targetPosition = eventData.Anchor.Position;
-                    if (eventData.Anchor.OverrideTargetOrientation)
-                    {
-                        targetRotation.y = eventData.Anchor.TargetOrientation;
-                    }
-                }
+            //    if (eventData.Anchor != null)
+            //    {
+            //        targetPosition = eventData.Anchor.Position;
+            //        if (eventData.Anchor.OverrideTargetOrientation)
+            //        {
+            //            targetRotation.y = eventData.Anchor.TargetOrientation;
+            //        }
+            //    }
 
-                this.targetRotation = Quaternion.Euler(targetRotation);
+            //    this.targetRotation = Quaternion.Euler(targetRotation);
 
-                startPosition = LocomotionService.LocomotionTarget.Pose.position;
-                startRotation = LocomotionService.LocomotionTarget.Pose.rotation;
-                dashTime = 0f;
-            }
+            //    startPosition = LocomotionService.LocomotionTarget.Pose.position;
+            //    startRotation = LocomotionService.LocomotionTarget.Pose.rotation;
+            //    dashTime = 0f;
+            //}
 
             base.OnTeleportStarted(eventData);
         }

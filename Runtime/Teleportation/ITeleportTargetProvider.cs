@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Reality Collective. All rights reserved.
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 
-using RealityToolkit.Input.Interfaces;
+using RealityToolkit.Interactions.Controllers;
 using UnityEngine;
 
 namespace RealityToolkit.Locomotion.Teleportation
@@ -10,7 +10,7 @@ namespace RealityToolkit.Locomotion.Teleportation
     /// Interface definition for components and services providing teleportation targets for
     /// <see cref="ITeleportLocomotionProvider"/>s. Whenever an <see cref="ITeleportLocomotionProvider"/>
     /// requests a teleportation target, the target provider will answer the request, if both share
-    /// the same <see cref="IInputSource"/> connectinon.
+    /// the same <see cref="IController"/> connection.
     /// </summary>
     public interface ITeleportTargetProvider : ILocomotionServiceHandler
     {
@@ -28,12 +28,12 @@ namespace RealityToolkit.Locomotion.Teleportation
         bool IsTargeting { get; }
 
         /// <summary>
-        /// Gets the <see cref="IInputSource"/> this provider is
+        /// Gets the <see cref="IController"/> this provider is
         /// connected with. Each <see cref="ITeleportTargetProvider"/> must be
-        /// assigned an input source so targets can be mapped to the
-        /// <see cref="RequestingLocomotionProvider"/>'s input source.
+        /// assigned an <see cref="IController"/> so targets can be mapped to the
+        /// <see cref="RequestingLocomotionProvider"/>'s <see cref="IController"/>.
         /// </summary>
-        IInputSource InputSource { get; }
+        IController Controller { get; }
 
         /// <summary>
         /// Gets the target pose provided, if any.

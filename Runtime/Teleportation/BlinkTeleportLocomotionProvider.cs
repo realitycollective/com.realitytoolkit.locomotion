@@ -2,8 +2,9 @@
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 
 using RealityCollective.Utilities.Extensions;
-using RealityToolkit.Input.Interfaces;
+using RealityToolkit.Interactions.Controllers;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
 
 namespace RealityToolkit.Locomotion.Teleportation
@@ -30,7 +31,7 @@ namespace RealityToolkit.Locomotion.Teleportation
         private readonly Material fadeMaterial;
         private readonly Color fadeInColor;
         private readonly Color fadeOutColor;
-        private IInputSource inputSource;
+        private IController controller;
         private Pose targetPose;
         private ITeleportAnchor targetAnchor;
         private GameObject fadeSphere;
@@ -91,57 +92,59 @@ namespace RealityToolkit.Locomotion.Teleportation
         }
 
         /// <inheritdoc />
-        public override void OnTeleportStarted(LocomotionEventData eventData)
+        protected override void OnLocomotionActionStarted(InputAction.CallbackContext context)
         {
             // Was this teleport provider's teleport started and did this provider
             // actually expect a teleport to start?
-            if (OpenTargetRequests.ContainsKey(eventData.EventSource.SourceId))
-            {
-                inputSource = (IInputSource)eventData.EventSource;
-                targetPose = eventData.Pose.Value;
-                targetAnchor = eventData.Anchor;
+            //if (OpenTargetRequests.ContainsKey(context.control.device.deviceId))
+            //{
+            //    controller = InteractionService.GetController(context.control.device.deviceId);
+            //    targetPose = eventData.Pose.Value;
+            //    targetAnchor = eventData.Anchor;
 
-                if (eventData.Anchor != null)
-                {
-                    targetPose.position = targetAnchor.Position;
-                    if (targetAnchor.OverrideTargetOrientation)
-                    {
-                        targetPose.rotation = Quaternion.Euler(0f, targetAnchor.TargetOrientation, 0f);
-                    }
-                }
+            //    if (eventData.Anchor != null)
+            //    {
+            //        targetPose.position = targetAnchor.Position;
+            //        if (targetAnchor.OverrideTargetOrientation)
+            //        {
+            //            targetPose.rotation = Quaternion.Euler(0f, targetAnchor.TargetOrientation, 0f);
+            //        }
+            //    }
 
-                FadeOut();
-            }
+            //    FadeOut();
+            //}
 
-            base.OnTeleportStarted(eventData);
+            //base.OnLocomotionActionStarted(context);
         }
 
         /// <inheritdoc />
-        public override void OnTeleportCompleted(LocomotionEventData eventData)
+        protected override void OnLocomotionActionPerformed(InputAction.CallbackContext context)
         {
-            if (OpenTargetRequests.ContainsKey(eventData.EventSource.SourceId))
+            if (OpenTargetRequests.ContainsKey(context.control.device.deviceId))
             {
                 FadeIn();
             }
 
-            base.OnTeleportCompleted(eventData);
+            base.OnLocomotionActionPerformed(context);
         }
 
         /// <inheritdoc />
-        public override void OnTeleportCanceled(LocomotionEventData eventData)
+        protected override void OnLocomotionActionCanceled(InputAction.CallbackContext context)
         {
-            if (OpenTargetRequests.ContainsKey(eventData.EventSource.SourceId))
+            base.OnLocomotionActionCanceled(context);
+
+            if (OpenTargetRequests.ContainsKey(context.control.device.deviceId))
             {
                 fadeSphere.SetActive(false);
             }
 
-            base.OnTeleportCanceled(eventData);
+            base.OnLocomotionActionCanceled(context);
         }
 
         private void PerformTeleport()
         {
             LocomotionService.LocomotionTarget.SetPositionAndRotation(targetPose.position, targetPose.rotation);
-            LocomotionService.RaiseTeleportCompleted(this, inputSource, targetPose, targetAnchor);
+            LocomotionService.RaiseTeleportCompleted(this, controller, targetPose, targetAnchor);
         }
 
         private void FadeOut()

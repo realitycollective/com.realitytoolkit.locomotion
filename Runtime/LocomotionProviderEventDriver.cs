@@ -3,10 +3,7 @@
 
 using RealityCollective.ServiceFramework.Services;
 using RealityCollective.Utilities.Extensions;
-using RealityToolkit.EventDatum.Input;
-using RealityToolkit.Input.Interfaces;
-using RealityToolkit.Input.Interfaces.Handlers;
-using RealityToolkit.Locomotion.Teleportation;
+using RealityToolkit.Interactions;
 using UnityEngine;
 
 namespace RealityToolkit.Locomotion
@@ -20,18 +17,15 @@ namespace RealityToolkit.Locomotion
     /// service is enabled. You do not need to manually place it in the scene.
     /// </summary>
     [AddComponentMenu("")]
-    public class LocomotionProviderEventDriver : MonoBehaviour,
-        ILocomotionServiceHandler,
-        IInputHandler,
-        IInputHandler<float>,
-        IInputHandler<Vector2>
+    public class LocomotionProviderEventDriver : MonoBehaviour
+    // ILocomotionServiceHandler
     {
-        private IInputService inputService = null;
+        private IInteractionService inputService = null;
         /// <summary>
         /// Gets the currently active <see cref="IInputService"/> instance.
         /// </summary>
-        protected IInputService InputService
-            => inputService ??= ServiceManager.Instance.GetService<IInputService>();
+        protected IInteractionService InputService
+            => inputService ??= ServiceManager.Instance.GetService<IInteractionService>();
 
         private ILocomotionService locomotionService = null;
         /// <summary>
@@ -79,122 +73,122 @@ namespace RealityToolkit.Locomotion
         }
 
         /// <inheritdoc />
-        public virtual void OnTeleportTargetRequested(LocomotionEventData eventData)
-        {
-            if (InputService.TryGetInputSource(eventData.EventSource.SourceId, out var inputSource))
-            {
-                ToggleInteractors(false, true, inputSource);
-            }
+        //public virtual void OnTeleportTargetRequested(LocomotionEventData eventData)
+        //{
+        //    if (InputService.TryGetInputSource(eventData.EventSource.SourceId, out var inputSource))
+        //    {
+        //        ToggleInteractors(false, true, inputSource);
+        //    }
 
-            for (int i = 0; i < LocomotionService.EnabledLocomotionProviders.Count; i++)
-            {
-                LocomotionService.EnabledLocomotionProviders[i].OnTeleportTargetRequested(eventData);
-            }
-        }
+        //    for (int i = 0; i < LocomotionService.EnabledLocomotionProviders.Count; i++)
+        //    {
+        //        LocomotionService.EnabledLocomotionProviders[i].OnTeleportTargetRequested(eventData);
+        //    }
+        //}
 
-        /// <inheritdoc />
-        public virtual void OnTeleportStarted(LocomotionEventData eventData)
-        {
-            if (InputService.TryGetInputSource(eventData.EventSource.SourceId, out var inputSource))
-            {
-                ToggleInteractors(false, true, inputSource);
-            }
+        ///// <inheritdoc />
+        //public virtual void OnTeleportStarted(LocomotionEventData eventData)
+        //{
+        //    if (InputService.TryGetInputSource(eventData.EventSource.SourceId, out var inputSource))
+        //    {
+        //        ToggleInteractors(false, true, inputSource);
+        //    }
 
-            for (int i = 0; i < LocomotionService.EnabledLocomotionProviders.Count; i++)
-            {
-                LocomotionService.EnabledLocomotionProviders[i].OnTeleportStarted(eventData);
-            }
-        }
+        //    for (int i = 0; i < LocomotionService.EnabledLocomotionProviders.Count; i++)
+        //    {
+        //        LocomotionService.EnabledLocomotionProviders[i].OnTeleportStarted(eventData);
+        //    }
+        //}
 
-        /// <inheritdoc />
-        public virtual void OnTeleportCompleted(LocomotionEventData eventData)
-        {
-            if (InputService.TryGetInputSource(eventData.EventSource.SourceId, out var inputSource))
-            {
-                ToggleInteractors(true, false, inputSource);
-            }
+        ///// <inheritdoc />
+        //public virtual void OnTeleportCompleted(LocomotionEventData eventData)
+        //{
+        //    if (InputService.TryGetInputSource(eventData.EventSource.SourceId, out var inputSource))
+        //    {
+        //        ToggleInteractors(true, false, inputSource);
+        //    }
 
-            for (int i = 0; i < LocomotionService.EnabledLocomotionProviders.Count; i++)
-            {
-                LocomotionService.EnabledLocomotionProviders[i].OnTeleportCompleted(eventData);
-            }
-        }
-
-        /// <inheritdoc />
-        public virtual void OnTeleportCanceled(LocomotionEventData eventData)
-        {
-            if (InputService.TryGetInputSource(eventData.EventSource.SourceId, out var inputSource))
-            {
-                ToggleInteractors(true, false, inputSource);
-            }
-
-            for (int i = 0; i < LocomotionService.EnabledLocomotionProviders.Count; i++)
-            {
-                LocomotionService.EnabledLocomotionProviders[i].OnTeleportCanceled(eventData);
-            }
-        }
+        //    for (int i = 0; i < LocomotionService.EnabledLocomotionProviders.Count; i++)
+        //    {
+        //        LocomotionService.EnabledLocomotionProviders[i].OnTeleportCompleted(eventData);
+        //    }
+        //}
 
         /// <inheritdoc />
-        public virtual void OnInputChanged(InputEventData<float> eventData)
-        {
-            for (int i = 0; i < LocomotionService.EnabledLocomotionProviders.Count; i++)
-            {
-                LocomotionService.EnabledLocomotionProviders[i].OnInputChanged(eventData);
-            }
-        }
+        //public virtual void OnTeleportCanceled(LocomotionEventData eventData)
+        //{
+        //    if (InputService.TryGetInputSource(eventData.EventSource.SourceId, out var inputSource))
+        //    {
+        //        ToggleInteractors(true, false, inputSource);
+        //    }
 
-        /// <inheritdoc />
-        public virtual void OnInputChanged(InputEventData<Vector2> eventData)
-        {
-            for (int i = 0; i < LocomotionService.EnabledLocomotionProviders.Count; i++)
-            {
-                LocomotionService.EnabledLocomotionProviders[i].OnInputChanged(eventData);
-            }
-        }
+        //    for (int i = 0; i < LocomotionService.EnabledLocomotionProviders.Count; i++)
+        //    {
+        //        LocomotionService.EnabledLocomotionProviders[i].OnTeleportCanceled(eventData);
+        //    }
+        //}
 
-        /// <inheritdoc />
-        public virtual void OnInputDown(InputEventData eventData)
-        {
-            for (int i = 0; i < LocomotionService.EnabledLocomotionProviders.Count; i++)
-            {
-                LocomotionService.EnabledLocomotionProviders[i].OnInputDown(eventData);
-            }
-        }
+        ///// <inheritdoc />
+        //public virtual void OnInputChanged(InputEventData<float> eventData)
+        //{
+        //    for (int i = 0; i < LocomotionService.EnabledLocomotionProviders.Count; i++)
+        //    {
+        //        LocomotionService.EnabledLocomotionProviders[i].OnInputChanged(eventData);
+        //    }
+        //}
 
-        /// <inheritdoc />
-        public virtual void OnInputUp(InputEventData eventData)
-        {
-            for (int i = 0; i < LocomotionService.EnabledLocomotionProviders.Count; i++)
-            {
-                LocomotionService.EnabledLocomotionProviders[i].OnInputUp(eventData);
-            }
-        }
+        ///// <inheritdoc />
+        //public virtual void OnInputChanged(InputEventData<Vector2> eventData)
+        //{
+        //    for (int i = 0; i < LocomotionService.EnabledLocomotionProviders.Count; i++)
+        //    {
+        //        LocomotionService.EnabledLocomotionProviders[i].OnInputChanged(eventData);
+        //    }
+        //}
 
-        private void ToggleInteractors(bool isOn, bool teleportInProgress, IInputSource teleportInputSource = null)
-        {
-            foreach (var inputSource in InputService.DetectedInputSources)
-            {
-                var isTeleportInputSource = inputSource.SourceId == teleportInputSource.SourceId;
+        ///// <inheritdoc />
+        //public virtual void OnInputDown(InputEventData eventData)
+        //{
+        //    for (int i = 0; i < LocomotionService.EnabledLocomotionProviders.Count; i++)
+        //    {
+        //        LocomotionService.EnabledLocomotionProviders[i].OnInputDown(eventData);
+        //    }
+        //}
 
-                foreach (var interactor in inputSource.Pointers)
-                {
-                    if (isTeleportInputSource && interactor is ITeleportTargetProvider _)
-                    {
-                        // If this interactor is the one handling the teleport and providing a target,
-                        // we do not want to mess with its state as it will manage it internally.
-                        continue;
-                    }
+        ///// <inheritdoc />
+        //public virtual void OnInputUp(InputEventData eventData)
+        //{
+        //    for (int i = 0; i < LocomotionService.EnabledLocomotionProviders.Count; i++)
+        //    {
+        //        LocomotionService.EnabledLocomotionProviders[i].OnInputUp(eventData);
+        //    }
+        //}
 
-                    interactor.IsTeleportRequestActive = teleportInProgress;
+        //private void ToggleInteractors(bool isOn, bool teleportInProgress, IInputSource teleportInputSource = null)
+        //{
+        //    foreach (var inputSource in InputService.DetectedInputSources)
+        //    {
+        //        var isTeleportInputSource = inputSource.SourceId == teleportInputSource.SourceId;
 
-                    if (interactor.BaseCursor != null)
-                    {
-                        // The interactor might be a teleport target provider, in which case we do not want
-                        // to enable it in any case.
-                        interactor.BaseCursor.IsVisible = isOn && !(interactor is ITeleportTargetProvider);
-                    }
-                }
-            }
-        }
+        //        foreach (var interactor in inputSource.Pointers)
+        //        {
+        //            if (isTeleportInputSource && interactor is ITeleportTargetProvider _)
+        //            {
+        //                // If this interactor is the one handling the teleport and providing a target,
+        //                // we do not want to mess with its state as it will manage it internally.
+        //                continue;
+        //            }
+
+        //            interactor.IsTeleportRequestActive = teleportInProgress;
+
+        //            if (interactor.BaseCursor != null)
+        //            {
+        //                // The interactor might be a teleport target provider, in which case we do not want
+        //                // to enable it in any case.
+        //                interactor.BaseCursor.IsVisible = isOn && !(interactor is ITeleportTargetProvider);
+        //            }
+        //        }
+        //    }
+        //}
     }
 }

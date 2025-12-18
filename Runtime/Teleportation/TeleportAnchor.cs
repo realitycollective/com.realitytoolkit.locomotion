@@ -3,8 +3,6 @@
 
 using RealityCollective.ServiceFramework.Services;
 using RealityCollective.Utilities.Extensions;
-using RealityToolkit.EventDatum.Input;
-using RealityToolkit.Input.Handlers;
 using System;
 using UnityEngine;
 using UnityEngine.Events;
@@ -19,7 +17,7 @@ namespace RealityToolkit.Locomotion.Teleportation
     [RequireComponent(typeof(BoxCollider))]
     [HelpURL("https://realitytoolkit.realitycollective.net/docs/locomotion/teleportation-anchor")]
     [AddComponentMenu(RealityToolkitRuntimePreferences.Toolkit_AddComponentMenu + "/Locomotion/" + nameof(TeleportAnchor))]
-    public class TeleportAnchor : BaseFocusHandler, ITeleportAnchor
+    public class TeleportAnchor : MonoBehaviour, ITeleportAnchor
     {
         [SerializeField, Tooltip("Defaults to the local transform. Override to specify a different transform to " +
             "serve as the anchor definifing position and orientation.")]
@@ -106,34 +104,34 @@ namespace RealityToolkit.Locomotion.Teleportation
         }
 
         /// <inheritdoc />
-        public override void OnFocusEnter(FocusEventData eventData)
-        {
-            if (eventData.Pointer is not TeleportInteractor _)
-            {
-                return;
-            }
+        //public override void OnFocusEnter(FocusEventData eventData)
+        //{
+        //    if (eventData.Pointer is not TeleportInteractor _)
+        //    {
+        //        return;
+        //    }
 
-            IsTargeted = true;
-        }
+        //    IsTargeted = true;
+        //}
 
         /// <inheritdoc />
-        public override void OnFocusExit(FocusEventData eventData)
-        {
-            if (eventData.Pointer is not TeleportInteractor _)
-            {
-                return;
-            }
+        //public override void OnFocusExit(FocusEventData eventData)
+        //{
+        //    if (eventData.Pointer is not TeleportInteractor _)
+        //    {
+        //        return;
+        //    }
 
-            IsTargeted = false;
-        }
+        //    IsTargeted = false;
+        //}
 
         private void LocomotionService_TeleportCompleted(LocomotionEventData eventData)
         {
-            if (eventData.Anchor != null && Equals(eventData.Anchor))
-            {
-                onActivated?.Invoke();
-                Activated?.Invoke();
-            }
+            //if (eventData.Anchor != null && Equals(eventData.Anchor))
+            //{
+            //    onActivated?.Invoke();
+            //    Activated?.Invoke();
+            //}
         }
 
         /// <summary>
@@ -141,12 +139,12 @@ namespace RealityToolkit.Locomotion.Teleportation
         /// </summary>
         private void OnDrawGizmosSelected()
         {
-            var source = anchorTransform.IsNull() ? transform : anchorTransform;
-            var position = source.position;
+            //var source = anchorTransform.IsNull() ? transform : anchorTransform;
+            //var position = source.position;
 
-            Gizmos.color = IsEnabled ? Color.green : Color.red;
-            Gizmos.DrawLine(position + (Vector3.up * 0.1f), position + (Vector3.up * 0.1f) + (source.forward * 0.5f));
-            Gizmos.DrawSphere(position + (Vector3.up * 0.1f) + (source.forward * 0.5f), 0.01f);
+            //Gizmos.color = IsEnabled ? Color.green : Color.red;
+            //Gizmos.DrawLine(position + (Vector3.up * 0.1f), position + (Vector3.up * 0.1f) + (source.forward * 0.5f));
+            //Gizmos.DrawSphere(position + (Vector3.up * 0.1f) + (source.forward * 0.5f), 0.01f);
         }
     }
 }

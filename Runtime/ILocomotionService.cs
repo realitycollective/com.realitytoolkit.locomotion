@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 
 using RealityCollective.ServiceFramework.Interfaces;
-using RealityToolkit.Input.Interfaces;
+using RealityToolkit.Interactions.Controllers;
 using RealityToolkit.Locomotion.Movement;
 using RealityToolkit.Locomotion.Teleportation;
 using System;
@@ -104,41 +104,41 @@ namespace RealityToolkit.Locomotion
         /// Raise a moving event for <see cref="ILocomotionServiceHandler"/>s.
         /// </summary>
         /// <param name="freeLocomotionProvider">The <see cref="IFreeLocomotionProvider"/> that is executing the movement.</param>
-        /// <param name="inputSource">The <see cref="IInputSource"/> the <paramref name="freeLocomotionProvider"/> received input from.</param>
+        /// <param name="controller">The <see cref="IController"/> the <paramref name="freeLocomotionProvider"/> received input from.</param>
         /// <param name="direction">The direction of movement.</param>
         /// <param name="speed">The movement speed.</param>
-        void RaiseMoving(IFreeLocomotionProvider freeLocomotionProvider, IInputSource inputSource, Vector3 direction, float speed);
+        void RaiseMoving(IFreeLocomotionProvider freeLocomotionProvider, IController controller, Vector3 direction, float speed);
 
         /// <summary>
         /// Raise a teleportation target request event.
         /// </summary>
         /// <param name="teleportLocomotionProvider">The <see cref="ITeleportLocomotionProvider"/> that requests a teleport target.</param>
-        /// <param name="inputSource">The <see cref="IInputSource"/> the <paramref name="teleportLocomotionProvider"/> requests the teleport location from.</param>
-        void RaiseTeleportTargetRequest(ITeleportLocomotionProvider teleportLocomotionProvider, IInputSource inputSource);
+        /// <param name="controller">The <see cref="IController"/> the <paramref name="teleportLocomotionProvider"/> received input from.</param>
+        void RaiseTeleportTargetRequest(ITeleportLocomotionProvider teleportLocomotionProvider, IController controller);
 
         /// <summary>
         /// Raises a teleportation started event for <see cref="ILocomotionServiceHandler"/>s.
         /// </summary>
         /// <param name="locomotionProvider">The <see cref="ITeleportLocomotionProvider"/> that started teleportation.</param>
-        /// <param name="inputSource">The <see cref="IInputSource"/> the <paramref name="locomotionProvider"/>'s teleport request originated from.</param>
+        /// <param name="controller">The <see cref="IController"/> the <paramref name="locomotionProvider"/> received input from.</param>
         /// <param name="pose">The target <see cref="Pose"/> the teleportation is going for.</param>
         /// <param name="anchor">The teleport target anchor, if any.</param>
-        void RaiseTeleportStarted(ITeleportLocomotionProvider locomotionProvider, IInputSource inputSource, Pose pose, ITeleportAnchor anchor);
+        void RaiseTeleportStarted(ITeleportLocomotionProvider locomotionProvider, IController controller, Pose pose, ITeleportAnchor anchor);
 
         /// <summary>
         /// Raises a teleportation completed event for <see cref="ILocomotionServiceHandler"/>s.
         /// </summary>
         /// <param name="locomotionProvider">The <see cref="ITeleportLocomotionProvider"/> whose teleportation has completed.</param>
-        /// <param name="inputSource">The <see cref="IInputSource"/> the <paramref name="locomotionProvider"/>'s teleport request originated from.</param>
+        /// <param name="controller">The <see cref="IController"/> the <paramref name="locomotionProvider"/> received input from.</param>
         /// <param name="pose">The target <see cref="Pose"/> the teleportation was going for.</param>
         /// <param name="anchor">The teleport target anchor, if any.</param>
-        void RaiseTeleportCompleted(ITeleportLocomotionProvider locomotionProvider, IInputSource inputSource, Pose pose, ITeleportAnchor anchor);
+        void RaiseTeleportCompleted(ITeleportLocomotionProvider locomotionProvider, IController controller, Pose pose, ITeleportAnchor anchor);
 
         /// <summary>
         /// Raises a teleportation canceled event for <see cref="ILocomotionServiceHandler"/>s.
         /// </summary>
         /// <param name="locomotionProvider">The <see cref="ITeleportLocomotionProvider"/> that canceled a previously started teleport.</param>
-        /// <param name="inputSource">The <see cref="IInputSource"/> the <paramref name="locomotionProvider"/>'s teleport request originated from.</param>
-        void RaiseTeleportCanceled(ITeleportLocomotionProvider locomotionProvider, IInputSource inputSource);
+        /// <param name="controller">The <see cref="IController"/> the <paramref name="locomotionProvider"/> received input from.</param>
+        void RaiseTeleportCanceled(ITeleportLocomotionProvider locomotionProvider, IController controller);
     }
 }

@@ -1,18 +1,16 @@
 ﻿// Copyright (c) Reality Collective. All rights reserved.
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 
-using RealityToolkit.EventDatum;
-using RealityToolkit.Input.Interfaces;
+using RealityToolkit.Interactions.Controllers;
 using RealityToolkit.Locomotion.Teleportation;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace RealityToolkit.Locomotion
 {
     /// <summary>
     /// Describes a locomotion event raised by the <see cref="ILocomotionService"/>.
     /// </summary>
-    public class LocomotionEventData : GenericBaseEventData
+    public class LocomotionEventData
     {
         /// <summary>
         /// The locomotion provider the event was raised for or raised by.
@@ -40,21 +38,15 @@ namespace RealityToolkit.Locomotion
         public ITeleportAnchor Anchor { get; private set; }
 
         /// <summary>
-        /// Constructor.
-        /// </summary>
-        /// <param name="eventSystem">Typically will be <see cref="EventSystem.current"/></param>
-        public LocomotionEventData(EventSystem eventSystem) : base(eventSystem) { }
-
-        /// <summary>
         /// Used to initialize/reset the event and populate the data.
         /// </summary>
         /// <param name="locomotionProvider">The <see cref="ILocomotionProvider"/> the event data is addressed at or coming from.</param>
         /// /// <param name="inputSource">The <see cref="IInputSource"/> the event originated from.</param>
         /// <param name="pose">Optional <see cref="Pose"/> providing a teleport target.</param>
         /// <param name="anchor">Optional <see cref="ITeleportAnchor"/> at the teleport target location.</param>
-        public void Initialize(ILocomotionProvider locomotionProvider, IInputSource inputSource, Pose pose, ITeleportAnchor anchor)
+        public void Initialize(ILocomotionProvider locomotionProvider, IController controller, Pose pose, ITeleportAnchor anchor)
         {
-            BaseInitialize(inputSource);
+            //BaseInitialize(inputSource);
             LocomotionProvider = locomotionProvider;
             Pose = pose;
             Anchor = anchor;
@@ -67,9 +59,9 @@ namespace RealityToolkit.Locomotion
         /// /// <param name="inputSource">The <see cref="IInputSource"/> the event originated from.</param>
         /// <param name="direction">The direction of movement.</param>
         /// <param name="speed">The movement speed applied.</param>
-        public void Initialize(ILocomotionProvider locomotionProvider, IInputSource inputSource, Vector3 direction, float speed)
+        public void Initialize(ILocomotionProvider locomotionProvider, IController controller, Vector3 direction, float speed)
         {
-            BaseInitialize(inputSource);
+            //BaseInitialize(inputSource);
             LocomotionProvider = locomotionProvider;
             Direction = direction;
             Speed = speed;
@@ -80,9 +72,9 @@ namespace RealityToolkit.Locomotion
         /// </summary>
         /// <param name="locomotionProvider">The <see cref="ILocomotionProvider"/> the event data is addressed at or coming from.</param>
         /// <param name="inputSource">The <see cref="IInputSource"/> the event originated from.</param>
-        public void Initialize(ILocomotionProvider locomotionProvider, IInputSource inputSource)
+        public void Initialize(ILocomotionProvider locomotionProvider, IController controller)
         {
-            BaseInitialize(inputSource);
+            //BaseInitialize(inputSource);
             LocomotionProvider = locomotionProvider;
             Pose = null;
             Anchor = null;

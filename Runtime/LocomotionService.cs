@@ -6,8 +6,7 @@ using RealityCollective.ServiceFramework.Definitions.Platforms;
 using RealityCollective.ServiceFramework.Definitions.Utilities;
 using RealityCollective.ServiceFramework.Services;
 using RealityCollective.Utilities.Extensions;
-using RealityToolkit.Input.Interfaces;
-using RealityToolkit.Input.Listeners;
+using RealityToolkit.Interactions.Controllers;
 using RealityToolkit.Locomotion.Movement;
 using RealityToolkit.Locomotion.Teleportation;
 using System;
@@ -97,7 +96,7 @@ namespace RealityToolkit.Locomotion
                 return;
             }
 
-            locomotionEventData = new LocomotionEventData(EventSystem.current);
+            //locomotionEventData = new LocomotionEventData(EventSystem.current);
             locomotionProviders.AddRange(ServiceManager.Instance.GetServices<ILocomotionProvider>());
 
             EnsureEventDriver();
@@ -213,7 +212,7 @@ namespace RealityToolkit.Locomotion
         {
             if (eventDriver.IsNull())
             {
-                eventDriver = new GameObject(nameof(LocomotionProviderEventDriver), typeof(LocomotionProviderEventDriver), typeof(InputServiceGlobalListener));
+                //eventDriver = new GameObject(nameof(LocomotionProviderEventDriver), typeof(LocomotionProviderEventDriver), typeof(InputServiceGlobalListener));
                 UnityEngine.Object.DontDestroyOnLoad(eventDriver);
             }
         }
@@ -234,11 +233,11 @@ namespace RealityToolkit.Locomotion
             };
 
         /// <inheritdoc />
-        public void RaiseMoving(IFreeLocomotionProvider freeLocomotionProvider, IInputSource inputSource, Vector3 direction, float speed)
+        public void RaiseMoving(IFreeLocomotionProvider freeLocomotionProvider, IController controller, Vector3 direction, float speed)
         {
-            locomotionEventData.Initialize(freeLocomotionProvider, inputSource, direction, speed);
-            HandleEvent(locomotionEventData, OnMovingHandler);
-            Moving?.Invoke(locomotionEventData);
+            //locomotionEventData.Initialize(freeLocomotionProvider, inputSource, direction, speed);
+            //HandleEvent(locomotionEventData, OnMovingHandler);
+            //Moving?.Invoke(locomotionEventData);
         }
 
         private static readonly ExecuteEvents.EventFunction<ILocomotionServiceHandler> OnTeleportRequestHandler =
@@ -249,16 +248,16 @@ namespace RealityToolkit.Locomotion
             };
 
         /// <inheritdoc />
-        public void RaiseTeleportTargetRequest(ITeleportLocomotionProvider teleportLocomotionProvider, IInputSource inputSource)
+        public void RaiseTeleportTargetRequest(ITeleportLocomotionProvider teleportLocomotionProvider, IController controller)
         {
             if (IsTeleportCoolingDown)
             {
                 return;
             }
 
-            locomotionEventData.Initialize(teleportLocomotionProvider, inputSource);
-            HandleEvent(locomotionEventData, OnTeleportRequestHandler);
-            TeleportTargetRequested?.Invoke(locomotionEventData);
+            //locomotionEventData.Initialize(teleportLocomotionProvider, inputSource);
+            //HandleEvent(locomotionEventData, OnTeleportRequestHandler);
+            //TeleportTargetRequested?.Invoke(locomotionEventData);
         }
 
         private static readonly ExecuteEvents.EventFunction<ILocomotionServiceHandler> OnTeleportStartedHandler =
@@ -269,11 +268,11 @@ namespace RealityToolkit.Locomotion
             };
 
         /// <inheritdoc />
-        public void RaiseTeleportStarted(ITeleportLocomotionProvider locomotionProvider, IInputSource inputSource, Pose pose, ITeleportAnchor anchor)
+        public void RaiseTeleportStarted(ITeleportLocomotionProvider locomotionProvider, IController controller, Pose pose, ITeleportAnchor anchor)
         {
-            locomotionEventData.Initialize(locomotionProvider, inputSource, pose, anchor);
-            HandleEvent(locomotionEventData, OnTeleportStartedHandler);
-            TeleportStarted?.Invoke(locomotionEventData);
+            //locomotionEventData.Initialize(locomotionProvider, inputSource, pose, anchor);
+            //HandleEvent(locomotionEventData, OnTeleportStartedHandler);
+            //TeleportStarted?.Invoke(locomotionEventData);
         }
 
         private static readonly ExecuteEvents.EventFunction<ILocomotionServiceHandler> OnTeleportCompletedHandler =
@@ -284,12 +283,12 @@ namespace RealityToolkit.Locomotion
             };
 
         /// <inheritdoc />
-        public void RaiseTeleportCompleted(ITeleportLocomotionProvider locomotionProvider, IInputSource inputSource, Pose pose, ITeleportAnchor anchor)
+        public void RaiseTeleportCompleted(ITeleportLocomotionProvider locomotionProvider, IController controller, Pose pose, ITeleportAnchor anchor)
         {
-            currentTeleportCooldown = teleportCooldown;
-            locomotionEventData.Initialize(locomotionProvider, inputSource, pose, anchor);
-            HandleEvent(locomotionEventData, OnTeleportCompletedHandler);
-            TeleportCompleted?.Invoke(locomotionEventData);
+            //currentTeleportCooldown = teleportCooldown;
+            //locomotionEventData.Initialize(locomotionProvider, inputSource, pose, anchor);
+            //HandleEvent(locomotionEventData, OnTeleportCompletedHandler);
+            //TeleportCompleted?.Invoke(locomotionEventData);
         }
 
         private static readonly ExecuteEvents.EventFunction<ILocomotionServiceHandler> OnTeleportCanceledHandler =
@@ -300,22 +299,22 @@ namespace RealityToolkit.Locomotion
             };
 
         /// <inheritdoc />
-        public void RaiseTeleportCanceled(ITeleportLocomotionProvider locomotionProvider, IInputSource inputSource)
+        public void RaiseTeleportCanceled(ITeleportLocomotionProvider locomotionProvider, IController controller)
         {
-            locomotionEventData.Initialize(locomotionProvider, inputSource);
-            HandleEvent(locomotionEventData, OnTeleportCanceledHandler);
-            TeleportCanceled?.Invoke(locomotionEventData);
+            //locomotionEventData.Initialize(locomotionProvider, inputSource);
+            //HandleEvent(locomotionEventData, OnTeleportCanceledHandler);
+            //TeleportCanceled?.Invoke(locomotionEventData);
         }
 
         /// <inheritdoc />
-        public override void HandleEvent<T>(BaseEventData eventData, ExecuteEvents.EventFunction<T> eventHandler)
-        {
-            Debug.Assert(eventData != null);
-            var teleportData = ExecuteEvents.ValidateEventData<LocomotionEventData>(eventData);
-            Debug.Assert(teleportData != null);
-            Debug.Assert(!teleportData.used);
+        //public override void HandleEvent<T>(BaseEventData eventData, ExecuteEvents.EventFunction<T> eventHandler)
+        //{
+        //    Debug.Assert(eventData != null);
+        //    var teleportData = ExecuteEvents.ValidateEventData<LocomotionEventData>(eventData);
+        //    Debug.Assert(teleportData != null);
+        //    Debug.Assert(!teleportData.used);
 
-            base.HandleEvent(teleportData, eventHandler);
-        }
+        //    base.HandleEvent(teleportData, eventHandler);
+        //}
     }
 }

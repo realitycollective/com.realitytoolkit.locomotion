@@ -1,9 +1,8 @@
 ﻿// Copyright (c) Reality Collective. All rights reserved.
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 
-using RealityToolkit.Input.Attributes;
-using RealityToolkit.Input.Definitions;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace RealityToolkit.Locomotion.Movement
 {
@@ -20,13 +19,13 @@ namespace RealityToolkit.Locomotion.Movement
         /// </summary>
         public float Speed => speed;
 
-        [SerializeField, AxisConstraint(AxisType.Digital), Tooltip("Input action to listen for to enable running speed.")]
-        private InputAction runInputAction = InputAction.None;
+        [SerializeField, Tooltip("Input action to listen for to enable running speed.")]
+        private InputActionReference runInputAction = null;
 
         /// <summary>
         /// Input action to listen for to enable <see cref="RunningSpeed"/>.
         /// </summary>
-        public InputAction RunInputAction => runInputAction;
+        public InputActionReference RunInputAction => runInputAction;
 
         [SerializeField, Range(1f, 100f), Tooltip("Speed applied when running.")]
         private float runningSpeed = 5f;
